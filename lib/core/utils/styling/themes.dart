@@ -24,8 +24,9 @@ class AppThemes {
       ),
       elevation: 0,
       backgroundColor: const Color(0xffDFECDB),
-      titleSpacing: 20.w,
+      centerTitle: true,
       titleTextStyle: TextStyle(
+        fontFamily: 'Inter',
         fontWeight: FontWeight.bold,
         fontSize: 35.sp,
         color: Colors.white,
@@ -54,7 +55,7 @@ class AppThemes {
         statusBarIconBrightness: Brightness.light,
       ),
       elevation: 0,
-      titleSpacing: 20.w,
+      centerTitle: true,
       backgroundColor: const Color(0xff181725),
       titleTextStyle: TextStyle(
         fontWeight: FontWeight.bold,

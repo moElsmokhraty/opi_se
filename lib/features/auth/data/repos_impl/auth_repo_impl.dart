@@ -1,0 +1,33 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:opi_se/core/errors/server_failure.dart';
+import 'package:opi_se/core/utils/api_config/api_config.dart';
+import 'package:opi_se/core/utils/api_config/api_service.dart';
+import 'package:opi_se/core/utils/constants.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
+import '../../domain/repos/auth_repo.dart';
+import 'package:opi_se/core/errors/failure.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/login_response.dart';
+
+class AuthRepoImpl implements AuthRepo {
+  final ApiService _apiService;
+
+  AuthRepoImpl(this._apiService);
+
+  @override
+  Future<Either<Failure, LoginResponse>> login(LoginRequest request) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.login,
+        token: token,
+        data: request.toJson(),
+      );
+      return Right(LoginResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+}
