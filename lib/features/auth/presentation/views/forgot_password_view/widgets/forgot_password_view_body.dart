@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_email.dart';
+import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 
@@ -20,6 +22,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
           showCustomSnackBar(context, state.response.message!);
+          GoRouter.of(context).go(RoutesConfig.login);
         } else if (state is ForgotPasswordFailure) {
           showCustomSnackBar(context, state.errMessage);
         }

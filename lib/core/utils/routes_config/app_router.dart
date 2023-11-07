@@ -12,10 +12,11 @@ import 'package:opi_se/features/auth/presentation/views/login_view/login_view.da
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import '../../../features/auth/presentation/views/change_password_view/successful_change_view.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.forgotPassword,
+    initialLocation: RoutesConfig.successfulChange,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -36,6 +37,12 @@ abstract class AppRouter {
           ),
           child: const ChangePasswordView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.successfulChange,
+        builder: (context, state) {
+          return const SuccessfulChangeView();
+        },
       ),
       GoRoute(
         path: RoutesConfig.forgotPassword,
