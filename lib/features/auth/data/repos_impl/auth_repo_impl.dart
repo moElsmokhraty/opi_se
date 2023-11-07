@@ -6,6 +6,8 @@ import 'package:opi_se/core/utils/api_config/api_service.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/features/auth/data/models/change_password_models/change_password_request.dart';
 import 'package:opi_se/features/auth/data/models/change_password_models/change_password_response.dart';
+import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_request.dart';
+import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_response.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
@@ -43,6 +45,24 @@ class AuthRepoImpl implements AuthRepo {
         data: request.toJson(),
       );
       return Right(ChangePasswordResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ForgotPasswordResponse>> forgotPassword(
+      ForgotPasswordRequest request) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.forgotPassword,
+        token: token,
+        data: request.toJson(),
+      );
+      return Right(ForgotPasswordResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

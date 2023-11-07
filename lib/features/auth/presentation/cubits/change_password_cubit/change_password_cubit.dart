@@ -8,7 +8,8 @@ import '../../../data/models/change_password_models/change_password_response.dar
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
-  ChangePasswordCubit(this._changePasswordUseCase) : super(ChangePasswordInitial());
+  ChangePasswordCubit(this._changePasswordUseCase)
+      : super(ChangePasswordInitial());
 
   final ChangePasswordUseCase _changePasswordUseCase;
 

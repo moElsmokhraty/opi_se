@@ -7,12 +7,15 @@ import 'package:opi_se/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/change_password_cubit/change_password_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/auth_options_view/auth_options_view.dart';
 import 'package:opi_se/features/auth/presentation/views/change_password_view/change_password_view.dart';
+import 'package:opi_se/features/auth/presentation/views/forgot_password_view/forget_password_view.dart';
 import 'package:opi_se/features/auth/presentation/views/login_view/login_view.dart';
+import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
+import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.changePassword,
+    initialLocation: RoutesConfig.forgotPassword,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -34,6 +37,15 @@ abstract class AppRouter {
           child: const ChangePasswordView(),
         ),
       ),
+      GoRoute(
+        path: RoutesConfig.forgotPassword,
+        builder: (context, state) => BlocProvider(
+          create: (context) => ForgotPasswordCubit(
+            getIt.get<ForgotPasswordUseCase>(),
+          ),
+          child: const ForgotPasswordView(),
+        ),
+      )
     ],
   );
 }

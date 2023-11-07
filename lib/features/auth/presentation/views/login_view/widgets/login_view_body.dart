@@ -9,6 +9,8 @@ import 'package:opi_se/core/widgets/text_fields/auth_text_field.dart';
 import 'package:opi_se/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/login_view/widgets/register_text.dart';
 
+import '../../../../../../core/utils/styling/styles.dart';
+
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
 
@@ -65,10 +67,8 @@ class LoginViewBody extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.05),
                 Text(
                   'Username',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
+                  style: AppStyles.textStyle16.copyWith(
                     fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
                 ),
@@ -88,9 +88,8 @@ class LoginViewBody extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.025),
                 Text(
                   'Password',
-                  style: TextStyle(
+                  style: AppStyles.textStyle16.copyWith(
                     fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
                 ),

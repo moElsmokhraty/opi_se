@@ -50,10 +50,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Old Password',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
+                    style: AppStyles.textStyle16.copyWith(
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
@@ -82,10 +80,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'New Password',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
+                    style: AppStyles.textStyle16.copyWith(
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
@@ -120,10 +116,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Confirm New Password',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
+                    style: AppStyles.textStyle16.copyWith(
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
