@@ -11,7 +11,7 @@ class AuthOptionsViewBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Image.asset(
-          'assets/auth_options.png',
+          'assets/images/auth_options.png',
           height: 400.h,
           width: 400.w,
         ),

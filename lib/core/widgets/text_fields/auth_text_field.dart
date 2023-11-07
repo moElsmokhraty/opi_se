@@ -31,6 +31,12 @@ class AuthTextField extends StatelessWidget {
       keyboardType: keyboardType,
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
+        errorStyle: TextStyle(
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w500,
+          color: Colors.red,
+          fontSize: 12.sp,
+        ),
         hintText: hintText,
         hintStyle: TextStyle(
           fontFamily: 'Inter',
@@ -41,10 +47,18 @@ class AuthTextField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.sp),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.sp),
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 1.w,
+          ),
+        ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
       ),
       style: TextStyle(
+        fontFamily: 'Inter',
         fontWeight: FontWeight.w500,
         color: Colors.black,
         fontSize: 14.sp,

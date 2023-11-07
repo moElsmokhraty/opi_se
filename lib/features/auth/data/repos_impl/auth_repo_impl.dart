@@ -4,6 +4,8 @@ import 'package:opi_se/core/errors/server_failure.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
 import 'package:opi_se/core/utils/constants.dart';
+import 'package:opi_se/features/auth/data/models/change_password_models/change_password_request.dart';
+import 'package:opi_se/features/auth/data/models/change_password_models/change_password_response.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
@@ -23,6 +25,24 @@ class AuthRepoImpl implements AuthRepo {
         data: request.toJson(),
       );
       return Right(LoginResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChangePasswordResponse>> changePassword(
+      ChangePasswordRequest request) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.changePassword,
+        token: token,
+        data: request.toJson(),
+      );
+      return Right(ChangePasswordResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

@@ -25,8 +25,8 @@ class LoginCubit extends Cubit<LoginState> {
   bool obscureText = true;
 
   Icon icon = Icon(
-    Icons.visibility,
-    size: 18.sp,
+    Icons.visibility_outlined,
+    size: 21.sp,
     color: const Color(0xff036666),
   );
 
