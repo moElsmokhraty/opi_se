@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
+import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/auth/presentation/cubits/change_password_cubit/change_password_cubit.dart';
 import '../../../../../../core/functions/validate_password.dart';
@@ -18,7 +20,7 @@ class ChangePasswordViewBody extends StatelessWidget {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-          showCustomSnackBar(context, 'Password changed successfully');
+          GoRouter.of(context).pushReplacement(RoutesConfig.successfulChange);
         } else if (state is ChangePasswordFailure) {
           showCustomSnackBar(context, state.errMessage);
         }

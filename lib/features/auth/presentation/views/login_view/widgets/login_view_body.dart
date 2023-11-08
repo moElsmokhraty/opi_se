@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_text.dart';
+import '../../../../../../core/utils/styling/styles.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/widgets/buttons/auth_button.dart';
 import 'package:opi_se/core/functions/validate_password.dart';
 import 'package:opi_se/core/widgets/text_fields/auth_text_field.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/login_view/widgets/register_text.dart';
-
-import '../../../../../../core/utils/styling/styles.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
@@ -21,7 +22,11 @@ class LoginViewBody extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          showCustomSnackBar(context, state.errMessage);
+          if (state.errMessage == 'please verify your account first !')  {
+            GoRouter.of(context).pushReplacement(RoutesConfig.verifyAccount);
+          } else {
+            showCustomSnackBar(context, state.errMessage);
+          }
         } else if (state is LoginSuccess) {
           showCustomSnackBar(context, 'Logged in successfully!');
         }
