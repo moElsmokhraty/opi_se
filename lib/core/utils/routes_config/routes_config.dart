@@ -8,4 +8,5 @@ abstract class RoutesConfig {
   static const String successfulChange = '/successful-change';
   static const String forgotPassword = '/forgot-password';
   static const String verifyAccount = '/verify-account';
+  static const String questions = '/questions';
 }
