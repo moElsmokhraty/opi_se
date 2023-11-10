@@ -18,3 +18,5 @@ class RegisterFailure extends RegisterState {
 class CountryChanged extends RegisterState {}
 
 class ChangePasswordVisibility extends RegisterState {}
+
+class ChangeAgree extends RegisterState {}

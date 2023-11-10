@@ -4,4 +4,5 @@ class APIConfig {
   static const String register = 'register';
   static const String changePassword = 'changePassword';
   static const String forgotPassword = 'forgetPassword';
+  static const String verifyAccount = 'resendVerificationEmail';
 }

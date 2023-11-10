@@ -22,7 +22,7 @@ class LoginViewBody extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          if (state.errMessage == 'please verify your account first !')  {
+          if (state.errMessage == 'please verify your account first !') {
             GoRouter.of(context).pushReplacement(RoutesConfig.verifyAccount);
           } else {
             showCustomSnackBar(context, state.errMessage);
@@ -136,7 +136,9 @@ class LoginViewBody extends StatelessWidget {
                             CircularProgressIndicator(color: Color(0xff036666)))
                     : AuthButton(
                         text: 'Login',
-                        onPressed: cubit.login,
+                        onPressed: () async {
+                          await cubit.login();
+                        },
                         backColor: const Color(0xff036666),
                         textColor: Colors.white,
                       ),

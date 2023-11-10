@@ -9,6 +9,9 @@ import 'package:opi_se/features/auth/data/models/change_password_models/change_p
 import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_request.dart';
 import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_response.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
+import 'package:opi_se/features/auth/data/models/register_models/register_request.dart';
+import 'package:opi_se/features/auth/data/models/register_models/register_response.dart';
+import 'package:opi_se/features/auth/data/models/verify_account_models/verify_account_response.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_response/login_response.dart';
@@ -27,6 +30,25 @@ class AuthRepoImpl implements AuthRepo {
         data: request.toJson(),
       );
       return Right(LoginResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, RegisterResponse>> register(
+    RegisterRequest request,
+  ) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.register,
+        token: token,
+        data: request.toJson(),
+      );
+      return Right(RegisterResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));
@@ -63,6 +85,25 @@ class AuthRepoImpl implements AuthRepo {
         data: request.toJson(),
       );
       return Right(ForgotPasswordResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, VerifyAccountResponse>> verifyAccount(
+    String email,
+  ) async {
+    try {
+      var data = await _apiService.get(
+        endpoint: APIConfig.verifyAccount,
+        token: token,
+        params: {'email': email},
+      );
+      return Right(VerifyAccountResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));
