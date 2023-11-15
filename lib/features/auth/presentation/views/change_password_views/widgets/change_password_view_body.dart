@@ -30,38 +30,21 @@ class ChangePasswordViewBody extends StatelessWidget {
           key: cubit.formKey,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/images/change_password.png',
-                  height: 300.h,
-                  width: 300.w,
-                  alignment: Alignment.center,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Reset Password',
-                    maxLines: 2,
-                    style: AppStyles.textStyle24,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.02),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Old Password',
-                    style: AppStyles.textStyle16.copyWith(
-                      fontSize: 14.sp,
-                      color: Colors.black,
-                    ),
+                Text(
+                  'Current Password',
+                  style: AppStyles.textStyle16.copyWith(
+                    fontSize: 14.sp,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 AuthTextField(
-                  controller: cubit.oldPasswordController,
-                  hintText: 'Enter Your Old Password',
+                  controller: cubit.currentPasswordController,
+                  hintText: 'Enter Your Current Password',
                   obscureText: cubit.oldObscureText,
                   suffixIcon: IconButton(
                     padding: EdgeInsets.only(right: 8.w),
@@ -77,15 +60,12 @@ class ChangePasswordViewBody extends StatelessWidget {
                     return validatePassword(value!);
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'New Password',
-                    style: AppStyles.textStyle16.copyWith(
-                      fontSize: 14.sp,
-                      color: Colors.black,
-                    ),
+                SizedBox(height: screenHeight * 0.01),
+                Text(
+                  'New Password',
+                  style: AppStyles.textStyle16.copyWith(
+                    fontSize: 14.sp,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -104,7 +84,7 @@ class ChangePasswordViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    if (cubit.oldPasswordController.text ==
+                    if (cubit.currentPasswordController.text ==
                             cubit.newPasswordController.text &&
                         cubit.newPasswordController.text.isNotEmpty) {
                       return 'New password must be different from old password';
@@ -113,15 +93,12 @@ class ChangePasswordViewBody extends StatelessWidget {
                     }
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Confirm New Password',
-                    style: AppStyles.textStyle16.copyWith(
-                      fontSize: 14.sp,
-                      color: Colors.black,
-                    ),
+                SizedBox(height: screenHeight * 0.01),
+                Text(
+                  'Confirm New Password',
+                  style: AppStyles.textStyle16.copyWith(
+                    fontSize: 14.sp,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -148,14 +125,14 @@ class ChangePasswordViewBody extends StatelessWidget {
                     }
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
+                SizedBox(height: screenHeight * 0.015),
                 state is ChangePasswordLoading
                     ? const Center(
                         child:
                             CircularProgressIndicator(color: Color(0xff036666)),
                       )
                     : AuthButton(
-                        text: 'Reset Password',
+                        text: 'Save',
                         onPressed: () async {
                           await cubit.changePassword();
                         },

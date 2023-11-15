@@ -25,7 +25,7 @@ class FirstRegisterViewBody extends StatelessWidget {
           key: cubit.firstFormKey,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -149,8 +149,7 @@ class FirstRegisterViewBody extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
-                    SizedBox(
-                      width: 290.w,
+                    Expanded(
                       child: Wrap(
                         children: [
                           Text(
@@ -209,7 +208,6 @@ class FirstRegisterViewBody extends StatelessWidget {
                   backColor: const Color(0xff036666),
                   textColor: Colors.white,
                 ),
-                SizedBox(height: screenHeight * 0.3),
               ],
             ),
           ),

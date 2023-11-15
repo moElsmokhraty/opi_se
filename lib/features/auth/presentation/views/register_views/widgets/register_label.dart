@@ -10,7 +10,6 @@ class RegisterLabel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: screenHeight * 0.033),
         Align(
           alignment: Alignment.center,
           child: Text(

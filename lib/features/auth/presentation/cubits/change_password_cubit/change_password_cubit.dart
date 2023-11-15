@@ -15,7 +15,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   @override
   Future<void> close() async {
-    oldPasswordController.dispose();
+    currentPasswordController.dispose();
     newPasswordController.dispose();
     confirmNewPasswordController.dispose();
     formKey.currentState?.reset();
@@ -48,7 +48,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     color: const Color(0xff036666),
   );
 
-  final TextEditingController oldPasswordController = TextEditingController();
+  final TextEditingController currentPasswordController = TextEditingController();
 
   final TextEditingController newPasswordController = TextEditingController();
 
@@ -60,7 +60,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     emit(ChangePasswordLoading());
     var result = await _changePasswordUseCase.call(
       ChangePasswordRequest(
-        oldPassword: oldPasswordController.text,
+        oldPassword: currentPasswordController.text,
         newPassword: newPasswordController.text,
         confirmNewPassword: confirmNewPasswordController.text,
       ),

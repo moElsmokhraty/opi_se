@@ -11,6 +11,7 @@ import 'package:opi_se/features/auth/presentation/views/forgot_password_view/for
 import 'package:opi_se/features/auth/presentation/views/login_view/login_view.dart';
 import 'package:opi_se/features/auth/presentation/views/questions_view/questions_view.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/first_register_view.dart';
+import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
@@ -23,7 +24,7 @@ import '../../../features/auth/presentation/views/register_views/third_register_
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.questions,
+    initialLocation: RoutesConfig.firstRegister,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -52,6 +53,12 @@ abstract class AppRouter {
         path: RoutesConfig.thirdRegister,
         builder: (context, state) {
           return const ThirdRegisterView();
+        },
+      ),
+      GoRoute(
+        path: RoutesConfig.map,
+        builder: (context, state) {
+          return const MapView();
         },
       ),
       GoRoute(
