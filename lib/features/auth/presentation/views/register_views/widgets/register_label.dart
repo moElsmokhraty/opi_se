@@ -18,6 +18,7 @@ class RegisterLabel extends StatelessWidget {
               fontFamily: 'Inter',
               color: Colors.black,
               fontWeight: FontWeight.w600,
+              letterSpacing: 1.1,
               fontSize: 30.sp,
             ),
             textAlign: TextAlign.center,

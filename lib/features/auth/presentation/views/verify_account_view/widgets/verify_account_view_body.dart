@@ -44,7 +44,7 @@ class VerifyAccountViewBody extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.015),
               Text(
-                'We have just sent a verification email to your email lol@gmail.com',
+                'We have just sent a verification email to $email.',
                 style: AppStyles.textStyle12.copyWith(fontSize: 15.sp),
                 maxLines: 3,
                 textAlign: TextAlign.center,

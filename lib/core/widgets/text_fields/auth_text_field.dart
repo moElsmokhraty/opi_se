@@ -69,6 +69,7 @@ class AuthTextField extends StatelessWidget {
           fontSize: 14.sp,
         ),
         validator: validator,
+        onTap: onTap,
         onTapOutside: (event) {
           FocusManager.instance.primaryFocus?.unfocus();
         },

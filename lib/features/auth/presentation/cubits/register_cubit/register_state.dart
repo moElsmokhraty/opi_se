@@ -15,8 +15,6 @@ class RegisterFailure extends RegisterState {
   final String errMessage;
 }
 
-class CountryChanged extends RegisterState {}
-
 class ChangePasswordVisibility extends RegisterState {}
 
 class ChangeAgree extends RegisterState {}

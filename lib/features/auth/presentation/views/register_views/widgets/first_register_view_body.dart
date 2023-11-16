@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_email.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
@@ -51,7 +52,7 @@ class FirstRegisterViewBody extends StatelessWidget {
                     return validateText('Username', value!);
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
+                SizedBox(height: screenHeight * 0.015),
                 Text(
                   'Email',
                   style: AppStyles.textStyle16.copyWith(
@@ -72,7 +73,7 @@ class FirstRegisterViewBody extends StatelessWidget {
                     return validateEmail(value!);
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
+                SizedBox(height: screenHeight * 0.015),
                 Text(
                   'Password',
                   style: AppStyles.textStyle16.copyWith(
@@ -101,7 +102,7 @@ class FirstRegisterViewBody extends StatelessWidget {
                     return validatePassword(value!);
                   },
                 ),
-                SizedBox(height: screenHeight * 0.025),
+                SizedBox(height: screenHeight * 0.015),
                 Text(
                   'Confirm Password',
                   style: AppStyles.textStyle16.copyWith(
@@ -127,10 +128,10 @@ class FirstRegisterViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    return validatePassword(value!);
+                    return validatePassword(value!)?.replaceAll('Password', 'Confirm Password');
                   },
                 ),
-                SizedBox(height: screenHeight * 0.015),
+                SizedBox(height: screenHeight * 0.01),
                 Row(
                   children: [
                     Checkbox(
@@ -197,11 +198,15 @@ class FirstRegisterViewBody extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: screenHeight * 0.04),
+                SizedBox(height: screenHeight * 0.035),
                 AuthButton(
                   text: 'Continue',
                   onPressed: () {
-                    if (cubit.firstFormKey.currentState!.validate()) {
+                    if (!cubit.agree) {
+                      showCustomSnackBar(context, 'Please agree to the Terms of Use and Privacy Policy');
+                    }
+                    if (cubit.firstFormKey.currentState!.validate() &&
+                        cubit.agree) {
                       GoRouter.of(context).push(RoutesConfig.secondRegister);
                     }
                   },

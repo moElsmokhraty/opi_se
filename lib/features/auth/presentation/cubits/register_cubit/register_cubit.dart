@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
+import 'package:opi_se/features/auth/data/models/register_models/language.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 
 import '../../../data/models/register_models/register_request.dart';
@@ -21,7 +23,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    emoji.dispose();
+    genderController.dispose();
+    nativeLanguageController.dispose();
+    nativeLevelController.dispose();
+    secondLanguageController.dispose();
+    secondLevelController.dispose();
     firstFormKey.currentState?.reset();
     secondFormKey.currentState?.reset();
     super.close();
@@ -45,7 +51,13 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   TextEditingController genderController = TextEditingController();
 
-  TextEditingController emoji = TextEditingController();
+  TextEditingController nativeLanguageController = TextEditingController();
+
+  TextEditingController nativeLevelController = TextEditingController();
+
+  TextEditingController secondLanguageController = TextEditingController();
+
+  TextEditingController secondLevelController = TextEditingController();
 
   bool obscureText = true;
 
@@ -65,6 +77,28 @@ class RegisterCubit extends Cubit<RegisterState> {
     color: const Color(0xff036666),
   );
 
+  List<Language> filteredLanguages() {
+    if (nativeLanguageController.text.isNotEmpty) {
+      return [
+        Language(
+          languageName: nativeLanguageController.text,
+          level: int.parse(nativeLevelController.text),
+        ),
+        Language(
+          languageName: secondLanguageController.text,
+          level: int.parse(secondLevelController.text),
+        ),
+      ];
+    } else {
+      return [
+        Language(
+          languageName: nativeLanguageController.text,
+          level: int.parse(nativeLevelController.text),
+        ),
+      ];
+    }
+  }
+
   Future<void> register() async {
     if (!secondFormKey.currentState!.validate()) return;
     emit(RegisterLoading());
@@ -76,7 +110,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         confirmPassword: confirmPasswordController.text,
         location: locationController.text,
         age: int.parse(ageController.text),
-        gender: genderController.text,
+        gender: genderController.text.toLowerCase(),
+        languages: filteredLanguages(),
       ),
     );
     result.fold((failure) {
@@ -84,12 +119,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }, (success) {
       emit(RegisterSuccess());
     });
-  }
-
-  void changeCountry(Country country) {
-    locationController.text = country.name;
-    emoji.text = country.flagEmoji;
-    emit(CountryChanged());
   }
 
   void changePasswordVisibility() {
@@ -112,4 +141,13 @@ class RegisterCubit extends Cubit<RegisterState> {
     agree = !agree;
     emit(ChangeAgree());
   }
+
+  Future<void> openMap(BuildContext context) async {
+    await Geolocator.isLocationServiceEnabled().then((value) {
+      if (!value) {
+        showCustomSnackBar(context, 'Please enable location service');
+      }
+    });
+  }
 }
+

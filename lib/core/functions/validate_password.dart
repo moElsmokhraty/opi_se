@@ -3,7 +3,7 @@ String? validatePassword(String password) {
   bool hasNumber = false;
 
   if (password.isEmpty || password.trim().isEmpty) {
-    return 'Please enter password';
+    return 'Please enter Password';
   }
 
   if (password.length < 8) {
@@ -24,10 +24,10 @@ String? validatePassword(String password) {
   } else {
     List<String> missingChars = [];
     if (!hasLowercase) {
-      missingChars.add('lowercase letters');
+      missingChars.add('Lowercase letters');
     }
     if (!hasNumber) {
-      missingChars.add('numbers');
+      missingChars.add('Numbers');
     }
     return ('${missingChars.join(', ')} required');
   }
