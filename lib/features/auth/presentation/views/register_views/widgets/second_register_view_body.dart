@@ -24,7 +24,6 @@ class SecondRegisterViewBody extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterFailure) {
-          print(state.errMessage);
           showCustomSnackBar(context, state.errMessage);
         } else if (state is RegisterSuccess) {
           GoRouter.of(context).pushReplacement(

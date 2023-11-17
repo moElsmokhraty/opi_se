@@ -4,19 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+  const NextButton({super.key, required this.onTap});
+
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150.w,
-      height: 50.h,
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
-      decoration: ShapeDecoration(
-        color: const Color(0xFF036666),
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+        backgroundColor: const Color(0xFF036666),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.r),
         ),
+        fixedSize: Size(150.w, 50.h),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

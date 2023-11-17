@@ -5,6 +5,7 @@ import 'package:opi_se/core/utils/service_locator.dart';
 import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.dart';
 import 'package:opi_se/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/change_password_cubit/change_password_cubit.dart';
+import 'package:opi_se/features/auth/presentation/cubits/questions_cubit/questions_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/auth_options_view/auth_options_view.dart';
 import 'package:opi_se/features/auth/presentation/views/change_password_views/change_password_view.dart';
 import 'package:opi_se/features/auth/presentation/views/forgot_password_view/forget_password_view.dart';
@@ -13,6 +14,7 @@ import 'package:opi_se/features/auth/presentation/views/questions_view/questions
 import 'package:opi_se/features/auth/presentation/views/register_views/first_register_view.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
+import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
@@ -24,7 +26,7 @@ import '../../../features/auth/presentation/views/register_views/third_register_
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.firstRegister,
+    initialLocation: RoutesConfig.questions,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -98,7 +100,14 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.questions,
-        builder: (context, state) => const QuestionsView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => QuestionsCubit(),
+          child: const QuestionsView(),
+        ),
+      ),
+      GoRoute(
+        path: RoutesConfig.editProfile,
+        builder: (context, state) => const EditProfileView(),
       ),
     ],
   );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/register_label.dart';
+import 'package:opi_se/features/auth/presentation/views/register_views/widgets/skills_widget.dart';
 
 import '../../../../../../core/functions/validate_text.dart';
 import '../../../../../../core/utils/styling/styles.dart';
@@ -72,18 +73,7 @@ class ThirdRegisterViewBody extends StatelessWidget {
             ),
           ),
           SizedBox(height: screenHeight * 0.005),
-          AuthTextField(
-            controller: TextEditingController(),
-            hintText: 'Enter Your Skills',
-            prefixIcon: Icon(
-              CupertinoIcons.square_stack_3d_up,
-              size: 21.sp,
-              color: const Color(0xff036666),
-            ),
-            validator: (value) {
-              return validateText('Skills', value!);
-            },
-          ),
+          const SkillsWidget(),
           SizedBox(height: screenHeight * 0.04),
           AuthButton(
             text: 'Sign Up',

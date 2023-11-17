@@ -3,20 +3,22 @@ import '../../../../../../core/utils/styling/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreviousButton extends StatelessWidget {
-  const PreviousButton({super.key});
+  const PreviousButton({super.key, required this.onTap});
+
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150.w,
-      height: 50.h,
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
-      decoration: ShapeDecoration(
-        color: Colors.white,
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           side: BorderSide(width: (1.5).w, color: const Color(0xFF036666)),
           borderRadius: BorderRadius.circular(20.r),
         ),
+        fixedSize: Size(150.w, 50.h),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +29,7 @@ class PreviousButton extends StatelessWidget {
             size: 20.sp,
           ),
           Text(
-            'Next',
+            'Back',
             textAlign: TextAlign.center,
             style: AppStyles.textStyle16.copyWith(
               color: const Color(0xFF036666),

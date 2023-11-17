@@ -8,10 +8,10 @@ class AuthOptionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (canPop) {
         SystemNavigator.pop();
-        return false;
       },
       child: const SafeArea(
         child: Scaffold(

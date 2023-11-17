@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'previous_button.dart';
+import 'package:opi_se/features/auth/presentation/cubits/questions_cubit/questions_cubit.dart';
+import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/finish_button.dart';
 import 'next_button.dart';
+import 'previous_button.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
-import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/selected_choice_item.dart';
-import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/unselected_choice_item.dart';
+import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/selection_item.dart';
 
 class QuestionPage extends StatelessWidget {
-  const QuestionPage({super.key});
+  const QuestionPage({
+    super.key,
+    required this.index,
+    required this.question,
+    required this.cubit,
+  });
+
+  final int index;
+  final String question;
+  final QuestionsCubit cubit;
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
       child: Column(
         children: [
           Text(
@@ -32,25 +42,56 @@ class QuestionPage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: screenHeight * 0.055),
-          Text(
-            'How many hours do you sleep?',
-            style: AppStyles.textStyle24,
-            maxLines: 4,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              question,
+              style: AppStyles.textStyle24.copyWith(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600,
+              ),
+              maxLines: 4,
+            ),
           ),
           SizedBox(height: screenHeight * 0.04),
-          const SelectedChoiceItem(),
+          SelectionItem(
+            isSelected: cubit.answers[index],
+            text: 'Yes',
+            onTap: () {
+              cubit.setAnswer(index, true);
+            },
+          ),
           SizedBox(height: screenHeight * 0.025),
-          const UnSelectedChoiceItem(),
-          SizedBox(height: screenHeight * 0.025),
-          const UnSelectedChoiceItem(),
+          SelectionItem(
+            isSelected: !cubit.answers[index],
+            text: 'No',
+            onTap: () {
+              cubit.setAnswer(index, false);
+            },
+          ),
           SizedBox(height: screenHeight * 0.05),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              PreviousButton(),
-              NextButton(),
-            ],
-          )
+          index == 1 || index == 2
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    PreviousButton(onTap: () {
+                      cubit.previousPage();
+                    }),
+                    NextButton(onTap: () {
+                      cubit.nextPage();
+                    }),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    index == 0
+                        ? NextButton(onTap: () {
+                            cubit.nextPage();
+                          })
+                        : FinishButton(onTap: () {}),
+                  ],
+                ),
         ],
       ),
     );
