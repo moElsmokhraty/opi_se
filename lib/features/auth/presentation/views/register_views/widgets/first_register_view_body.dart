@@ -128,7 +128,8 @@ class FirstRegisterViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    return validatePassword(value!)?.replaceAll('Password', 'Confirm Password');
+                    return validatePassword(value!)
+                        ?.replaceAll('Password', 'Confirm Password');
                   },
                 ),
                 SizedBox(height: screenHeight * 0.01),
@@ -203,7 +204,8 @@ class FirstRegisterViewBody extends StatelessWidget {
                   text: 'Continue',
                   onPressed: () {
                     if (!cubit.agree) {
-                      showCustomSnackBar(context, 'Please agree to the Terms of Use and Privacy Policy');
+                      showCustomSnackBar(context,
+                          'Please agree to the Terms of Use and Privacy Policy');
                     }
                     if (cubit.firstFormKey.currentState!.validate() &&
                         cubit.agree) {

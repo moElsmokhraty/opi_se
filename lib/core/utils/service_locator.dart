@@ -5,6 +5,7 @@ import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.d
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 import '../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../features/auth/domain/use_cases/login_use_case.dart';
+import '../../features/auth/domain/use_cases/upload_national_id_use_case.dart';
 import '../../features/auth/domain/use_cases/verify_account_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
@@ -36,6 +37,10 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<RegisterUseCase>(
     RegisterUseCase(getIt.get<AuthRepoImpl>()),
+  );
+
+  getIt.registerSingleton<UploadNationalIdUseCase>(
+    UploadNationalIdUseCase(getIt.get<AuthRepoImpl>()),
   );
 
   getIt.registerSingleton<ChangePasswordUseCase>(

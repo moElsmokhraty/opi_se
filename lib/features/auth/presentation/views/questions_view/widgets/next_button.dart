@@ -23,14 +23,12 @@ class NextButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-              'Next',
+          Text('Next',
               textAlign: TextAlign.center,
               style: AppStyles.textStyle16.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
-              )
-          ),
+              )),
           Icon(
             Icons.arrow_forward_ios_rounded,
             color: Colors.white,

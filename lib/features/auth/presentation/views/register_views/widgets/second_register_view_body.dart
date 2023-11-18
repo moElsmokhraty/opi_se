@@ -30,6 +30,8 @@ class SecondRegisterViewBody extends StatelessWidget {
             RoutesConfig.verifyAccount,
             extra: cubit.emailController.text,
           );
+        } else if (state is UploadNationalIdImageFailure) {
+          showCustomSnackBar(context, state.errMessage);
         }
       },
       builder: (context, state) {
@@ -96,12 +98,12 @@ class SecondRegisterViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    return validateText('Age', value!);
+                    return validateText('Location', value!);
                   },
                 ),
                 SizedBox(height: screenHeight * 0.015),
                 LanguageWidget(
-                  languageType: 'Native',
+                  languageType: 'First',
                   languageController: cubit.nativeLanguageController,
                   levelController: cubit.nativeLevelController,
                 ),
@@ -121,11 +123,13 @@ class SecondRegisterViewBody extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 AuthTextField(
-                  controller: TextEditingController(),
-                  hintText: 'Add File',
+                  readOnly: true,
+                  controller: cubit.nationalIdController,
+                  hintText: state is UploadNationalIdImageLoading
+                      ? 'Uploading...'
+                      : 'Upload Your National ID',
                   onTap: () {
-                    ///TODO: Add File
-                    // cubit.uploadFile();
+                    cubit.showBottomSheet(context);
                   },
                   prefixIcon: Icon(
                     CupertinoIcons.doc_person,
@@ -135,8 +139,6 @@ class SecondRegisterViewBody extends StatelessWidget {
                   validator: (value) {
                     if (value!.isEmpty || value.trim().isEmpty) {
                       return 'Please Add File';
-                    } else if (value.length < 14) {
-                      return 'Please Add a Valid File';
                     } else {
                       return null;
                     }

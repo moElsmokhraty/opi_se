@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opi_se/core/utils/service_locator.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
+import 'package:opi_se/features/auth/domain/use_cases/upload_national_id_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import 'core/utils/constants.dart';
 import 'core/utils/routes_config/app_router.dart';
@@ -10,6 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  ScreenUtil.ensureScreenSize();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.white,
@@ -24,7 +29,11 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => RegisterCubit(getIt.get<RegisterUseCase>())),
+          create: (context) => RegisterCubit(
+            getIt.get<RegisterUseCase>(),
+            getIt.get<UploadNationalIdUseCase>(),
+          ),
+        ),
       ],
       child: const OpiSe(),
     ),

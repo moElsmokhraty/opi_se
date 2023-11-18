@@ -1,20 +1,23 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../domain/repos/auth_repo.dart';
+import 'package:opi_se/core/errors/failure.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
-import 'package:opi_se/core/utils/constants.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
+import 'package:opi_se/features/auth/data/models/register_models/register_request.dart';
+import 'package:opi_se/features/auth/data/models/register_models/register_response.dart';
+import 'package:opi_se/features/auth/data/models/register_models/upload_national_id_response.dart';
+import 'package:opi_se/features/auth/data/models/verify_account_models/verify_account_response.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/login_response.dart';
 import 'package:opi_se/features/auth/data/models/change_password_models/change_password_request.dart';
 import 'package:opi_se/features/auth/data/models/change_password_models/change_password_response.dart';
 import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_request.dart';
 import 'package:opi_se/features/auth/data/models/forgot_password_models/forgot_password_response.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_request.dart';
-import 'package:opi_se/features/auth/data/models/register_models/register_request.dart';
-import 'package:opi_se/features/auth/data/models/register_models/register_response.dart';
-import 'package:opi_se/features/auth/data/models/verify_account_models/verify_account_response.dart';
-import '../../domain/repos/auth_repo.dart';
-import 'package:opi_se/core/errors/failure.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/login_response.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final ApiService _apiService;
@@ -109,6 +112,41 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure.fromDioException(e));
       }
       return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UploadNationalIdResponse>> uploadNationalId(
+    XFile image,
+  ) async {
+    Dio dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        sendTimeout: const Duration(seconds: 30),
+        receiveDataWhenStatusError: true,
+      ),
+    );
+    try {
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+          contentType: MediaType('image', image.path.split('.').last),
+        ),
+      });
+      var response = await dio.post(
+        APIConfig.uploadNationalId,
+        data: formData,
+        options: Options(headers: {'Content-Type': 'multipart/form-data'})
+      );
+      return Right(UploadNationalIdResponse.fromJson(response.data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      } else {
+        return Left(ServerFailure(errMessage: e.toString()));
+      }
     }
   }
 }

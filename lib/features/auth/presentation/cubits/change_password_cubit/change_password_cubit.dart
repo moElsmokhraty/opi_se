@@ -48,7 +48,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     color: const Color(0xff036666),
   );
 
-  final TextEditingController currentPasswordController = TextEditingController();
+  final TextEditingController currentPasswordController =
+      TextEditingController();
 
   final TextEditingController newPasswordController = TextEditingController();
 

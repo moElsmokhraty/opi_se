@@ -18,3 +18,15 @@ class RegisterFailure extends RegisterState {
 class ChangePasswordVisibility extends RegisterState {}
 
 class ChangeAgree extends RegisterState {}
+
+class NationalIdImagePicked extends RegisterState {}
+
+class UploadNationalIdImageLoading extends RegisterState {}
+
+class UploadNationalIdImageSuccess extends RegisterState {}
+
+class UploadNationalIdImageFailure extends RegisterState {
+  UploadNationalIdImageFailure(this.errMessage);
+
+  final String errMessage;
+}

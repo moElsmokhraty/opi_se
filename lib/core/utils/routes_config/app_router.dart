@@ -26,7 +26,7 @@ import '../../../features/auth/presentation/views/register_views/third_register_
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.questions,
+    initialLocation: RoutesConfig.secondRegister,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,

@@ -37,33 +37,32 @@ class EditProfileViewBody extends StatelessWidget {
                     color: const Color(0XFF036666).withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
-                  child:  Icon(
-                      Icons.camera_alt_outlined,
-                      color: Colors.white,
-                      size: 30.sp,
-                    ),
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    color: Colors.white,
+                    size: 30.sp,
+                  ),
                 ),
                 Positioned(
                   bottom: 7.h,
                   right: 3.w,
                   child: Container(
-                    height: 18.h,
-                    width: 18.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: const Color(0XFF036666),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(6.r),
-                        topRight: Radius.circular(6.r),
-                        topLeft: Radius.circular(6.r),
+                      height: 18.h,
+                      width: 18.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: const Color(0XFF036666),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(6.r),
+                          topRight: Radius.circular(6.r),
+                          topLeft: Radius.circular(6.r),
+                        ),
                       ),
-                    ),
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                      size: 12.sp,
-                    )
-                  ),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 12.sp,
+                      )),
                 ),
               ],
             ),

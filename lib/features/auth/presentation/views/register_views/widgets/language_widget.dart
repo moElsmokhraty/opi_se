@@ -45,14 +45,20 @@ class LanguageWidget extends StatelessWidget {
                   color: const Color(0xff036666),
                 ),
                 validator: (value) {
-                  if (languageType == 'Native') {
+                  if (languageType == 'First') {
                     if (value?.trim().isEmpty ?? true) {
                       return 'Required';
-                    } else if (value!.length < 3 || value.contains(RegExp(r"[0-9]")) || !validateLanguage(value)) {
+                    } else if (value!.length < 3 ||
+                        value.contains(RegExp(r"[0-9]")) ||
+                        !validateLanguage(value)) {
                       return 'Not a valid language';
                     }
                   } else {
-                    if (value != null && value.trim().isNotEmpty && (value.length < 3 || value.contains(RegExp(r'[0-9]')) || !validateLanguage(value))) {
+                    if (value != null &&
+                        value.trim().isNotEmpty &&
+                        (value.length < 3 ||
+                            value.contains(RegExp(r'[0-9]')) ||
+                            !validateLanguage(value))) {
                       return 'Not a valid language';
                     }
                   }
@@ -77,20 +83,14 @@ class LanguageWidget extends StatelessWidget {
               height: 75.h,
               child: DropdownMenu(
                 controller: levelController,
-                textStyle: TextStyle(
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                ),
+                textStyle: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                 width: 120.w,
-                hintText: 'Select',
                 inputDecorationTheme: InputDecorationTheme(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.sp),
+                    borderRadius: BorderRadius.circular(16.r),
                   ),
                   errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.sp),
+                    borderRadius: BorderRadius.circular(16.r),
                     borderSide: BorderSide(
                       color: Colors.red,
                       width: 1.w,
@@ -102,10 +102,10 @@ class LanguageWidget extends StatelessWidget {
                     EdgeInsets.symmetric(vertical: 8.h),
                   ),
                   backgroundColor: MaterialStateProperty.all(Colors.white),
-                  elevation: MaterialStateProperty.all(4.sp),
+                  elevation: MaterialStateProperty.all(4),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.sp),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
                 ),
@@ -114,11 +114,13 @@ class LanguageWidget extends StatelessWidget {
                   DropdownMenuEntry(value: '1', label: '1'),
                   DropdownMenuEntry(value: '2', label: '2'),
                   DropdownMenuEntry(value: '3', label: '3'),
+                  DropdownMenuEntry(value: '4', label: '4'),
+                  DropdownMenuEntry(value: '5', label: '5'),
                 ],
                 onSelected: (value) {
                   levelController.text = value.toString();
                 },
-                initialSelection: languageType == 'Native' ? '3' : '1',
+                initialSelection: '1',
               ),
             ),
           ],

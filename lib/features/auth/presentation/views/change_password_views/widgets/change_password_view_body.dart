@@ -57,7 +57,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    return validatePassword(value!)?.replaceAll('Password', 'Current Password');
+                    return validatePassword(value!)
+                        ?.replaceAll('Password', 'Current Password');
                   },
                 ),
                 SizedBox(height: screenHeight * 0.01),
@@ -89,7 +90,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                         cubit.newPasswordController.text.isNotEmpty) {
                       return 'New password must be different from old password';
                     } else {
-                      return validatePassword(value!)?.replaceAll('Password', 'New Password');
+                      return validatePassword(value!)
+                          ?.replaceAll('Password', 'New Password');
                     }
                   },
                 ),
@@ -121,7 +123,8 @@ class ChangePasswordViewBody extends StatelessWidget {
                         cubit.confirmNewPasswordController.text) {
                       return 'Passwords don\'t match';
                     } else {
-                      return validatePassword(value!)?.replaceAll('Password', 'Confirm New Password');
+                      return validatePassword(value!)
+                          ?.replaceAll('Password', 'Confirm New Password');
                     }
                   },
                 ),

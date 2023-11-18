@@ -5,4 +5,5 @@ class APIConfig {
   static const String changePassword = 'changePassword';
   static const String forgotPassword = 'forgetPassword';
   static const String verifyAccount = 'resendVerificationEmail';
+  static const String uploadNationalId = 'https://ml-api-x5og.onrender.com/extract_nationalId';
 }

@@ -118,7 +118,8 @@ class _MapViewBodyState extends State<MapViewBody> {
                   mapController: _mapController,
                   children: [
                     TileLayer(
-                      urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      urlTemplate:
+                          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                       subdomains: const ['a', 'b', 'c'],
                     ),
                   ],

@@ -22,12 +22,17 @@ class GenderWidget extends StatelessWidget {
         ),
         hintText: 'Select',
         width: width * 0.875,
+        leadingIcon: Icon(
+          Icons.transgender_outlined,
+          size: 21.sp,
+          color: const Color(0xff036666),
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.sp),
+            borderRadius: BorderRadius.circular(16.r),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.sp),
+            borderRadius: BorderRadius.circular(16.r),
             borderSide: BorderSide(
               color: Colors.red,
               width: 1.w,
@@ -39,10 +44,10 @@ class GenderWidget extends StatelessWidget {
             EdgeInsets.symmetric(vertical: 8.h),
           ),
           backgroundColor: MaterialStateProperty.all(Colors.white),
-          elevation: MaterialStateProperty.all(4.sp),
+          elevation: MaterialStateProperty.all(4),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.sp),
+              borderRadius: BorderRadius.circular(16.r),
             ),
           ),
         ),
