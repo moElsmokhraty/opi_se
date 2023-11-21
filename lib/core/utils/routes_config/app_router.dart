@@ -14,6 +14,7 @@ import 'package:opi_se/features/auth/presentation/views/questions_view/questions
 import 'package:opi_se/features/auth/presentation/views/register_views/first_register_view.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
+import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
@@ -108,6 +109,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.editProfile,
         builder: (context, state) => const EditProfileView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.profile,
+        builder: (context, state) => const ProfileView(),
       ),
     ],
   );
