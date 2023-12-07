@@ -3,8 +3,8 @@ abstract class RoutesConfig {
   static const String login = '/login';
   static const String firstRegister = '/first-register';
   static const String secondRegister = '/second-register';
-  static const String thirdRegister = '/third-register';
   static const String map = '/map';
+  static const String userPrefers = '/user-prefers';
   static const String changePassword = '/change-password';
   static const String successfulChange = '/successful-change';
   static const String forgotPassword = '/forgot-password';

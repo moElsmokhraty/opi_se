@@ -163,7 +163,12 @@ class RegisterCubit extends Cubit<RegisterState> {
       maxHeight: 1920,
       compressQuality: 100,
       compressFormat: ImageCompressFormat.png,
-      aspectRatioPresets: [CropAspectRatioPreset.ratio16x9, CropAspectRatioPreset.ratio4x3, CropAspectRatioPreset.original, CropAspectRatioPreset.square],
+      aspectRatioPresets: [
+        CropAspectRatioPreset.ratio16x9,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square
+      ],
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'OpiSe Cropper',

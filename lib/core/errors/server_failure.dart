@@ -39,11 +39,14 @@ class ServerFailure extends Failure {
   factory ServerFailure._fromResponse(Response response) {
     final statusCode = response.statusCode!;
     var responseData = response.data!;
-    String errorMessage =
-        'Oops, an unexpected error occurred, please try again later';
+    print(responseData);
+    String errorMessage = 'Oops, an unexpected error occurred, please try again later';
 
     if (responseData is String) {
       errorMessage = responseData;
+    } else if (responseData.containsKey('message') &&
+        responseData.containsKey('error')) {
+      errorMessage = responseData['error'];
     } else if (responseData.containsKey('message')) {
       errorMessage = responseData['message'];
     } else {

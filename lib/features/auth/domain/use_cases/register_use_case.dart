@@ -11,7 +11,7 @@ class RegisterUseCase extends UseCase<RegisterResponse, RegisterRequest> {
   final AuthRepo _authRepo;
 
   @override
-  Future<Either<Failure, RegisterResponse>> call(RegisterRequest param) async {
+  Future<Either<Failure, RegisterResponse>> call(param) async {
     return await _authRepo.register(param);
   }
 }

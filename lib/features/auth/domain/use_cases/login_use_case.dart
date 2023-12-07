@@ -11,7 +11,7 @@ class LoginUseCase extends UseCase<LoginResponse, LoginRequest> {
   final AuthRepo _authRepo;
 
   @override
-  Future<Either<Failure, LoginResponse>> call(LoginRequest param) async {
+  Future<Either<Failure, LoginResponse>> call(param) async {
     return await _authRepo.login(param);
   }
 }

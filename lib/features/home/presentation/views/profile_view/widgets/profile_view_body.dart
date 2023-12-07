@@ -30,8 +30,8 @@ class ProfileViewBody extends StatelessWidget {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [
-                          const Color(0xff3666666).withOpacity(0.4),
-                          const Color(0xff3666666).withOpacity(0.1),
+                          const Color(0xff366666).withOpacity(0.4),
+                          const Color(0xff366666).withOpacity(0.1),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(10.r),
@@ -69,7 +69,7 @@ class ProfileViewBody extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 65.r,
                         backgroundColor:
-                            const Color(0xff3666666).withOpacity(0.2),
+                            const Color(0xff366666).withOpacity(0.2),
                         child: Text('MS',
                             style: AppStyles.textStyle16
                                 .copyWith(fontSize: 30.sp)),
@@ -252,22 +252,26 @@ class ProfileViewBody extends StatelessWidget {
                     return Chip(
                       backgroundColor: const Color(0xFFF6F6F6),
                       shape: RoundedRectangleBorder(
-                        side: const BorderSide(width: 1, color: Color(0xFF036666)),
+                        side: const BorderSide(
+                            width: 1, color: Color(0xFF036666)),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       label: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 4.h),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               skill,
-                              style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
+                              style: AppStyles.textStyle24
+                                  .copyWith(fontSize: 14.sp),
                             ),
                             SizedBox(width: 12.w),
                             Text(
                               '3',
-                              style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
+                              style: AppStyles.textStyle24
+                                  .copyWith(fontSize: 14.sp),
                             ),
                           ],
                         ),

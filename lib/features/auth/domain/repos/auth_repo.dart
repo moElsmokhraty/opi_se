@@ -10,6 +10,8 @@ import 'package:opi_se/features/auth/data/models/login_models/login_response/log
 import 'package:opi_se/features/auth/data/models/register_models/register_request.dart';
 import 'package:opi_se/features/auth/data/models/register_models/register_response.dart';
 import 'package:opi_se/features/auth/data/models/register_models/upload_national_id_response.dart';
+import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_request.dart';
+import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_response.dart';
 import 'package:opi_se/features/auth/data/models/verify_account_models/verify_account_response.dart';
 
 abstract class AuthRepo {
@@ -25,5 +27,9 @@ abstract class AuthRepo {
 
   Future<Either<Failure, VerifyAccountResponse>> verifyAccount(String email);
 
-  Future<Either<Failure, UploadNationalIdResponse>> uploadNationalId(XFile image);
+  Future<Either<Failure, UploadNationalIdResponse>> uploadNationalId(
+      XFile image);
+
+  Future<Either<Failure, UserPrefersResponse>> submitUserPrefers(
+      UserPrefersRequest request);
 }

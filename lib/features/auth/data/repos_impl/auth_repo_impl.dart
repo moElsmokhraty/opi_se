@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_request.dart';
+import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_response.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
 import 'package:opi_se/core/utils/constants.dart';
@@ -30,7 +32,7 @@ class AuthRepoImpl implements AuthRepo {
       var data = await _apiService.post(
         endpoint: APIConfig.login,
         token: token,
-        data: request.toJson(),
+        body: request.toJson(),
       );
       return Right(LoginResponse.fromJson(data));
     } on Exception catch (e) {
@@ -49,7 +51,7 @@ class AuthRepoImpl implements AuthRepo {
       var data = await _apiService.post(
         endpoint: APIConfig.register,
         token: token,
-        data: request.toJson(),
+        body: request.toJson(),
       );
       return Right(RegisterResponse.fromJson(data));
     } on Exception catch (e) {
@@ -67,7 +69,7 @@ class AuthRepoImpl implements AuthRepo {
       var data = await _apiService.post(
         endpoint: APIConfig.changePassword,
         token: token,
-        data: request.toJson(),
+        body: request.toJson(),
       );
       return Right(ChangePasswordResponse.fromJson(data));
     } on Exception catch (e) {
@@ -85,7 +87,7 @@ class AuthRepoImpl implements AuthRepo {
       var data = await _apiService.post(
         endpoint: APIConfig.forgotPassword,
         token: token,
-        data: request.toJson(),
+        body: request.toJson(),
       );
       return Right(ForgotPasswordResponse.fromJson(data));
     } on Exception catch (e) {
@@ -121,9 +123,9 @@ class AuthRepoImpl implements AuthRepo {
   ) async {
     Dio dio = Dio(
       BaseOptions(
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        sendTimeout: const Duration(seconds: 30),
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+        sendTimeout: const Duration(seconds: 60),
         receiveDataWhenStatusError: true,
       ),
     );
@@ -135,11 +137,9 @@ class AuthRepoImpl implements AuthRepo {
           contentType: MediaType('image', image.path.split('.').last),
         ),
       });
-      var response = await dio.post(
-        APIConfig.uploadNationalId,
-        data: formData,
-        options: Options(headers: {'Content-Type': 'multipart/form-data'})
-      );
+      var response = await dio.post(APIConfig.uploadNationalId,
+          data: formData,
+          options: Options(headers: {'Content-Type': 'multipart/form-data'}));
       return Right(UploadNationalIdResponse.fromJson(response.data));
     } on Exception catch (e) {
       if (e is DioException) {
@@ -147,6 +147,25 @@ class AuthRepoImpl implements AuthRepo {
       } else {
         return Left(ServerFailure(errMessage: e.toString()));
       }
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserPrefersResponse>> submitUserPrefers(
+    UserPrefersRequest request,
+  ) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.submitUserPrefers,
+        token: token,
+        body: request.toJson(),
+      );
+      return Right(UserPrefersResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
     }
   }
 }

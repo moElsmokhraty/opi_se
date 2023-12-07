@@ -7,7 +7,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> post({
     required String endpoint,
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? params,
     String? token,
   }) async {
@@ -17,7 +17,7 @@ class ApiService {
     };
     var response = await _dio.post(
       endpoint,
-      data: data,
+      data: body,
       queryParameters: params ?? {},
     );
     return response.data;
@@ -38,7 +38,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> delete({
     required String endpoint,
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? params,
     String? token,
   }) async {
@@ -48,7 +48,7 @@ class ApiService {
     };
     var response = await _dio.delete(
       endpoint,
-      data: data,
+      data: body,
       queryParameters: params ?? {},
     );
     return response.data;
@@ -56,7 +56,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> put({
     required String endpoint,
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? params,
     String? token,
   }) async {
@@ -66,7 +66,7 @@ class ApiService {
     };
     var response = await _dio.put(
       endpoint,
-      data: data,
+      data: body,
       queryParameters: params ?? {},
     );
     return response.data;

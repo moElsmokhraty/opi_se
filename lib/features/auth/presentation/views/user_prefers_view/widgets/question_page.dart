@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/features/auth/presentation/cubits/questions_cubit/questions_cubit.dart';
-import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/finish_button.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
+import 'package:opi_se/features/auth/presentation/cubits/user_prefers_cubit/user_prefers_cubit.dart';
+import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/selection_item.dart';
+import 'finish_button.dart';
 import 'next_button.dart';
 import 'previous_button.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
-import 'package:opi_se/features/auth/presentation/views/questions_view/widgets/selection_item.dart';
 
 class QuestionPage extends StatelessWidget {
   const QuestionPage({
@@ -17,7 +18,7 @@ class QuestionPage extends StatelessWidget {
 
   final int index;
   final String question;
-  final QuestionsCubit cubit;
+  final UserPrefersCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class QuestionPage extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.04),
           SelectionItem(
-            isSelected: cubit.answers[index],
+            isSelected: cubit.answers[index] ?? false,
             text: 'Yes',
             onTap: () {
               cubit.setAnswer(index, true);
@@ -63,14 +64,15 @@ class QuestionPage extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.025),
           SelectionItem(
-            isSelected: !cubit.answers[index],
+            isSelected:
+                cubit.answers[index] == null ? false : !cubit.answers[index]!,
             text: 'No',
             onTap: () {
               cubit.setAnswer(index, false);
             },
           ),
           SizedBox(height: screenHeight * 0.05),
-          index == 1 || index == 2
+          index == 0 || index == 1 || index == 2
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -83,13 +85,20 @@ class QuestionPage extends StatelessWidget {
                   ],
                 )
               : Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: cubit.state is SubmitUserPrefersLoading
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.end,
                   children: [
-                    index == 0
-                        ? NextButton(onTap: () {
-                            cubit.nextPage();
-                          })
-                        : FinishButton(onTap: () {}),
+                    FinishButton(
+                      onTap: () async {
+                        if (cubit.answers.contains(null)) {
+                          showCustomSnackBar(
+                              context, 'Please answer all questions');
+                        } else {
+                          await cubit.submitUserPrefers();
+                        }
+                      },
+                    ),
                   ],
                 ),
         ],

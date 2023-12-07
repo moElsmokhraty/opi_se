@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:opi_se/features/auth/data/repos_impl/auth_repo_impl.dart';
 import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
+import 'package:opi_se/features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../features/auth/domain/use_cases/upload_national_id_use_case.dart';
@@ -18,9 +19,9 @@ void setupServiceLocator() {
       Dio(
         BaseOptions(
           baseUrl: APIConfig.baseUrl,
-          connectTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
-          sendTimeout: const Duration(seconds: 30),
+          connectTimeout: const Duration(seconds: 60),
+          receiveTimeout: const Duration(seconds: 60),
+          sendTimeout: const Duration(seconds: 60),
           receiveDataWhenStatusError: true,
         ),
       ),
@@ -53,5 +54,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<VerifyAccountUseCase>(
     VerifyAccountUseCase(getIt.get<AuthRepoImpl>()),
+  );
+
+  getIt.registerSingleton<SubmitUserPrefersUseCase>(
+    SubmitUserPrefersUseCase(getIt.get<AuthRepoImpl>()),
   );
 }
