@@ -12,4 +12,5 @@ abstract class RoutesConfig {
   static const String questions = '/questions';
   static const String editProfile = '/edit-profile';
   static const String profile = '/profile';
+  static const String home = '/home';
 }
