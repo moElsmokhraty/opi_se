@@ -14,6 +14,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/first_reg
 import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_prefers_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
+import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
@@ -28,7 +29,7 @@ import '../../../features/auth/presentation/views/register_views/second_register
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.home,
+    initialLocation: RoutesConfig.chat,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -114,6 +115,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.home,
         builder: (context, state) => const HomeView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.chat,
+        builder: (context, state) => const ChatView(),
       ),
     ],
   );
