@@ -14,6 +14,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/first_reg
 import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_prefers_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
+import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
@@ -27,7 +28,7 @@ import '../../../features/auth/presentation/views/register_views/second_register
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.profile,
+    initialLocation: RoutesConfig.home,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -109,6 +110,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.profile,
         builder: (context, state) => const ProfileView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.home,
+        builder: (context, state) => const HomeView(),
       ),
     ],
   );
