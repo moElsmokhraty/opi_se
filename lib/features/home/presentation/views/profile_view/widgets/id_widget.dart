@@ -9,7 +9,7 @@ class IDWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       width: double.infinity,
       height: 60.h,
       decoration: ShapeDecoration(

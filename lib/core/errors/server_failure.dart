@@ -40,7 +40,8 @@ class ServerFailure extends Failure {
     final statusCode = response.statusCode!;
     var responseData = response.data!;
     print(responseData);
-    String errorMessage = 'Oops, an unexpected error occurred, please try again later';
+    String errorMessage =
+        'Oops, an unexpected error occurred, please try again later';
 
     if (responseData is String) {
       errorMessage = responseData;

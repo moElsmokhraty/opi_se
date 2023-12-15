@@ -1,15 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import '../../features/chat/domain/use_cases/get_chat_use_case.dart';
+import 'api_config/api_config.dart';
+import 'api_config/api_service.dart';
 import 'package:opi_se/features/auth/data/repos_impl/auth_repo_impl.dart';
 import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:opi_se/features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
+import 'package:opi_se/features/chat/data/repos_impl/chat_repo_impl.dart';
 import '../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../features/auth/domain/use_cases/upload_national_id_use_case.dart';
 import '../../features/auth/domain/use_cases/verify_account_use_case.dart';
-import 'api_config/api_config.dart';
-import 'api_config/api_service.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -58,5 +60,11 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<SubmitUserPrefersUseCase>(
     SubmitUserPrefersUseCase(getIt.get<AuthRepoImpl>()),
+  );
+
+  getIt.registerSingleton<ChatRepoImpl>(ChatRepoImpl(getIt.get<ApiService>()));
+
+  getIt.registerSingleton<GetChatUseCase>(
+    GetChatUseCase(getIt.get<ChatRepoImpl>()),
   );
 }

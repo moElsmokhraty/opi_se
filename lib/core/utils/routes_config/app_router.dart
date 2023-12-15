@@ -26,6 +26,8 @@ import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart'
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
+import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
+import '../../../features/chat/presentation/cubits/chat_cubit.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
@@ -118,7 +120,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.chat,
-        builder: (context, state) => const ChatView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => ChatCubit(getIt.get<GetChatUseCase>())..getChat('657864d6b9aeadd65b0d92b9'),
+          child: const ChatView(),
+        ),
       ),
     ],
   );

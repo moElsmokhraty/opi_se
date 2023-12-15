@@ -118,19 +118,19 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
     List<String> finalAnswers = convertAnswers(answers);
     List<UserQuestion> finalQuestions = [
       UserQuestion(
-        question:  questions[0],
+        question: questions[0],
         answer: finalAnswers[0],
       ),
       UserQuestion(
-        question:  questions[1],
+        question: questions[1],
         answer: finalAnswers[1],
       ),
       UserQuestion(
-        question:  questions[2],
+        question: questions[2],
         answer: finalAnswers[2],
       ),
       UserQuestion(
-        question:  questions[3],
+        question: questions[3],
         answer: finalAnswers[3],
       ),
     ];

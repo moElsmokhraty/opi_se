@@ -26,11 +26,13 @@ class ApiService {
   Future<Map<String, dynamic>> get({
     required String endpoint,
     Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
     String? token,
   }) async {
     _dio.options.headers = {'Authorization': 'Bearer $token'};
     var response = await _dio.get(
       endpoint,
+      data: body,
       queryParameters: params ?? {},
     );
     return response.data;

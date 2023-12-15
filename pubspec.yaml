@@ -47,6 +47,7 @@ dependencies:
   syncfusion_flutter_sliders: ^23.2.7
   cupertino_icons: ^1.0.6
   geolocator: ^10.1.0
+  socket_io_client: ^2.0.3+1
   open_street_map_search_and_pick: ^0.1.0
 
 dev_dependencies:

@@ -23,7 +23,9 @@ void main() {
     ),
   );
   setupServiceLocator();
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDgzMTA1MWM4YTdiM2E3ZWRlNzljZSIsInVzZXJOYW1lIjoibW9oYW1lZDEiLCJlbWFpbCI6Im1lbHNtb2tocmF0eUB5YWhvby5jb20iLCJuYXRpb25hbElkIjoiNCIsImlhdCI6MTcwMTk3MDgyOH0.HYWN6yKgNPcuyT-bIHWLpURaCj556MG1k7yMzIW-Kks';
+  token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDgzMTA1MWM4YTdiM2E3ZWRlNzljZSIsInVzZXJOYW1lIjoibW9oYW1lZDEiLCJlbWFpbCI6Im1lbHNtb2tocmF0eUB5YWhvby5jb20iLCJuYXRpb25hbElkIjoiNCIsImlhdCI6MTcwMTk3MDgyOH0.HYWN6yKgNPcuyT-bIHWLpURaCj556MG1k7yMzIW-Kks';
+  userId = '6544fb51e09bf066c237cc48';
   runApp(
     MultiBlocProvider(
       providers: [
