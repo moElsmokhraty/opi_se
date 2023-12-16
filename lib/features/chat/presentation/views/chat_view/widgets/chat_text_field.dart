@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../cubits/chat_cubit.dart';
+
 class ChatTextField extends StatelessWidget {
-  const ChatTextField({super.key});
+  const ChatTextField({super.key, required this.cubit});
+
+  final ChatCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class ChatTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14.r),
               ),
               child: TextField(
+                controller: cubit.messageController,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 12.w,
@@ -43,10 +48,19 @@ class ChatTextField extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              if (cubit.messageController.text.isNotEmpty) {
+                cubit.sendMessage(
+                  '657864d6b9aeadd65b0d92b9',
+                  '6544fb51e09bf066c237cc48',
+                  'Hello',
+                  'text',
+                );
+              }
+            },
             padding: EdgeInsets.zero,
             icon: Icon(
-              CupertinoIcons.camera,
+              Icons.send,
               color: const Color(0XFF000E08).withOpacity(0.5),
               size: 24.sp,
             ),

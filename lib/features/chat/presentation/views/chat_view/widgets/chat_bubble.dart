@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/constants.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/chat/data/models/get_chat_response/message.dart';
-
-import '../../../../../../core/utils/constants.dart';
 
 class ChatBubble extends StatelessWidget {
   final Message? message;
@@ -67,7 +66,7 @@ class ChatBubble extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: message?.sentAt == null ? 0.h : 5.h),
+        SizedBox(height: 5.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
@@ -78,7 +77,7 @@ class ChatBubble extends StatelessWidget {
                 formattedDate,
                 style: AppStyles.textStyle12.copyWith(
                   fontSize: 12.sp,
-                  color: isSender ? Colors.grey : Colors.black,
+                  color: Colors.grey,
                 ),
               ),
               SizedBox(width: 5.w),
@@ -92,6 +91,7 @@ class ChatBubble extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 16.h)
       ],
     );
   }

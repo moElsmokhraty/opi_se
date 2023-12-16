@@ -22,7 +22,7 @@ class ChatView extends StatelessWidget {
               children: [
                 SizedBox(height: 8.h),
                 ChatMessagesList(cubit: cubit, state: state),
-                const ChatTextField(),
+                ChatTextField(cubit: cubit),
               ],
             ),
           );

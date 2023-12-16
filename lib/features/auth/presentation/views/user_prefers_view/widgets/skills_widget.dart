@@ -12,7 +12,11 @@ class SkillsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 2.h),
+      padding: EdgeInsets.only(
+        left: 8.w,
+        right: 8.w,
+        top: cubit.skills.isEmpty ? 0 : 4.h,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[400]!),
         borderRadius: BorderRadius.circular(16.r),
@@ -27,6 +31,7 @@ class SkillsWidget extends StatelessWidget {
           Wrap(
             spacing: 8.w,
             runSpacing: 8.h,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: cubit.skills.map((skill) {
               return Chip(
                 backgroundColor: const Color(0XFF036666),
