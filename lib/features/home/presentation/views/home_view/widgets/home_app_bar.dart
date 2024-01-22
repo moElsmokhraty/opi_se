@@ -54,6 +54,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           tooltip: 'Notifications',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           icon: Icon(
+            Icons.person_add_alt_1,
+            color: const Color(0xFF036666),
+            size: 24.sp,
+          ),
+        ),
+        IconButton(
+          onPressed: () {},
+          tooltip: 'Notifications',
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          icon: Icon(
             CupertinoIcons.bell_fill,
             color: const Color(0xFF036666),
             size: 24.sp,

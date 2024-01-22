@@ -27,8 +27,8 @@ class CustomMap extends StatelessWidget {
         Positioned.fill(
           child: FlutterMap(
             options: MapOptions(
-              center: mapCentre,
-              zoom: 15.0,
+              initialCenter: mapCentre ?? const LatLng(50.5, 30.51),
+              initialZoom: 15.0,
               maxZoom: 18.0,
               minZoom: 1.0,
             ),
@@ -83,8 +83,8 @@ class CustomMap extends StatelessWidget {
                 ),
                 onPressed: () {
                   mapController.move(
-                    mapController.center,
-                    mapController.zoom + 1,
+                    mapController.camera.center,
+                    mapController.camera.zoom + 1,
                   );
                 },
                 child: Icon(
@@ -102,8 +102,8 @@ class CustomMap extends StatelessWidget {
                 ),
                 onPressed: () {
                   mapController.move(
-                    mapController.center,
-                    mapController.zoom - 1,
+                    mapController.camera.center,
+                    mapController.camera.zoom - 1,
                   );
                 },
                 child: Icon(
@@ -127,7 +127,7 @@ class CustomMap extends StatelessWidget {
                     );
                   } else {
                     mapController.move(
-                      LatLng(50.5, 30.51),
+                      const LatLng(50.5, 30.51),
                       15,
                     );
                   }
@@ -175,12 +175,12 @@ class CustomMap extends StatelessWidget {
   Future<PickedData> pickData() async {
     const String baseUri = 'https://nominatim.openstreetmap.org';
     LatLong center = LatLong(
-      mapController.center.latitude,
-      mapController.center.longitude,
+      mapController.camera.center.latitude,
+      mapController.camera.center.longitude,
     );
     var client = http.Client();
     String url =
-        '$baseUri/reverse?format=json&lat=${mapController.center.latitude}&lon=${mapController.center.longitude}&zoom=18&addressdetails=1';
+        '$baseUri/reverse?format=json&lat=${mapController.camera.center.latitude}&lon=${mapController.camera.center.longitude}&zoom=18&addressdetails=1';
 
     var response = await client.get(Uri.parse(url));
     var decodedResponse =

@@ -14,6 +14,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/first_reg
 import 'package:opi_se/features/auth/presentation/views/register_views/map_view.dart';
 import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_prefers_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
+import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
@@ -31,7 +32,7 @@ import '../../../features/chat/presentation/cubits/chat_cubit.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.chat,
+    initialLocation: RoutesConfig.progress,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -121,9 +122,15 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.chat,
         builder: (context, state) => BlocProvider(
-          create: (context) => ChatCubit(getIt.get<GetChatUseCase>())..getChat('657864d6b9aeadd65b0d92b9'),
+          create: (context) => ChatCubit(
+            getIt.get<GetChatUseCase>(),
+          )..getChat('657864d6b9aeadd65b0d92b9'),
           child: const ChatView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.call,
+        builder: (context, state) => const CallView(),
       ),
     ],
   );

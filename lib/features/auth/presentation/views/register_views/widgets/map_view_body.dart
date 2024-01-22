@@ -13,7 +13,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/widgets/m
 class MapViewBody extends StatefulWidget {
   final String baseUri = 'https://nominatim.openstreetmap.org';
 
-  const MapViewBody({Key? key}) : super(key: key);
+  const MapViewBody({super.key});
 
   @override
   State<MapViewBody> createState() => _MapViewBodyState();
@@ -68,7 +68,7 @@ class _MapViewBodyState extends State<MapViewBody> {
         if (event is MapEventMoveEnd) {
           var client = http.Client();
           String url =
-              '${widget.baseUri}/reverse?format=json&lat=${event.center.latitude}&lon=${event.center.longitude}&zoom=18&addressdetails=1';
+              '${widget.baseUri}/reverse?format=json&lat=${event.camera.center.latitude}&lon=${event.camera.center.longitude}&zoom=18&addressdetails=1';
 
           var response = await client.get(Uri.parse(url));
           jsonDecode(utf8.decode(response.bodyBytes)) as Map<dynamic, dynamic>;

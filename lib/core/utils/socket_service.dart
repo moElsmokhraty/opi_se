@@ -32,9 +32,13 @@ class SocketService {
     Map<String, dynamic>? data,
   ) {
     if (socket!.connected) {
-      socket!.emit(eventName, data);
+      try {
+        socket!.emit(eventName, data);
+      } catch (e) {
+        print('Error emitting event: $e');
+      }
     } else {
-      print('Cannot emit event: socket not connected');
+      print('Socket is not connected');
     }
   }
 
