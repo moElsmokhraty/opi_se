@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../../features/chat/domain/use_cases/get_chat_use_case.dart';
+import '../../features/home/data/repos_impl/match_requests_repo_impl.dart';
+import '../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import 'package:opi_se/features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -66,5 +68,13 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<GetChatUseCase>(
     GetChatUseCase(getIt.get<ChatRepoImpl>()),
+  );
+
+  getIt.registerSingleton<MatchRequestsRepoImpl>(
+    MatchRequestsRepoImpl(getIt.get<ApiService>()),
+  );
+
+  getIt.registerSingleton<GetMatchRequestsUseCase>(
+    GetMatchRequestsUseCase(getIt.get<MatchRequestsRepoImpl>()),
   );
 }

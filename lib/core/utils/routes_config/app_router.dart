@@ -16,6 +16,7 @@ import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_p
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
+import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
@@ -29,10 +30,12 @@ import '../../../features/auth/presentation/views/change_password_views/successf
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
 import '../../../features/chat/presentation/cubits/chat_cubit.dart';
+import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
+import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.progress,
+    initialLocation: RoutesConfig.requests,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -131,6 +134,15 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.call,
         builder: (context, state) => const CallView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.requests,
+        builder: (context, state) => BlocProvider(
+          create: (context) => MatchRequestsCubit(
+            getIt.get<GetMatchRequestsUseCase>(),
+          )..getMatchRequests(),
+          child: const RequestsView(),
+        ),
       ),
     ],
   );
