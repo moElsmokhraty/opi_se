@@ -23,8 +23,10 @@ void main() {
   );
   setupServiceLocator();
   SocketService.connect();
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDgzMTA1MWM4YTdiM2E3ZWRlNzljZSIsInVzZXJOYW1lIjoibW9oYW1lZDEiLCJlbWFpbCI6Im1lbHNtb2tocmF0eUB5YWhvby5jb20iLCJuYXRpb25hbElkIjoiNCIsImlhdCI6MTcwNTkzMDA2Mn0.8gD7rahmJQ-03sSsoj2Pk0QpJ41Wz66O26jJ9YGlwxY';
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDgzMTA1MWM4YTdiM2E3ZWRlNzljZSIsInVzZXJOYW1lIjoibW9oYW1lZDEiLCJlbWFpbCI6Im1lbHNtb2tocmF0eUB5YWhvby5jb20iLCJuYXRpb25hbElkIjoiNCIsImlhdCI6MTcwNjQ1MzU4OX0.TLa4ZOlRR9E-pEd3GbA-23xR2Sm69Trmw741V5vozOY';
   userId = '6544fb51e09bf066c237cc48';
+  email = 'melsmokhraty@yahoo.com';
+  nationalId = '4';
   runApp(
     MultiBlocProvider(
       providers: [

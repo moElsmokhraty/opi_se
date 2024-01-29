@@ -10,10 +10,12 @@ class ApiService {
     Map<String, dynamic>? body,
     Map<String, dynamic>? params,
     String? token,
+    String? deviceToken,
   }) async {
     _dio.options.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      if (token != null) 'Authorization': 'Bearer $token',
+      if (deviceToken != null) 'device_token': deviceToken,
     };
     var response = await _dio.post(
       endpoint,

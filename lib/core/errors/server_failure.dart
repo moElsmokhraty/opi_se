@@ -27,7 +27,7 @@ class ServerFailure extends Failure {
           errMessage: "Bad certificate in connection with server",
         );
       case DioExceptionType.badResponse:
-        return ServerFailure._fromResponse(dioException.response!);
+        return ServerFailure._fromResponse(dioException.response);
       default:
         return ServerFailure(
           errMessage:
@@ -36,13 +36,15 @@ class ServerFailure extends Failure {
     }
   }
 
-  factory ServerFailure._fromResponse(Response response) {
-    final statusCode = response.statusCode!;
-    var responseData = response.data!;
-    print(responseData);
+  factory ServerFailure._fromResponse(Response? response) {
+    final statusCode = response?.statusCode!;
+    var responseData = response?.data!;
     String errorMessage =
         'Oops, an unexpected error occurred, please try again later';
 
+    if (response == null) {
+      return ServerFailure(errMessage: errorMessage);
+    }
     if (responseData is String) {
       errorMessage = responseData;
     } else if (responseData.containsKey('message') &&
@@ -57,6 +59,9 @@ class ServerFailure extends Failure {
           break;
         case 500:
           errorMessage = 'Internal server error, please try again later';
+          break;
+        case 503:
+          errorMessage = 'Service Unavailable, please try again later';
           break;
         case 400:
           errorMessage = 'Bad request, please try again later';
@@ -76,7 +81,9 @@ class ServerFailure extends Failure {
           break;
       }
     }
-
+    if (errorMessage.isEmpty) {
+      errorMessage = 'Oops, an unknown error occurred, please try again later';
+    }
     return ServerFailure(errMessage: errorMessage);
   }
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../data/models/requests_models/get_match_requests_response/partner_request.dart';
+import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
+import '../../../../data/models/requests_models/decline_match_request_models/decline_match_request.dart';
 
 class RequestItem extends StatelessWidget {
-  const RequestItem({super.key, this.partnerRequest});
+  const RequestItem({
+    super.key,
+    this.partnerRequest,
+    required this.cubit,
+  });
 
   final PartnerRequest? partnerRequest;
+  final MatchRequestsCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,12 @@ class RequestItem extends StatelessWidget {
             Row(
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await cubit.acceptMatchRequest(
+                      partnerRequest?.partnerId ?? '',
+                      partnerRequest?.nationalId ?? '',
+                    );
+                  },
                   style: TextButton.styleFrom(
                     fixedSize: Size(100.w, 30.h),
                     backgroundColor: const Color(0xFF036666),
@@ -74,7 +86,15 @@ class RequestItem extends StatelessWidget {
                 ),
                 SizedBox(width: 14.w),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await cubit.declineMatchRequest(
+                      DeclineMatchRequest(
+                        email: 'moelsmokhraty@gmail.com',
+                        requestId: partnerRequest?.id ?? '',
+                        rejectedUserId: partnerRequest?.partnerId ?? '',
+                      ),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     fixedSize: Size(100.w, 30.h),
                     backgroundColor: const Color(0xFFEDEDED),
@@ -83,7 +103,7 @@ class RequestItem extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Delete',
+                    'Decline',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 15.sp,

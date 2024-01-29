@@ -30,6 +30,8 @@ import '../../../features/auth/presentation/views/change_password_views/successf
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
 import '../../../features/chat/presentation/cubits/chat_cubit.dart';
+import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
+import '../../../features/home/domain/use_cases/decline_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 
@@ -140,6 +142,8 @@ abstract class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => MatchRequestsCubit(
             getIt.get<GetMatchRequestsUseCase>(),
+            getIt.get<DeclineMatchRequestUseCase>(),
+            getIt.get<AcceptMatchRequestsUseCase>(),
           )..getMatchRequests(),
           child: const RequestsView(),
         ),

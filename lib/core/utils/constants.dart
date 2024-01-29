@@ -7,3 +7,7 @@ double width = 375.w;
 String? token;
 
 String? userId;
+
+String? email;
+
+String? nationalId;

@@ -18,3 +18,31 @@ class GetMatchRequestsFailure extends MatchRequestsState {
 
   GetMatchRequestsFailure(this.failure);
 }
+
+class DeclineMatchRequestLoading extends MatchRequestsState {}
+
+class DeclineMatchRequestSuccess extends MatchRequestsState {
+  final DeclineMatchResponse response;
+
+  DeclineMatchRequestSuccess(this.response);
+}
+
+class DeclineMatchRequestFailure extends MatchRequestsState {
+  final Failure failure;
+
+  DeclineMatchRequestFailure(this.failure);
+}
+
+class AcceptMatchRequestLoading extends MatchRequestsState {}
+
+class AcceptMatchRequestSuccess extends MatchRequestsState {
+  final AcceptMatchResponse response;
+
+  AcceptMatchRequestSuccess(this.response);
+}
+
+class AcceptMatchRequestFailure extends MatchRequestsState {
+  final Failure failure;
+
+  AcceptMatchRequestFailure(this.failure);
+}

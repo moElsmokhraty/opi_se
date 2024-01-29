@@ -8,7 +8,8 @@ class MatchRequestsData extends Equatable {
 
   const MatchRequestsData({this.id, this.partnerRequests});
 
-  factory MatchRequestsData.fromJson(Map<String, dynamic> json) => MatchRequestsData(
+  factory MatchRequestsData.fromJson(Map<String, dynamic> json) =>
+      MatchRequestsData(
         id: json['_id'] as String?,
         partnerRequests: (json['partnerRequests'] as List<dynamic>?)
             ?.map((e) => PartnerRequest.fromJson(e as Map<String, dynamic>))
