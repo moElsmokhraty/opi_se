@@ -31,7 +31,7 @@ class ServerFailure extends Failure {
       default:
         return ServerFailure(
           errMessage:
-              "Oops, an unexpected error occurred, please try again later",
+              "Oops, Unexpected Error Occurred, Please try again later",
         );
     }
   }
@@ -40,7 +40,7 @@ class ServerFailure extends Failure {
     final statusCode = response?.statusCode!;
     var responseData = response?.data!;
     String errorMessage =
-        'Oops, an unexpected error occurred, please try again later';
+        'Oops, Unexpected Error Occurred, Please try again later';
 
     if (response == null) {
       return ServerFailure(errMessage: errorMessage);
@@ -55,7 +55,7 @@ class ServerFailure extends Failure {
     } else {
       switch (statusCode) {
         case 404:
-          errorMessage = 'Your request was not found, please try again later';
+          errorMessage = 'Your request was not found, Please try again later';
           break;
         case 500:
           errorMessage = 'Internal server error, please try again later';
@@ -82,7 +82,7 @@ class ServerFailure extends Failure {
       }
     }
     if (errorMessage.isEmpty) {
-      errorMessage = 'Oops, an unknown error occurred, please try again later';
+      errorMessage = 'Oops, Unknown Error Occurred, Please try again later';
     }
     return ServerFailure(errMessage: errorMessage);
   }

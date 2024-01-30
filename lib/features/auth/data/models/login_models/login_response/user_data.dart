@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-
 import 'language.dart';
+import 'notification.dart';
+import '../../../../../home/data/models/requests_models/get_match_requests_response/partner_request.dart';
 
-class Data extends Equatable {
+class UserData extends Equatable {
   final String? id;
   final String? userName;
   final String? email;
@@ -18,11 +19,12 @@ class Data extends Equatable {
   final bool? isAvailable;
   final DateTime? joinedAt;
   final List<Language>? languages;
-  final List<dynamic>? partnerRequests;
+  final List<PartnerRequest>? partnerRequests;
   final List<dynamic>? history;
+  final List<Notification>? notifications;
   final int? v;
 
-  const Data({
+  const UserData({
     this.id,
     this.userName,
     this.email,
@@ -41,9 +43,10 @@ class Data extends Equatable {
     this.partnerRequests,
     this.history,
     this.v,
+    this.notifications,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         id: json['_id'] as String?,
         userName: json['userName'] as String?,
         email: json['email'] as String?,
@@ -63,7 +66,12 @@ class Data extends Equatable {
         languages: (json['languages'] as List<dynamic>?)
             ?.map((e) => Language.fromJson(e as Map<String, dynamic>))
             .toList(),
-        partnerRequests: json['partnerRequests'] as List<dynamic>?,
+        notifications: (json['notifications'] as List<dynamic>?)
+            ?.map((e) => Notification.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        partnerRequests: (json['partnerRequests'] as List<dynamic>?)
+            ?.map((e) => PartnerRequest.fromJson(e as Map<String, dynamic>))
+            .toList(),
         history: json['history'] as List<dynamic>?,
         v: json['__v'] as int?,
       );

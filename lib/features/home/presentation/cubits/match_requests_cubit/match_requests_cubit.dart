@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../core/errors/failure.dart';
+import '../../../data/models/get_profile_response.dart';
+import '../../../domain/use_cases/get_profile_use_case.dart';
 import '../../../domain/use_cases/get_match_requests_use_case.dart';
 import '../../../domain/use_cases/accept_match_request_use_case.dart';
 import '../../../domain/use_cases/decline_match_request_use_case.dart';
@@ -17,6 +20,7 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
     this._getMatchRequestsUseCase,
     this._declineMatchRequestUseCase,
     this._acceptMatchRequestsUseCase,
+    this._getProfileUseCase,
   ) : super(MatchRequestsInitial());
 
   final GetMatchRequestsUseCase _getMatchRequestsUseCase;
@@ -24,6 +28,10 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
   final DeclineMatchRequestUseCase _declineMatchRequestUseCase;
 
   final AcceptMatchRequestsUseCase _acceptMatchRequestsUseCase;
+
+  final GetProfileUseCase _getProfileUseCase;
+
+  UserData? userData;
 
   List<PartnerRequest> partnerRequests = [];
 
@@ -51,10 +59,23 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
 
   Future<void> acceptMatchRequest(String partnerId, String nationalID) async {
     emit(AcceptMatchRequestLoading());
-    final result = await _acceptMatchRequestsUseCase.call([partnerId, nationalID]);
+    final result =
+        await _acceptMatchRequestsUseCase.call([partnerId, nationalID]);
     result.fold(
       (failure) => emit(AcceptMatchRequestFailure(failure)),
       (response) => emit(AcceptMatchRequestSuccess(response)),
+    );
+  }
+
+  Future<void> getProfile(String userId) async {
+    emit(GetProfileLoading());
+    final result = await _getProfileUseCase.call(userId);
+    result.fold(
+      (failure) => emit(GetProfileFailure(failure)),
+      (response) {
+        userData = response.data;
+        emit(GetProfileSuccess(response));
+      },
     );
   }
 }

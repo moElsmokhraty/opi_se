@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -86,5 +87,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<AcceptMatchRequestsUseCase>(
     AcceptMatchRequestsUseCase(getIt.get<MatchRequestsRepoImpl>()),
+  );
+
+  getIt.registerSingleton<GetProfileUseCase>(
+    GetProfileUseCase(getIt.get<MatchRequestsRepoImpl>()),
   );
 }

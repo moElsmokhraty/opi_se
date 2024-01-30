@@ -18,7 +18,7 @@ class ProfileViewBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HeaderWidget(),
+          //const HeaderWidget(),
           SizedBox(height: screenHeight * 0.01),
           Text(
             'Mohamed Elsmokhraty',
@@ -56,7 +56,7 @@ class ProfileViewBody extends StatelessWidget {
           SizedBox(height: screenHeight * 0.025),
           const AboutMeWidget(),
           SizedBox(height: screenHeight * 0.025),
-          const SkillsWidget(),
+          const ProfileSkillsWidget(),
         ],
       ),
     );

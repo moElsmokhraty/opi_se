@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-import 'data.dart';
+import 'user_data.dart';
 
 class LoginResponse extends Equatable {
   final String? message;
   final String? token;
-  final Data? data;
+  final UserData? data;
   final bool? firstTime;
 
   const LoginResponse({
@@ -20,7 +20,7 @@ class LoginResponse extends Equatable {
         token: json['token'] as String?,
         data: json['data'] == null
             ? null
-            : Data.fromJson(json['data'] as Map<String, dynamic>),
+            : UserData.fromJson(json['data'] as Map<String, dynamic>),
         firstTime: json['firstTime'] as bool?,
       );
 

@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
 import '../../../../../../core/utils/styling/styles.dart';
+import '../../../../data/models/requests_models/decline_match_request_models/decline_match_request.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+  const HeaderWidget({
+    super.key,
+    required this.cubit,
+    required this.state,
+    required this.requestId,
+  });
+
+  final MatchRequestsCubit cubit;
+  final MatchRequestsState state;
+  final String requestId;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +54,7 @@ class HeaderWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 75.h,
-            )
+            SizedBox(height: 75.h),
           ],
         ),
         Positioned(
@@ -97,6 +106,82 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ),
               )
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 15.h,
+          right: 0.w,
+          child: Row(
+            children: [
+              state is AcceptMatchRequestLoading
+                  ? SizedBox(
+                      width: 70.w,
+                      child: const Center(
+                        child:
+                            CircularProgressIndicator(color: Color(0xFF036666)),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () async {
+                        await cubit.acceptMatchRequest(
+                          cubit.userData?.id ?? '',
+                          cubit.userData?.nationalId ?? '',
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        fixedSize: Size(70.w, 30.h),
+                        backgroundColor: const Color(0xFF036666),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Accept',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.sp,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+              SizedBox(width: 14.w),
+              state is DeclineMatchRequestLoading
+                  ? SizedBox(
+                      width: 70.w,
+                      child: const Center(
+                        child:
+                            CircularProgressIndicator(color: Color(0xFF036666)),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () async {
+                        await cubit.declineMatchRequest(
+                          DeclineMatchRequest(
+                            email: cubit.userData?.email ?? '',
+                            requestId: requestId,
+                            rejectedUserId: cubit.userData?.id ?? '',
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        fixedSize: Size(70.w, 30.h),
+                        backgroundColor: const Color(0xFFEDEDED),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Decline',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),

@@ -13,6 +13,7 @@ abstract class RoutesConfig {
   static const String editProfile = '/edit-profile';
   static const String profile = '/profile';
   static const String home = '/home';
+  static const String partnerRequestProfile = '/partner-request-profile';
   static const String requests = '/requests';
   static const String progress = '/progress';
   static const String chat = '/chat';

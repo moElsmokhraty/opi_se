@@ -38,7 +38,7 @@ class IDWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w),
                   Text(
-                    'https://smokhraty27kheiorhoweuihjfebjnkewf/opise.com',
+                    'https://smokhraty27/opise.com',
                     style: AppStyles.textStyle12.copyWith(
                       fontSize: 14.sp,
                       color: Colors.black,

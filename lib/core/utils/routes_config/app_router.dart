@@ -16,8 +16,10 @@ import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_p
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
+import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
 import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
+import 'package:opi_se/features/home/presentation/views/partner_request_profile_view/partner_request_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
@@ -33,11 +35,12 @@ import '../../../features/chat/presentation/cubits/chat_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/decline_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
+import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.requests,
+    initialLocation: RoutesConfig.partnerRequestProfile,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -144,9 +147,26 @@ abstract class AppRouter {
             getIt.get<GetMatchRequestsUseCase>(),
             getIt.get<DeclineMatchRequestUseCase>(),
             getIt.get<AcceptMatchRequestsUseCase>(),
+            getIt.get<GetProfileUseCase>(),
           )..getMatchRequests(),
           child: const RequestsView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.partnerRequestProfile,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => MatchRequestsCubit(
+              getIt.get<GetMatchRequestsUseCase>(),
+              getIt.get<DeclineMatchRequestUseCase>(),
+              getIt.get<AcceptMatchRequestsUseCase>(),
+              getIt.get<GetProfileUseCase>(),
+            )..getProfile('654831051c8a7b3a7ede79ce'),
+            child: PartnerRequestView(
+              requestId: '',
+            ),
+          );
+        },
       ),
     ],
   );

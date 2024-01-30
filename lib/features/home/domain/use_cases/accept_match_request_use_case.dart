@@ -4,7 +4,8 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/use_cases/use_case.dart';
 import '../../data/models/requests_models/accept_match_response.dart';
 
-class AcceptMatchRequestsUseCase extends UseCase<AcceptMatchResponse, List<String>> {
+class AcceptMatchRequestsUseCase
+    extends UseCase<AcceptMatchResponse, List<String>> {
   final MatchRequestsRepo _matchRequestRepository;
 
   AcceptMatchRequestsUseCase(this._matchRequestRepository);

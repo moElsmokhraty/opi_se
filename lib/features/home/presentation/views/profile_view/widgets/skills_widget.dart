@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
-class SkillsWidget extends StatelessWidget {
-  const SkillsWidget({super.key});
+class ProfileSkillsWidget extends StatelessWidget {
+  const ProfileSkillsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

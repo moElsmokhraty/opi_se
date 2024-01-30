@@ -46,3 +46,17 @@ class AcceptMatchRequestFailure extends MatchRequestsState {
 
   AcceptMatchRequestFailure(this.failure);
 }
+
+class GetProfileLoading extends MatchRequestsState {}
+
+class GetProfileSuccess extends MatchRequestsState {
+  final GetProfileResponse response;
+
+  GetProfileSuccess(this.response);
+}
+
+class GetProfileFailure extends MatchRequestsState {
+  final Failure failure;
+
+  GetProfileFailure(this.failure);
+}
