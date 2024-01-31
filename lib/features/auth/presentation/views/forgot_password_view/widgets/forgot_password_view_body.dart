@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+import 'forgot_password_button.dart';
+import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_email.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
-import 'package:opi_se/core/utils/styling/styles.dart';
-import 'package:opi_se/features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
-
-import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
+import '../../../cubits/forgot_password_cubit/forgot_password_cubit.dart';
 
 class ForgotPasswordViewBody extends StatelessWidget {
   const ForgotPasswordViewBody({super.key});
@@ -31,14 +30,15 @@ class ForgotPasswordViewBody extends StatelessWidget {
         return Form(
           key: cubit.formKey,
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
             child: Column(
               children: [
                 Image.asset(
                   'assets/images/forgot_password.png',
                   height: 350.h,
-                  width: 350.w,
+                  width: double.infinity,
                   alignment: Alignment.center,
                 ),
                 Text(
@@ -52,7 +52,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
                   maxLines: 3,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: screenHeight * 0.06),
+                SizedBox(height: screenHeight * 0.045),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -76,20 +76,8 @@ class ForgotPasswordViewBody extends StatelessWidget {
                     return validateEmail(value!);
                   },
                 ),
-                SizedBox(height: screenHeight * 0.06),
-                state is ForgotPasswordLoading
-                    ? const Center(
-                        child:
-                            CircularProgressIndicator(color: Color(0xff036666)))
-                    : AuthButton(
-                        text: 'Send',
-                        onPressed: () async {
-                          await cubit.forgotPassword();
-                        },
-                        backColor: const Color(0xff036666),
-                        textColor: Colors.white,
-                      ),
-                SizedBox(height: screenHeight * 0.1),
+                SizedBox(height: screenHeight * 0.04),
+                ForgotPasswordButton(cubit: cubit, state: state),
               ],
             ),
           ),

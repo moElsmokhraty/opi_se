@@ -58,7 +58,6 @@ class OpiSe extends StatelessWidget {
           routerConfig: AppRouter.router,
           title: 'OpiSe',
           theme: ThemeData(useMaterial3: true),
-          themeMode: ThemeMode.light,
         );
       },
     );

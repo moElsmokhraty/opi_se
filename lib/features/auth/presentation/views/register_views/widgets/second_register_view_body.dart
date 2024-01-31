@@ -76,7 +76,7 @@ class SecondRegisterViewBody extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 const GenderWidget(),
-                SizedBox(height: screenHeight * 0.015),
+                SizedBox(height: screenHeight * 0.004),
                 Text(
                   'Location',
                   style: AppStyles.textStyle16.copyWith(
@@ -107,7 +107,6 @@ class SecondRegisterViewBody extends StatelessWidget {
                   languageController: cubit.nativeLanguageController,
                   levelController: cubit.nativeLevelController,
                 ),
-                SizedBox(height: screenHeight * 0.015),
                 LanguageWidget(
                   languageType: 'Second',
                   languageController: cubit.secondLanguageController,

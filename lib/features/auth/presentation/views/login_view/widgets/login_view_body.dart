@@ -23,7 +23,10 @@ class LoginViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginFailure) {
           if (state.errMessage == 'please verify your account first !') {
-            GoRouter.of(context).pushReplacement(RoutesConfig.verifyAccount);
+            GoRouter.of(context).pushReplacement(
+              RoutesConfig.verifyAccount,
+              extra: cubit.emailController.text,
+            );
           } else {
             showCustomSnackBar(context, state.errMessage);
           }
@@ -77,7 +80,7 @@ class LoginViewBody extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.005),
+                SizedBox(height: screenHeight * 0.01),
                 AuthTextField(
                   controller: cubit.emailController,
                   hintText: 'Enter Your Username',
@@ -98,7 +101,7 @@ class LoginViewBody extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.005),
+                SizedBox(height: screenHeight * 0.01),
                 AuthTextField(
                   controller: cubit.passwordController,
                   hintText: 'Enter Your Password',

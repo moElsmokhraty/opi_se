@@ -16,42 +16,48 @@ class FinishButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserPrefersCubit, UserPrefersState>(
-      listener: (context, state) {
-        if (state is SubmitUserPrefersSuccess) {
-          showCustomSnackBar(context, 'User Prefers Submitted Successfully');
-        } else if (state is SubmitUserPrefersFailure) {
-          showCustomSnackBar(context, state.errMessage);
-        }
-      },
-      builder: (context, state) {
-        if (state is SubmitUserPrefersLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFF036666),
-            ),
-          );
-        } else {
-          return ElevatedButton(
-            onPressed: onTap,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF036666),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.r),
+    return Align(
+      alignment: Alignment.centerRight,
+      child: BlocConsumer<UserPrefersCubit, UserPrefersState>(
+        listener: (context, state) {
+          if (state is SubmitUserPrefersSuccess) {
+            showCustomSnackBar(context, 'User Prefers Submitted Successfully');
+          } else if (state is SubmitUserPrefersFailure) {
+            showCustomSnackBar(context, state.errMessage);
+          }
+        },
+        builder: (context, state) {
+          if (state is SubmitUserPrefersLoading) {
+            return SizedBox(
+              width: 150.w,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF036666),
+                ),
               ),
-              fixedSize: Size(150.w, 50.h),
-            ),
-            child: Text(
-              'Finish',
-              textAlign: TextAlign.center,
-              style: AppStyles.textStyle16.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+            );
+          } else {
+            return ElevatedButton(
+              onPressed: onTap,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF036666),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                fixedSize: Size(150.w, 50.h),
               ),
-            ),
-          );
-        }
-      },
+              child: Text(
+                'Finish',
+                textAlign: TextAlign.center,
+                style: AppStyles.textStyle16.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

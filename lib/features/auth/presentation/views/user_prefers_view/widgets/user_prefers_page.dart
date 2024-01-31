@@ -95,15 +95,18 @@ class UserPrefersPage extends StatelessWidget {
             SizedBox(height: screenHeight * 0.025),
             Align(
               alignment: Alignment.centerRight,
-              child: NextButton(onTap: () {
-                if (cubit.skills.isEmpty) {
-                  showCustomSnackBar(context, 'Please add at least one skill');
-                }
-                if (cubit.formKey.currentState!.validate() &&
-                    cubit.skills.isNotEmpty) {
-                  cubit.nextPage();
-                }
-              }),
+              child: NextButton(
+                onTap: () {
+                  if (cubit.skills.isEmpty) {
+                    showCustomSnackBar(
+                        context, 'Please add at least one skill');
+                  }
+                  if (cubit.formKey.currentState!.validate() &&
+                      cubit.skills.isNotEmpty) {
+                    cubit.nextPage();
+                  }
+                },
+              ),
             ),
           ],
         ),

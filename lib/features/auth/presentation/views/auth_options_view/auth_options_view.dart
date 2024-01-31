@@ -9,7 +9,7 @@ class AuthOptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: true,
       onPopInvoked: (canPop) {
         SystemNavigator.pop();
       },

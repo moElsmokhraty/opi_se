@@ -25,7 +25,7 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 60.w,
       toolbarHeight: 60.h,
       scrolledUnderElevation: 0.0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
     );
   }
 }

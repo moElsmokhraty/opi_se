@@ -6,6 +6,7 @@ import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_email.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
+import 'package:opi_se/features/auth/presentation/views/register_views/widgets/login_text.dart';
 import '../../../../../../core/functions/validate_password.dart';
 import '../../../../../../core/functions/validate_text.dart';
 import '../../../../../../core/utils/styling/styles.dart';
@@ -215,6 +216,8 @@ class FirstRegisterViewBody extends StatelessWidget {
                   backColor: const Color(0xff036666),
                   textColor: Colors.white,
                 ),
+                SizedBox(height: screenHeight * 0.025),
+                const LoginText(),
               ],
             ),
           ),

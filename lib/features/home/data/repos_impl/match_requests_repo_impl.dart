@@ -68,7 +68,6 @@ class MatchRequestsRepoImpl implements MatchRequestsRepo {
           'nationalId': nationalId,
         },
       );
-      print(data.toString());
       return Right(AcceptMatchResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {

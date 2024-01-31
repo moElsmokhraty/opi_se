@@ -72,7 +72,7 @@ class QuestionPage extends StatelessWidget {
             },
           ),
           SizedBox(height: screenHeight * 0.05),
-          index == 0 || index == 1 || index == 2
+          index != 3
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -84,23 +84,16 @@ class QuestionPage extends StatelessWidget {
                     }),
                   ],
                 )
-              : Row(
-                  mainAxisAlignment: cubit.state is SubmitUserPrefersLoading
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.end,
-                  children: [
-                    FinishButton(
-                      onTap: () async {
-                        if (cubit.answers.contains(null)) {
-                          showCustomSnackBar(
-                              context, 'Please answer all questions');
-                        } else {
-                          await cubit.submitUserPrefers();
-                        }
-                      },
-                    ),
-                  ],
-                ),
+              : FinishButton(
+                onTap: () async {
+                  if (cubit.answers.contains(null)) {
+                    showCustomSnackBar(
+                        context, 'Please answer all questions');
+                  } else {
+                    await cubit.submitUserPrefers();
+                  }
+                },
+              ),
         ],
       ),
     );

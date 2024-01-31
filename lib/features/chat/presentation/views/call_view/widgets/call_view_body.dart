@@ -74,6 +74,7 @@ class CallViewBody extends StatelessWidget {
                                 'Meeting Review',
                                 style: TextStyle(
                                   fontSize: 18.sp,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

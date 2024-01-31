@@ -11,7 +11,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/widgets/c
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/map_error.dart';
 
 class MapViewBody extends StatefulWidget {
-  final String baseUri = 'https://nominatim.openstreetmap.org';
+  final String baseUri = 'https://tile.openstreetmap.org';
 
   const MapViewBody({super.key});
 

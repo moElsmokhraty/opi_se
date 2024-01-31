@@ -40,7 +40,7 @@ import '../../../features/home/presentation/views/requests_view/requests_view.da
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.partnerRequestProfile,
+    initialLocation: RoutesConfig.login,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -161,9 +161,9 @@ abstract class AppRouter {
               getIt.get<DeclineMatchRequestUseCase>(),
               getIt.get<AcceptMatchRequestsUseCase>(),
               getIt.get<GetProfileUseCase>(),
-            )..getProfile('654831051c8a7b3a7ede79ce'),
+            )..getProfile((state.extra as PartnerRequest).partnerId ?? ''),
             child: PartnerRequestView(
-              requestId: '',
+              requestId: (state.extra as PartnerRequest).id ?? '',
             ),
           );
         },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 
 class AuthOptionsViewBody extends StatelessWidget {
   const AuthOptionsViewBody({super.key});
@@ -13,7 +15,7 @@ class AuthOptionsViewBody extends StatelessWidget {
         Image.asset(
           'assets/images/auth_options.png',
           height: 400.h,
-          width: 400.w,
+          width: double.infinity,
         ),
         Text(
           'Welcome to',
@@ -39,7 +41,9 @@ class AuthOptionsViewBody extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              GoRouter.of(context).go(RoutesConfig.firstRegister);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 0.5,
               shadowColor: Colors.transparent,
@@ -64,7 +68,9 @@ class AuthOptionsViewBody extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              GoRouter.of(context).pushReplacement(RoutesConfig.login);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 0.5,
               shadowColor: Colors.transparent,
@@ -79,7 +85,7 @@ class AuthOptionsViewBody extends StatelessWidget {
               fixedSize: Size(327.w, 52.h),
             ),
             child: Text(
-              'Sign Up',
+              'Login',
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.bold,

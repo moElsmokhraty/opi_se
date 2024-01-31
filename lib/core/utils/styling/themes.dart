@@ -35,6 +35,7 @@ class AppThemes {
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: Colors.black,
+        fontFamily: 'Inter',
         fontSize: 20,
       ),
     ),
@@ -58,6 +59,7 @@ class AppThemes {
       centerTitle: true,
       backgroundColor: const Color(0xff181725),
       titleTextStyle: TextStyle(
+        fontFamily: 'Inter',
         fontWeight: FontWeight.bold,
         fontSize: 35.sp,
         color: Colors.black,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/core/utils/constants.dart';
+import 'resend_mail_button.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
-import 'package:opi_se/core/widgets/buttons/auth_button.dart';
 import '../../../../../../core/functions/show_snack_bar.dart';
-import 'package:opi_se/features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
+import '../../../cubits/verify_account_cubit/verify_account_cubit.dart';
 
 class VerifyAccountViewBody extends StatelessWidget {
   const VerifyAccountViewBody({super.key, required this.email});
@@ -25,14 +26,31 @@ class VerifyAccountViewBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          clipBehavior: Clip.none,
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    GoRouter.of(context).pushReplacement(RoutesConfig.login);
+                  },
+                  child: Text(
+                    'Skip',
+                    style: AppStyles.textStyle12.copyWith(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
               Image.asset(
                 'assets/images/verify_account.png',
                 height: 350.h,
-                width: width,
+                width: double.infinity,
                 alignment: Alignment.center,
               ),
               Text(
@@ -49,20 +67,8 @@ class VerifyAccountViewBody extends StatelessWidget {
                 maxLines: 3,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: screenHeight * 0.06),
-              state is VerifyAccountLoading
-                  ? const Center(
-                      child:
-                          CircularProgressIndicator(color: Color(0xff036666)))
-                  : AuthButton(
-                      text: 'Resend Email',
-                      onPressed: () async {
-                        await cubit.verifyAccount(email);
-                      },
-                      backColor: const Color(0xff036666),
-                      textColor: Colors.white,
-                    ),
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: screenHeight * 0.05),
+              ResendEmailButton(email: email, cubit: cubit, state: state),
             ],
           ),
         );

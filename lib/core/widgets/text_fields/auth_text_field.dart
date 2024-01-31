@@ -34,6 +34,20 @@ class AuthTextField extends StatelessWidget {
       readOnly: readOnly,
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        prefixIconConstraints: BoxConstraints(
+          minWidth: 40.w,
+          maxWidth: 40.w,
+          minHeight: 30.h,
+          maxHeight: 30.h,
+        ),
+        suffixIconConstraints: BoxConstraints(
+          minWidth: 40.w,
+          maxWidth: 40.w,
+          minHeight: 30.h,
+          maxHeight: 30.h,
+        ),
         errorStyle: TextStyle(
           fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
@@ -47,14 +61,32 @@ class AuthTextField extends StatelessWidget {
           color: Colors.grey[700],
           fontSize: 14.sp,
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.r),
+          borderSide: BorderSide(
+            color: Colors.black.withOpacity(0.4),
+            width: 1.w,
+          ),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
+          borderSide: BorderSide(
+            color: Colors.black.withOpacity(0.4),
+            width: 1.w,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.r),
+          borderSide: BorderSide(
+            color: const Color(0xFF247CFF),
+            width: (1.5).w,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(
             color: Colors.red,
-            width: 1.w,
+            width: (1.5).w,
           ),
         ),
         suffixIcon: suffixIcon,
