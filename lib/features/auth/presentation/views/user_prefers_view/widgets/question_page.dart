@@ -85,15 +85,15 @@ class QuestionPage extends StatelessWidget {
                   ],
                 )
               : FinishButton(
-                onTap: () async {
-                  if (cubit.answers.contains(null)) {
-                    showCustomSnackBar(
-                        context, 'Please answer all questions');
-                  } else {
-                    await cubit.submitUserPrefers();
-                  }
-                },
-              ),
+                  onTap: () async {
+                    if (cubit.answers.contains(null)) {
+                      showCustomSnackBar(
+                          context, 'Please answer all questions');
+                    } else {
+                      await cubit.submitUserPrefers();
+                    }
+                  },
+                ),
         ],
       ),
     );

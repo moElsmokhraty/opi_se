@@ -9,9 +9,11 @@ import '../../data/models/requests_models/get_match_requests_response/get_match_
 abstract class MatchRequestsRepo {
   Future<Either<Failure, GetMatchRequestsResponse>> getMatchRequests();
 
-  Future<Either<Failure, DeclineMatchResponse>> declineMatchRequest(DeclineMatchRequest request);
+  Future<Either<Failure, DeclineMatchResponse>> declineMatchRequest(
+      DeclineMatchRequest request);
 
-  Future<Either<Failure, AcceptMatchResponse>> acceptMatchRequest(String partner2Id, String nationalId);
+  Future<Either<Failure, AcceptMatchResponse>> acceptMatchRequest(
+      String partner2Id, String nationalId);
 
   Future<Either<Failure, GetProfileResponse>> getProfile(String userId);
 }

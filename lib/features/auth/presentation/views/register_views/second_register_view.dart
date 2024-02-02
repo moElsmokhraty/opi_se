@@ -10,7 +10,7 @@ class SecondRegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (canPop) {
-       GoRouter.of(context).pop();
+        GoRouter.of(context).pop();
       },
       child: const SafeArea(
         child: Scaffold(

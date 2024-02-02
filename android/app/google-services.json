@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001961629897",
+    "project_id": "opi-se",
+    "storage_bucket": "opi-se.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001961629897:android:4799d6912e4a25dd49c518",
+        "android_client_info": {
+          "package_name": "com.example.opi_se"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANLKBvmOJEQwD4QFRY5wi2Yl0kZ9IgA3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

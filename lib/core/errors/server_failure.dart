@@ -30,8 +30,7 @@ class ServerFailure extends Failure {
         return ServerFailure._fromResponse(dioException.response);
       default:
         return ServerFailure(
-          errMessage:
-              "Oops, Unexpected Error Occurred, Please try again later",
+          errMessage: "Oops, Unexpected Error Occurred, Please try again later",
         );
     }
   }
