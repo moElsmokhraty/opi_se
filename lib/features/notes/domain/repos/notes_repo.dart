@@ -3,6 +3,8 @@ import '../../../../core/errors/failure.dart';
 import '../../data/models/pin_note_response.dart';
 import '../../data/models/add_note_models/add_note_request.dart';
 import '../../data/models/add_note_models/add_note_response.dart';
+import '../../data/models/delete_note_models/delete_note_request.dart';
+import '../../data/models/delete_note_models/delete_note_response.dart';
 import '../../data/models/get_all_notes_response/get_all_notes_response.dart';
 
 abstract class NotesRepo {
@@ -22,4 +24,7 @@ abstract class NotesRepo {
     String matchId,
     String isPinned,
   );
+
+  Future<Either<Failure, DeleteNoteResponse>> deleteNote(
+      DeleteNoteRequest request);
 }

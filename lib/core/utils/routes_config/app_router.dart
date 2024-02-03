@@ -42,6 +42,7 @@ import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
+import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../constants.dart';
@@ -182,6 +183,7 @@ abstract class AppRouter {
           create: (context) => NotesCubit(
             getIt.get<GetNotesUseCase>(),
             getIt.get<PinNoteUseCase>(),
+            getIt.get<DeleteNoteUseCase>(),
           )..getNotes(matchId!, 1, 10),
           child: const NotesView(),
         ),

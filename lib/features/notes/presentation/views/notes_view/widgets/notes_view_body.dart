@@ -31,6 +31,13 @@ class NotesViewBody extends StatelessWidget {
             await cubit.getNotes(matchId!, 1, 10);
           } else if (state is PinNoteLoading) {
             showCustomSnackBar(context, 'Loading...');
+          } else if (state is DeleteNoteSuccess) {
+            showCustomSnackBar(context, 'Note deleted Successfully');
+            await cubit.getNotes(matchId!, 1, 10);
+          } else if (state is DeleteNoteFailure) {
+            showCustomSnackBar(context, state.failure.errMessage);
+          } else if (state is DeleteNoteLoading) {
+            showCustomSnackBar(context, 'Loading...');
           }
         },
         builder: (context, state) {

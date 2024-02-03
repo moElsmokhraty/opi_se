@@ -1,12 +1,13 @@
 import 'dart:math';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
 import '../../../cubits/notes_cubit/notes_cubit.dart';
+import '../../../../data/models/delete_note_models/delete_note_request.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key, this.note});
@@ -118,10 +119,20 @@ class NoteItem extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Icon(
-                Icons.delete_outline_rounded,
-                color: Colors.black.withOpacity(0.7),
-                size: 18.sp,
+              GestureDetector(
+                onTap: () async {
+                  await BlocProvider.of<NotesCubit>(context).deleteNote(
+                    DeleteNoteRequest(
+                      matchId: matchId!,
+                      noteId: note!.id!,
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.delete_outline_rounded,
+                  color: Colors.black.withOpacity(0.7),
+                  size: 18.sp,
+                ),
               ),
             ],
           ),

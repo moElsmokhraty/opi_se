@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:opi_se/features/notes/data/models/add_note_models/add_note_request.dart';
 import 'package:opi_se/features/notes/data/models/add_note_models/add_note_response.dart';
+import 'package:opi_se/features/notes/data/models/delete_note_models/delete_note_request.dart';
+import 'package:opi_se/features/notes/data/models/delete_note_models/delete_note_response.dart';
 import 'package:opi_se/features/notes/data/models/pin_note_response.dart';
 import '../../domain/repos/notes_repo.dart';
 import '../../../../core/utils/constants.dart';
@@ -79,6 +81,25 @@ class NotesRepoImpl implements NotesRepo {
         },
       );
       return Right(PinNoteResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeleteNoteResponse>> deleteNote(
+    DeleteNoteRequest request,
+  ) async {
+    try {
+      var data = await _apiService.delete(
+        endpoint: APIConfig.deleteNote,
+        token: token,
+        params: request.toJson(),
+      );
+      return Right(DeleteNoteResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));
