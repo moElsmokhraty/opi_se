@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:opi_se/features/notes/data/models/edit_note_models/edit_note_request.dart';
 import '../../../../core/errors/failure.dart';
+import '../../data/models/edit_note_models/edit_note_response.dart';
 import '../../data/models/pin_note_response.dart';
 import '../../data/models/add_note_models/add_note_request.dart';
 import '../../data/models/add_note_models/add_note_response.dart';
@@ -26,5 +28,10 @@ abstract class NotesRepo {
   );
 
   Future<Either<Failure, DeleteNoteResponse>> deleteNote(
-      DeleteNoteRequest request);
+    DeleteNoteRequest request,
+  );
+
+  Future<Either<Failure, EditNoteResponse>> editNote(
+    EditNoteRequest request
+  );
 }

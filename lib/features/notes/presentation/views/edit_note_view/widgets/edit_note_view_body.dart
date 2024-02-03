@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
-import 'package:opi_se/core/functions/validate_text.dart';
-import '../../../cubits/add_note_cubit/add_note_cubit.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/functions/validate_text.dart';
+import '../../../../../../core/functions/show_snack_bar.dart';
+import '../../../cubits/edit_note_cubit/edit_note_cubit.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 
-class AddNoteViewBody extends StatelessWidget {
-  const AddNoteViewBody({super.key});
+class EditNoteViewBody extends StatelessWidget {
+  const EditNoteViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddNoteCubit, AddNoteState>(
+    return BlocConsumer<EditNoteCubit, EditNoteState>(
       listener: (context, state) {
-        if (state is AddNoteSuccess) {
-          showCustomSnackBar(context, 'Note Added Successfully');
+        if (state is EditNoteSuccess) {
+          showCustomSnackBar(context, 'Note Edited Successfully');
           GoRouter.of(context).pushReplacement(RoutesConfig.notes);
-        } else if (state is AddNoteFailure) {
+        } else if (state is EditNoteFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
-        } else if (state is AddNoteLoading) {
+        } else if (state is EditNoteLoading) {
           showCustomSnackBar(context, 'Loading...');
         }
       },
       builder: (context, state) {
-        AddNoteCubit cubit = BlocProvider.of<AddNoteCubit>(context);
+        EditNoteCubit cubit = BlocProvider.of<EditNoteCubit>(context);
         return Form(
           key: cubit.formKey,
           child: ListView(
@@ -120,7 +120,7 @@ class AddNoteViewBody extends StatelessWidget {
                         SizedBox(width: 10.w),
                         IconButton(
                           onPressed: () async {
-                            await cubit.addNote();
+                            await cubit.editNote();
                           },
                           tooltip: 'Save Note',
                           icon: Container(

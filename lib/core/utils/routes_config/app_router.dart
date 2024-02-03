@@ -24,6 +24,7 @@ import 'package:opi_se/features/home/presentation/views/profile_view/profile_vie
 import 'package:opi_se/features/notes/presentation/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubit.dart';
 import 'package:opi_se/features/notes/presentation/views/add_note_view/add_note_view.dart';
+import 'package:opi_se/features/notes/presentation/views/edit_note_view/edit_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
@@ -41,10 +42,13 @@ import '../../../features/home/domain/use_cases/decline_match_request_use_case.d
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
+import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
+import '../../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
+import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../constants.dart';
 
 abstract class AppRouter {
@@ -194,7 +198,17 @@ abstract class AppRouter {
           create: (context) => AddNoteCubit(getIt.get<AddNoteUseCase>()),
           child: const AddNoteView(),
         ),
-      )
+      ),
+      GoRoute(
+        path: RoutesConfig.editNote,
+        builder: (context, state) => BlocProvider(
+          create: (context) =>
+              EditNoteCubit(
+                getIt.get<EditNoteUseCase>(),
+              )..setInitialValues(state.extra as Note),
+          child: const EditNoteView(),
+        ),
+      ),
     ],
   );
 }

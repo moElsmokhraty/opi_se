@@ -3,7 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
 import '../../../cubits/notes_cubit/notes_cubit.dart';
@@ -71,16 +73,21 @@ class NoteItem extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Container(
-                width: 22.w,
-                height: 22.h,
-                decoration: ShapeDecoration(
-                  color: Colors.black.withOpacity(0.8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.r),
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).pushReplacement(RoutesConfig.editNote, extra: note!);
+                },
+                child: Container(
+                  width: 22.w,
+                  height: 22.h,
+                  decoration: ShapeDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
                   ),
+                  child: SvgPicture.asset('assets/svgs/pen.svg'),
                 ),
-                child: SvgPicture.asset('assets/svgs/pen.svg'),
               ),
             ],
           ),

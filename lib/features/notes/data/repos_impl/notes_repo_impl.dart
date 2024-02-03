@@ -4,6 +4,8 @@ import 'package:opi_se/features/notes/data/models/add_note_models/add_note_reque
 import 'package:opi_se/features/notes/data/models/add_note_models/add_note_response.dart';
 import 'package:opi_se/features/notes/data/models/delete_note_models/delete_note_request.dart';
 import 'package:opi_se/features/notes/data/models/delete_note_models/delete_note_response.dart';
+import 'package:opi_se/features/notes/data/models/edit_note_models/edit_note_request.dart';
+import 'package:opi_se/features/notes/data/models/edit_note_models/edit_note_response.dart';
 import 'package:opi_se/features/notes/data/models/pin_note_response.dart';
 import '../../domain/repos/notes_repo.dart';
 import '../../../../core/utils/constants.dart';
@@ -100,6 +102,29 @@ class NotesRepoImpl implements NotesRepo {
         params: request.toJson(),
       );
       return Right(DeleteNoteResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, EditNoteResponse>> editNote(
+    EditNoteRequest request,
+  ) async {
+    try {
+      var data = await _apiService.patch(
+        endpoint: APIConfig.editNote,
+        token: token,
+        body: request.toJson(),
+        params: {
+          'matchId': matchId,
+          'noteId': request.noteId,
+        },
+      );
+      return Right(EditNoteResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

@@ -11,11 +11,18 @@ part 'add_note_state.dart';
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit(this.addNoteUseCase) : super(AddNoteInitial());
 
+  @override
+  Future<void> close() {
+    titleController.dispose();
+    contentController.dispose();
+    return super.close();
+  }
+
   final AddNoteUseCase addNoteUseCase;
 
   TextEditingController titleController = TextEditingController();
 
-  TextEditingController descriptionController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -34,7 +41,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
       var result = await addNoteUseCase.call([
         AddNoteRequest(
           noteTitle: titleController.text.trim(),
-          noteContent: descriptionController.text.trim(),
+          noteContent: contentController.text.trim(),
           noteColor: noteColors.keys.firstWhere(
             (k) => noteColors[k] == backgroundColor,
           ),

@@ -6,6 +6,7 @@ import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
+import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -116,5 +117,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<DeleteNoteUseCase>(
     DeleteNoteUseCase(getIt.get<NotesRepoImpl>()),
+  );
+
+  getIt.registerSingleton<EditNoteUseCase>(
+    EditNoteUseCase(getIt.get<NotesRepoImpl>()),
   );
 }
