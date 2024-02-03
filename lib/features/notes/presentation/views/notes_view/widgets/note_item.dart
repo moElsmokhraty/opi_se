@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
@@ -68,11 +69,7 @@ class NoteItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5.r),
                   ),
                 ),
-                child: Icon(
-                  CupertinoIcons.pen,
-                  color: Colors.white,
-                  size: 18.sp,
-                ),
+                child: SvgPicture.asset('assets/svgs/pen.svg'),
               ),
             ],
           ),

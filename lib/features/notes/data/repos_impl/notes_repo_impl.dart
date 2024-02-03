@@ -1,11 +1,13 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
+import 'package:opi_se/features/notes/data/models/add_note_models/add_note_request.dart';
+import 'package:opi_se/features/notes/data/models/add_note_models/add_note_response.dart';
+import '../../domain/repos/notes_repo.dart';
+import '../../../../core/utils/constants.dart';
 import 'package:opi_se/core/errors/failure.dart';
-import 'package:opi_se/core/utils/api_config/api_service.dart';
 import '../../../../core/errors/server_failure.dart';
 import '../../../../core/utils/api_config/api_config.dart';
-import '../../../../core/utils/constants.dart';
-import '../../domain/repos/notes_repo.dart';
+import 'package:opi_se/core/utils/api_config/api_service.dart';
 import '../models/get_all_notes_response/get_all_notes_response.dart';
 
 class NotesRepoImpl implements NotesRepo {
@@ -30,6 +32,27 @@ class NotesRepoImpl implements NotesRepo {
         },
       );
       return Right(GetNotesResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddNoteResponse>> addNote(
+    AddNoteRequest request,
+    String matchId,
+  ) async {
+    try {
+      var data = await _apiService.post(
+        endpoint: APIConfig.addNote,
+        token: token,
+        body: request.toJson(),
+        params: {'matchId': matchId},
+      );
+      return Right(AddNoteResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

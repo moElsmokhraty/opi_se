@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubit.dart';
 import 'note_item.dart';
+import 'no_notes_widget.dart';
+import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubit.dart';
 
 class NotesViewBody extends StatelessWidget {
   const NotesViewBody({super.key});
@@ -17,20 +18,24 @@ class NotesViewBody extends StatelessWidget {
             child: Text(state.failure.errMessage),
           );
         } else if (state is GetNotesSuccess) {
-          return GridView.builder(
-            itemCount: cubit.notes.length,
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 12.w,
-              mainAxisSpacing: 16.h,
-              crossAxisCount: 2,
-              childAspectRatio: 0.75,
-            ),
-            itemBuilder: (context, index) {
-              return NoteItem(note: cubit.notes[index]);
-            },
-          );
+          if (cubit.notes.isEmpty) {
+            return const NoNotesWidget();
+          } else {
+            return GridView.builder(
+              itemCount: cubit.notes.length,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 16.h,
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+              ),
+              itemBuilder: (context, index) {
+                return NoteItem(note: cubit.notes[index]);
+              },
+            );
+          }
         } else {
           return const Center(
             child: CircularProgressIndicator(),

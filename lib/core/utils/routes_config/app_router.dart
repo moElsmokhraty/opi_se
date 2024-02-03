@@ -21,7 +21,9 @@ import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/ma
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/partner_request_profile_view/partner_request_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
+import 'package:opi_se/features/notes/presentation/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubit.dart';
+import 'package:opi_se/features/notes/presentation/views/add_note_view/add_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
@@ -39,6 +41,7 @@ import '../../../features/home/domain/use_cases/decline_match_request_use_case.d
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
+import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../constants.dart';
 
@@ -175,10 +178,18 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.notes,
         builder: (context, state) => BlocProvider(
-          create: (context) => NotesCubit(getIt.get<GetNotesUseCase>())..getNotes(matchId!, 1, 10),
+          create: (context) => NotesCubit(getIt.get<GetNotesUseCase>())
+            ..getNotes(matchId!, 1, 10),
           child: const NotesView(),
         ),
       ),
+      GoRoute(
+        path: RoutesConfig.addNote,
+        builder: (context, state) => BlocProvider(
+          create: (context) => AddNoteCubit(getIt.get<AddNoteUseCase>()),
+          child: const AddNoteView(),
+        ),
+      )
     ],
   );
 }

@@ -14,4 +14,5 @@ class APIConfig {
   static const String declineMatchRequest = 'declineMatchRequest';
   static const String getProfile = 'searchForSpecificPartner';
   static const String getNotes = 'getAllNotes';
+  static const String addNote = 'addNote';
 }

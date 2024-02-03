@@ -19,4 +19,5 @@ abstract class RoutesConfig {
   static const String chat = '/chat';
   static const String call = '/call';
   static const String notes = '/notes';
+  static const String addNote = '/add-note';
 }
