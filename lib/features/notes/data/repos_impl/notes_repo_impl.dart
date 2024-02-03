@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:opi_se/features/notes/data/models/add_note_models/add_note_request.dart';
 import 'package:opi_se/features/notes/data/models/add_note_models/add_note_response.dart';
+import 'package:opi_se/features/notes/data/models/pin_note_response.dart';
 import '../../domain/repos/notes_repo.dart';
 import '../../../../core/utils/constants.dart';
 import 'package:opi_se/core/errors/failure.dart';
@@ -53,6 +54,31 @@ class NotesRepoImpl implements NotesRepo {
         params: {'matchId': matchId},
       );
       return Right(AddNoteResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PinNoteResponse>> pinNote(
+    String noteId,
+    String matchId,
+    String isPinned,
+  ) async {
+    try {
+      var data = await _apiService.patch(
+        endpoint: APIConfig.pinNote,
+        token: token,
+        body: {"isPinned": isPinned},
+        params: {
+          'matchId': matchId,
+          'noteId': noteId,
+        },
+      );
+      return Right(PinNoteResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

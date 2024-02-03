@@ -76,6 +76,24 @@ class ApiService {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> patch({
+    required String endpoint,
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? params,
+    String? token,
+  }) async {
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    var response = await _dio.patch(
+      endpoint,
+      data: body,
+      queryParameters: params ?? {},
+    );
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> sendFormData({
     required String endpoint,
     required FormData formData,

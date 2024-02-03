@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
+import '../../../cubits/notes_cubit/notes_cubit.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key, this.note});
@@ -25,15 +26,24 @@ class NoteItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Transform.rotate(
-              angle: pi / 4.0,
-              child: Icon(
-                (note?.isPinned ?? false)
-                    ? Icons.push_pin
-                    : Icons.push_pin_outlined,
-                size: 20.sp,
+          GestureDetector(
+            onTap: () async {
+              await BlocProvider.of<NotesCubit>(context).pinNote(
+                matchId: matchId!,
+                noteId: note!.id!,
+                isPinned: note!.isPinned! ? 'false' : 'true',
+              );
+            },
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Transform.rotate(
+                angle: pi / 4.0,
+                child: Icon(
+                  (note?.isPinned ?? false)
+                      ? Icons.push_pin
+                      : Icons.push_pin_outlined,
+                  size: 20.sp,
+                ),
               ),
             ),
           ),

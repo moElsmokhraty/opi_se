@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opi_se/features/notes/data/repos_impl/notes_repo_impl.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_notes_use_case.dart';
+import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import 'api_config/api_config.dart';
@@ -106,5 +107,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<AddNoteUseCase>(
     AddNoteUseCase(getIt.get<NotesRepoImpl>()),
+  );
+
+  getIt.registerSingleton<PinNoteUseCase>(
+    PinNoteUseCase(getIt.get<NotesRepoImpl>()),
   );
 }

@@ -15,7 +15,6 @@ class AddNoteViewBody extends StatelessWidget {
     return BlocConsumer<AddNoteCubit, AddNoteState>(
       listener: (context, state) {
         if (state is AddNoteSuccess) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           showCustomSnackBar(context, 'Note Added Successfully');
           GoRouter.of(context).pushReplacement(RoutesConfig.notes);
         } else if (state is AddNoteFailure) {
@@ -100,7 +99,8 @@ class AddNoteViewBody extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            GoRouter.of(context).pushReplacement(RoutesConfig.notes);
+                            GoRouter.of(context)
+                                .pushReplacement(RoutesConfig.notes);
                           },
                           tooltip: 'Discard Note',
                           icon: Container(
@@ -119,8 +119,8 @@ class AddNoteViewBody extends StatelessWidget {
                         ),
                         SizedBox(width: 10.w),
                         IconButton(
-                          onPressed: () {
-                            cubit.addNote();
+                          onPressed: () async {
+                            await cubit.addNote();
                           },
                           tooltip: 'Save Note',
                           icon: Container(

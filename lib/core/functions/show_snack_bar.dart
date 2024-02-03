@@ -2,6 +2,7 @@ import '../utils/styling/styles.dart';
 import 'package:flutter/material.dart';
 
 void showCustomSnackBar(BuildContext context, String content) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

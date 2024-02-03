@@ -18,3 +18,17 @@ class GetNotesFailure extends NotesState {
 
   GetNotesFailure({required this.failure});
 }
+
+class PinNoteLoading extends NotesState {}
+
+class PinNoteSuccess extends NotesState {
+  final PinNoteResponse response;
+
+  PinNoteSuccess({required this.response});
+}
+
+class PinNoteFailure extends NotesState {
+  final Failure failure;
+
+  PinNoteFailure({required this.failure});
+}
