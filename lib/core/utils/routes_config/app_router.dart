@@ -46,6 +46,7 @@ import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/edit_note_use_case.dart';
+import '../../../features/notes/domain/use_cases/flush_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
@@ -216,6 +217,7 @@ abstract class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => TrashCubit(
             getIt.get<GetTrashUseCase>(),
+            getIt.get<FlushTrashUseCase>(),
           )..getTrash(page: 1, limit: 10),
           child: const TrashView(),
         ),

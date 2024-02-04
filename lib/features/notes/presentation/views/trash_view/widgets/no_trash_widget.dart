@@ -7,18 +7,18 @@ class NoTrashWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      padding: EdgeInsets.symmetric(horizontal: 18.w),
       child: Column(
         children: [
           const Spacer(flex: 1),
           Image.asset(
-            'assets/images/no_notes.png',
+            'assets/images/no_trash.png',
             height: 350.h,
             width: double.infinity,
           ),
           SizedBox(height: 22.h),
           Text(
-            'No Trash Yet',
+            'No Notes in Trash yet',
             style: TextStyle(
               fontSize: 28.sp,
               fontFamily: 'Inter',
@@ -28,7 +28,7 @@ class NoTrashWidget extends StatelessWidget {
           ),
           SizedBox(height: 22.h),
           Text(
-            'No notes are available yet. Start creating your first note.',
+            'If there are any notes you no longer need, you can permanently delete them here',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20.sp,

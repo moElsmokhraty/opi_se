@@ -18,3 +18,17 @@ class GetTrashFailure extends TrashState {
 
   GetTrashFailure({required this.failure});
 }
+
+class FlushTrashLoading extends TrashState {}
+
+class FlushTrashSuccess extends TrashState {
+  final FlushTrashResponse response;
+
+  FlushTrashSuccess({required this.response});
+}
+
+class FlushTrashFailure extends TrashState {
+  final Failure failure;
+
+  FlushTrashFailure({required this.failure});
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'trash_item.dart';
 import 'no_trash_widget.dart';
 import '../../../cubits/trash_cubit/trash_cubit.dart';
@@ -17,7 +18,13 @@ class TrashViewBody extends StatelessWidget {
         await cubit.getTrash(page: 1, limit: 10);
       },
       child: BlocConsumer<TrashCubit, TrashState>(
-        listener: (context, state) async {},
+        listener: (context, state) async {
+          if (state is FlushTrashLoading) {
+            showCustomSnackBar(context, 'Loading...');
+          } else if (state is FlushTrashSuccess) {
+            showCustomSnackBar(context, 'Trash flushed successfully');
+          }
+        },
         builder: (context, state) {
           if (state is GetTrashFailure) {
             return CustomErrorWidget(

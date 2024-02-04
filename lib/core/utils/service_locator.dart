@@ -9,6 +9,7 @@ import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
+import '../../features/notes/domain/use_cases/flush_trash_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -131,5 +132,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<GetTrashUseCase>(
     GetTrashUseCase(getIt.get<TrashRepoImpl>()),
+  );
+
+  getIt.registerSingleton<FlushTrashUseCase>(
+    FlushTrashUseCase(getIt.get<TrashRepoImpl>()),
   );
 }

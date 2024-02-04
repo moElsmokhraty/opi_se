@@ -19,4 +19,5 @@ class APIConfig {
   static const String deleteNote = 'deleteNote';
   static const String editNote = 'updateNote';
   static const String getTrash = 'getAllTrashNotes';
+  static const String flushTrash = 'flushTrash';
 }
