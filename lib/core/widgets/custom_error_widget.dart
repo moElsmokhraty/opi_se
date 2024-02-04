@@ -15,7 +15,7 @@ class CustomErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -27,6 +27,7 @@ class CustomErrorWidget extends StatelessWidget {
           SizedBox(height: 10.h),
           Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0XFF036666),
               fontFamily: 'Inter',

@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opi_se/features/notes/data/repos_impl/notes_repo_impl.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_notes_use_case.dart';
+import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
+import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
@@ -121,5 +123,13 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<EditNoteUseCase>(
     EditNoteUseCase(getIt.get<NotesRepoImpl>()),
+  );
+
+  getIt.registerSingleton<TrashRepoImpl>(
+    TrashRepoImpl(getIt.get<ApiService>()),
+  );
+
+  getIt.registerSingleton<GetTrashUseCase>(
+    GetTrashUseCase(getIt.get<TrashRepoImpl>()),
   );
 }

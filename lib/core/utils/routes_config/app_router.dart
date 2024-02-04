@@ -47,13 +47,16 @@ import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
+import '../../../features/notes/domain/use_cases/get_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
+import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
+import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
 import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.notes,
+    initialLocation: RoutesConfig.trash,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -202,11 +205,19 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.editNote,
         builder: (context, state) => BlocProvider(
-          create: (context) =>
-              EditNoteCubit(
-                getIt.get<EditNoteUseCase>(),
-              )..setInitialValues(state.extra as Note),
+          create: (context) => EditNoteCubit(
+            getIt.get<EditNoteUseCase>(),
+          )..setInitialValues(state.extra as Note),
           child: const EditNoteView(),
+        ),
+      ),
+      GoRoute(
+        path: RoutesConfig.trash,
+        builder: (context, state) => BlocProvider(
+          create: (context) => TrashCubit(
+            getIt.get<GetTrashUseCase>(),
+          )..getTrash(page: 1, limit: 10),
+          child: const TrashView(),
         ),
       ),
     ],

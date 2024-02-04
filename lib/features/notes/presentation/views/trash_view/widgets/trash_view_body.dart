@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'trash_item.dart';
+import 'no_trash_widget.dart';
+import '../../../cubits/trash_cubit/trash_cubit.dart';
+import '../../../../../../core/widgets/custom_error_widget.dart';
+
+class TrashViewBody extends StatelessWidget {
+  const TrashViewBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    TrashCubit cubit = BlocProvider.of<TrashCubit>(context);
+    return RefreshIndicator(
+      onRefresh: () async {
+        await cubit.getTrash(page: 1, limit: 10);
+      },
+      child: BlocConsumer<TrashCubit, TrashState>(
+        listener: (context, state) async {},
+        builder: (context, state) {
+          if (state is GetTrashFailure) {
+            return CustomErrorWidget(
+              errorMessage: state.failure.errMessage,
+              onPressed: () {},
+            );
+          } else if (state is GetTrashLoading && cubit.trash.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            if (cubit.trash.isEmpty) {
+              return const NoTrashWidget();
+            } else {
+              return GridView.builder(
+                itemCount: cubit.trash.length,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisSpacing: 12.w,
+                  mainAxisSpacing: 16.h,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) {
+                  return TrashItem(note: cubit.trash[index]);
+                },
+              );
+            }
+          }
+        },
+      ),
+    );
+  }
+}

@@ -31,7 +31,5 @@ abstract class NotesRepo {
     DeleteNoteRequest request,
   );
 
-  Future<Either<Failure, EditNoteResponse>> editNote(
-    EditNoteRequest request
-  );
+  Future<Either<Failure, EditNoteResponse>> editNote(EditNoteRequest request);
 }

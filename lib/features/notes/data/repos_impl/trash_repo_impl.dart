@@ -1,0 +1,39 @@
+import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
+import '../../domain/repos/trash_repo.dart';
+import '../../../../core/errors/failure.dart';
+import '../../../../core/utils/constants.dart';
+import '../../../../core/errors/server_failure.dart';
+import '../../../../core/utils/api_config/api_config.dart';
+import '../../../../core/utils/api_config/api_service.dart';
+import '../models/get_trash_response/get_trash_response.dart';
+
+class TrashRepoImpl implements TrashRepo {
+  final ApiService _apiService;
+
+  TrashRepoImpl(this._apiService);
+
+  @override
+  Future<Either<Failure, GetTrashResponse>> getTrashNotes({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    try {
+      var data = await _apiService.get(
+        endpoint: APIConfig.getTrash,
+        token: token,
+        params: {
+          'matchId': matchId,
+          'page': page,
+          'limit': limit,
+        },
+      );
+      return Right(GetTrashResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+}

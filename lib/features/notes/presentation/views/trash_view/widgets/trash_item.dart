@@ -1,18 +1,10 @@
-import 'dart:math';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
-import '../../../../../../core/utils/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
-import '../../../cubits/notes_cubit/notes_cubit.dart';
-import '../../../../data/models/delete_note_models/delete_note_request.dart';
 
-class NoteItem extends StatelessWidget {
-  const NoteItem({super.key, this.note});
+class TrashItem extends StatelessWidget {
+  const TrashItem({super.key, this.note});
 
   final Note? note;
 
@@ -21,7 +13,7 @@ class NoteItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: ShapeDecoration(
-        color: noteColors[note?.noteColor ?? '--note1'],
+        color: const Color(0XFFDFDFDF),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.r),
         ),
@@ -29,27 +21,7 @@ class NoteItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () async {
-              await BlocProvider.of<NotesCubit>(context).pinNote(
-                matchId: matchId!,
-                noteId: note!.id!,
-                isPinned: note!.isPinned! ? 'false' : 'true',
-              );
-            },
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Transform.rotate(
-                angle: pi / 4.0,
-                child: Icon(
-                  (note?.isPinned ?? false)
-                      ? Icons.push_pin
-                      : Icons.push_pin_outlined,
-                  size: 20.sp,
-                ),
-              ),
-            ),
-          ),
+          SizedBox(height: 8.h),
           Text(
             DateFormat('dd/MM/yyyy').format(note?.createdAt ?? DateTime.now()),
             style: TextStyle(
@@ -73,21 +45,19 @@ class NoteItem extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context)
-                      .pushReplacement(RoutesConfig.editNote, extra: note!);
-                },
-                child: Container(
-                  width: 22.w,
-                  height: 22.h,
-                  decoration: ShapeDecoration(
-                    color: Colors.black.withOpacity(0.8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.r),
-                    ),
+              Container(
+                width: 22.w,
+                height: 22.h,
+                decoration: ShapeDecoration(
+                  color: Colors.black.withOpacity(0.8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.r),
                   ),
-                  child: SvgPicture.asset('assets/svgs/pen.svg'),
+                ),
+                child: Icon(
+                  Icons.more_vert_outlined,
+                  color: Colors.white,
+                  size: 18.sp,
                 ),
               ),
             ],
@@ -124,22 +94,6 @@ class NoteItem extends StatelessWidget {
                   fontFamily: 'Inter',
                   overflow: TextOverflow.ellipsis,
                   fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () async {
-                  await BlocProvider.of<NotesCubit>(context).deleteNote(
-                    DeleteNoteRequest(
-                      matchId: matchId!,
-                      noteId: note!.id!,
-                    ),
-                  );
-                },
-                child: Icon(
-                  Icons.delete_outline_rounded,
-                  color: Colors.black.withOpacity(0.7),
-                  size: 18.sp,
                 ),
               ),
             ],

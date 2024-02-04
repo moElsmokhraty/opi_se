@@ -18,4 +18,5 @@ class APIConfig {
   static const String pinNote = 'pinNote';
   static const String deleteNote = 'deleteNote';
   static const String editNote = 'updateNote';
+  static const String getTrash = 'getAllTrashNotes';
 }
