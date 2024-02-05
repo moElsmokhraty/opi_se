@@ -21,4 +21,5 @@ class APIConfig {
   static const String getTrash = 'getAllTrashNotes';
   static const String flushTrash = 'flushTrash';
   static const String deleteNoteFromTrash = 'deleteNoteFromTrash';
+  static const String restoreNote = 'restoreNote';
 }

@@ -12,8 +12,8 @@ class FlushTrashResponse extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-    'message': message,
-  };
+        'message': message,
+      };
 
   @override
   List<Object?> get props => [message];

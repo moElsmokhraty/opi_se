@@ -46,3 +46,17 @@ class DeleteNoteFromTrashFailure extends TrashState {
 
   DeleteNoteFromTrashFailure({required this.failure});
 }
+
+class RestoreNoteLoading extends TrashState {}
+
+class RestoreNoteSuccess extends TrashState {
+  final RestoreNoteResponse response;
+
+  RestoreNoteSuccess({required this.response});
+}
+
+class RestoreNoteFailure extends TrashState {
+  final Failure failure;
+
+  RestoreNoteFailure({required this.failure});
+}

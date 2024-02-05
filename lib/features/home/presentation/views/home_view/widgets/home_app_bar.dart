@@ -71,15 +71,17 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           icon: StatefulBuilder(
             builder: (context, setState) {
-              SocketService.on(eventName: 'showNotificationMark', handler: (eventData) {
-                setState(() {
-                  notificationIcon = Icon(
-                    CupertinoIcons.bell_fill,
-                    color: const Color(0xFF036666),
-                    size: 24.sp,
-                  );
-                });
-              });
+              SocketService.on(
+                  eventName: 'showNotificationMark',
+                  handler: (eventData) {
+                    setState(() {
+                      notificationIcon = Icon(
+                        CupertinoIcons.bell_fill,
+                        color: const Color(0xFF036666),
+                        size: 24.sp,
+                      );
+                    });
+                  });
               return notificationIcon;
             },
           ),

@@ -51,6 +51,7 @@ import '../../../features/notes/domain/use_cases/flush_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
+import '../../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
 import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
@@ -220,6 +221,7 @@ abstract class AppRouter {
             getIt.get<GetTrashUseCase>(),
             getIt.get<FlushTrashUseCase>(),
             getIt.get<DeleteNoteFromTrashUseCase>(),
+            getIt.get<RestoreNoteUseCase>(),
           )..getTrash(page: 1, limit: 10),
           child: const TrashView(),
         ),

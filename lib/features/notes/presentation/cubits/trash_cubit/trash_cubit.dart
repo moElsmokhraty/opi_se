@@ -4,9 +4,12 @@ import '../../../../../core/errors/failure.dart';
 import '../../../data/models/flush_trash_response.dart';
 import '../../../domain/use_cases/get_trash_use_case.dart';
 import '../../../domain/use_cases/flush_trash_use_case.dart';
+import '../../../domain/use_cases/restore_note_use_case.dart';
 import '../../../data/models/get_all_notes_response/note.dart';
 import '../../../domain/use_cases/delete_note_from_trash_use_case.dart';
 import '../../../data/models/get_trash_response/get_trash_response.dart';
+import '../../../data/models/restore_note_models/restore_note_request.dart';
+import '../../../data/models/restore_note_models/restore_note_response.dart';
 import '../../../data/models/delete_note_from_trash_models/delete_note_from_trash_request.dart';
 import '../../../data/models/delete_note_from_trash_models/delete_note_from_trash_response.dart';
 
@@ -17,6 +20,7 @@ class TrashCubit extends Cubit<TrashState> {
     this._getTrashUseCase,
     this._flushTrashUseCase,
     this._deleteNoteFromTrashUseCase,
+    this._restoreNoteUseCase,
   ) : super(TrashInitial());
 
   final GetTrashUseCase _getTrashUseCase;
@@ -24,6 +28,8 @@ class TrashCubit extends Cubit<TrashState> {
   final FlushTrashUseCase _flushTrashUseCase;
 
   final DeleteNoteFromTrashUseCase _deleteNoteFromTrashUseCase;
+
+  final RestoreNoteUseCase _restoreNoteUseCase;
 
   final List<Note> trash = [];
 
@@ -61,6 +67,15 @@ class TrashCubit extends Cubit<TrashState> {
     result.fold(
       (failure) => emit(DeleteNoteFromTrashFailure(failure: failure)),
       (response) => emit(DeleteNoteFromTrashSuccess(response: response)),
+    );
+  }
+
+  Future<void> restoreNote(RestoreNoteRequest request) async {
+    emit(RestoreNoteLoading());
+    var result = await _restoreNoteUseCase.call(request);
+    result.fold(
+      (failure) => emit(RestoreNoteFailure(failure: failure)),
+      (response) => emit(RestoreNoteSuccess(response: response)),
     );
   }
 }

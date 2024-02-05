@@ -8,6 +8,8 @@ import '../../data/models/add_note_models/add_note_response.dart';
 import '../../data/models/delete_note_models/delete_note_request.dart';
 import '../../data/models/delete_note_models/delete_note_response.dart';
 import '../../data/models/get_all_notes_response/get_all_notes_response.dart';
+import '../../data/models/restore_note_models/restore_note_request.dart';
+import '../../data/models/restore_note_models/restore_note_response.dart';
 
 abstract class NotesRepo {
   Future<Either<Failure, GetNotesResponse>> getNotes({
@@ -32,4 +34,7 @@ abstract class NotesRepo {
   );
 
   Future<Either<Failure, EditNoteResponse>> editNote(EditNoteRequest request);
+
+  Future<Either<Failure, RestoreNoteResponse>> restoreNote(
+      RestoreNoteRequest request);
 }

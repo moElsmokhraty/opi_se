@@ -11,6 +11,7 @@ import '../../features/notes/domain/use_cases/delete_note_from_trash_use_case.da
 import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../features/notes/domain/use_cases/flush_trash_use_case.dart';
+import '../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -141,5 +142,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<DeleteNoteFromTrashUseCase>(
     DeleteNoteFromTrashUseCase(getIt.get<TrashRepoImpl>()),
+  );
+
+  getIt.registerSingleton<RestoreNoteUseCase>(
+    RestoreNoteUseCase(getIt.get<NotesRepoImpl>()),
   );
 }

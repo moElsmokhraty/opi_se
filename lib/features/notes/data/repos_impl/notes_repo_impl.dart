@@ -14,6 +14,8 @@ import '../../../../core/errors/server_failure.dart';
 import '../../../../core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
 import '../models/get_all_notes_response/get_all_notes_response.dart';
+import '../models/restore_note_models/restore_note_request.dart';
+import '../models/restore_note_models/restore_note_response.dart';
 
 class NotesRepoImpl implements NotesRepo {
   final ApiService _apiService;
@@ -125,6 +127,24 @@ class NotesRepoImpl implements NotesRepo {
         },
       );
       return Right(EditNoteResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, RestoreNoteResponse>> restoreNote(
+      RestoreNoteRequest request) async {
+    try {
+      var data = await _apiService.delete(
+        endpoint: APIConfig.restoreNote,
+        token: token,
+        params: request.toJson(),
+      );
+      return Right(RestoreNoteResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

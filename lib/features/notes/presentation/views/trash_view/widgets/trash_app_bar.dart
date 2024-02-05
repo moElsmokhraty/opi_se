@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../cubits/trash_cubit/trash_cubit.dart';
+import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 
 class TrashAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TrashAppBar({super.key});
@@ -24,6 +26,17 @@ class TrashAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       backgroundColor: Colors.white,
+      leadingWidth: 60.w,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black,
+          size: 24.sp,
+        ),
+        onPressed: () {
+          GoRouter.of(context).go(RoutesConfig.notes);
+        },
+      ),
       actions: [
         Container(
           height: 30.h,

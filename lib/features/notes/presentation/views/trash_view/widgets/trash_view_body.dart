@@ -32,6 +32,13 @@ class TrashViewBody extends StatelessWidget {
             await cubit.getTrash(page: 1, limit: 0);
           } else if (state is DeleteNoteFromTrashFailure) {
             showCustomSnackBar(context, state.failure.errMessage);
+          } else if (state is RestoreNoteLoading) {
+            showCustomSnackBar(context, 'Loading...');
+          } else if (state is RestoreNoteSuccess) {
+            showCustomSnackBar(context, 'Note restored successfully');
+            await cubit.getTrash(page: 1, limit: 0);
+          } else if (state is RestoreNoteFailure) {
+            showCustomSnackBar(context, state.failure.errMessage);
           }
         },
         builder: (context, state) {
