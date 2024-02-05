@@ -32,3 +32,17 @@ class FlushTrashFailure extends TrashState {
 
   FlushTrashFailure({required this.failure});
 }
+
+class DeleteNoteFromTrashLoading extends TrashState {}
+
+class DeleteNoteFromTrashSuccess extends TrashState {
+  final DeleteNoteFromTrashResponse response;
+
+  DeleteNoteFromTrashSuccess({required this.response});
+}
+
+class DeleteNoteFromTrashFailure extends TrashState {
+  final Failure failure;
+
+  DeleteNoteFromTrashFailure({required this.failure});
+}

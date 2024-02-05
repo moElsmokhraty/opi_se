@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:opi_se/features/notes/data/models/delete_note_from_trash_models/delete_note_from_trash_request.dart';
+import 'package:opi_se/features/notes/data/models/delete_note_from_trash_models/delete_note_from_trash_response.dart';
 import '../../domain/repos/trash_repo.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/utils/constants.dart';
@@ -47,6 +49,24 @@ class TrashRepoImpl implements TrashRepo {
         params: {'matchId': matchId},
       );
       return Right(FlushTrashResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeleteNoteFromTrashResponse>> deleteNoteFromTrash(
+      DeleteNoteFromTrashRequest request) async {
+    try {
+      var data = await _apiService.delete(
+        endpoint: APIConfig.flushTrash,
+        token: token,
+        params: request.toJson(),
+      );
+      return Right(DeleteNoteFromTrashResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

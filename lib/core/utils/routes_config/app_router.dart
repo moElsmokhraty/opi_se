@@ -44,6 +44,7 @@ import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
+import '../../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/flush_trash_use_case.dart';
@@ -218,6 +219,7 @@ abstract class AppRouter {
           create: (context) => TrashCubit(
             getIt.get<GetTrashUseCase>(),
             getIt.get<FlushTrashUseCase>(),
+            getIt.get<DeleteNoteFromTrashUseCase>(),
           )..getTrash(page: 1, limit: 10),
           child: const TrashView(),
         ),

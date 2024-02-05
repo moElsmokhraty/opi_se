@@ -1,5 +1,5 @@
 class APIConfig {
-  static const String baseUrl = 'https://graduation-project-j6gl.onrender.com/';
+  static const String baseUrl = 'https://opi-se-test.onrender.com/';
   static const String login = 'login';
   static const String register = 'signUp';
   static const String changePassword = 'changePassword';
@@ -20,4 +20,5 @@ class APIConfig {
   static const String editNote = 'updateNote';
   static const String getTrash = 'getAllTrashNotes';
   static const String flushTrash = 'flushTrash';
+  static const String deleteNoteFromTrash = 'deleteNoteFromTrash';
 }

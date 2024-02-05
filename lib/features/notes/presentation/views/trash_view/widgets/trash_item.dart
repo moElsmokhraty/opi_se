@@ -1,7 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../cubits/trash_cubit/trash_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
+import '../../../../data/models/delete_note_from_trash_models/delete_note_from_trash_request.dart';
 
 class TrashItem extends StatelessWidget {
   const TrashItem({super.key, this.note});
@@ -10,6 +13,7 @@ class TrashItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TrashCubit cubit = BlocProvider.of<TrashCubit>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: ShapeDecoration(
@@ -48,16 +52,50 @@ class TrashItem extends StatelessWidget {
               Container(
                 width: 22.w,
                 height: 22.h,
+                alignment: Alignment.center,
                 decoration: ShapeDecoration(
                   color: Colors.black.withOpacity(0.8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.r),
                   ),
                 ),
-                child: Icon(
-                  Icons.more_vert_outlined,
+                child: PopupMenuButton(
+                  position: PopupMenuPosition.under,
+                  tooltip: 'Options',
                   color: Colors.white,
-                  size: 18.sp,
+                  onSelected: (value) async {
+                    if (value == 'restore') {
+                      // restore note
+                    } else {
+                      await cubit.deleteNoteFromTrash(
+                        DeleteNoteFromTrashRequest(
+                          noteId: note!.id!,
+                          matchId: note!.matchId!,
+                        ),
+                      );
+                    }
+                  },
+                  offset: const Offset(-150, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  itemBuilder: (context) {
+                    return [
+                      const PopupMenuItem(
+                        value: 'delete',
+                        child: Text('Delete            '),
+                      ),
+                      const PopupMenuItem(
+                        value: 'restore',
+                        child: Text('Restore            '),
+                      ),
+                    ];
+                  },
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                    size: 16.sp,
+                  ),
                 ),
               ),
             ],

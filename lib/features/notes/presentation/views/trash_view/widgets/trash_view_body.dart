@@ -23,6 +23,15 @@ class TrashViewBody extends StatelessWidget {
             showCustomSnackBar(context, 'Loading...');
           } else if (state is FlushTrashSuccess) {
             showCustomSnackBar(context, 'Trash flushed successfully');
+          } else if (state is FlushTrashFailure) {
+            showCustomSnackBar(context, state.failure.errMessage);
+          } else if (state is DeleteNoteFromTrashLoading) {
+            showCustomSnackBar(context, 'Loading...');
+          } else if (state is DeleteNoteFromTrashSuccess) {
+            showCustomSnackBar(context, 'Note deleted successfully');
+            await cubit.getTrash(page: 1, limit: 0);
+          } else if (state is DeleteNoteFromTrashFailure) {
+            showCustomSnackBar(context, state.failure.errMessage);
           }
         },
         builder: (context, state) {

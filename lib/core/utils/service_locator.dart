@@ -7,6 +7,7 @@ import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
+import '../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../features/notes/domain/use_cases/flush_trash_use_case.dart';
@@ -136,5 +137,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<FlushTrashUseCase>(
     FlushTrashUseCase(getIt.get<TrashRepoImpl>()),
+  );
+
+  getIt.registerSingleton<DeleteNoteFromTrashUseCase>(
+    DeleteNoteFromTrashUseCase(getIt.get<TrashRepoImpl>()),
   );
 }

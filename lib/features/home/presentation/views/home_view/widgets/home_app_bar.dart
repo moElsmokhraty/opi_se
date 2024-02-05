@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,6 +12,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    Icon notificationIcon = Icon(
+      CupertinoIcons.bell_fill,
+      color: const Color(0xFF036666),
+      size: 24.sp,
+    );
     return AppBar(
       toolbarHeight: 100.h,
       elevation: 0,
@@ -63,10 +69,19 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {},
           tooltip: 'Notifications',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: Icon(
-            CupertinoIcons.bell_fill,
-            color: const Color(0xFF036666),
-            size: 24.sp,
+          icon: StatefulBuilder(
+            builder: (context, setState) {
+              SocketService.on(eventName: 'showNotificationMark', handler: (eventData) {
+                setState(() {
+                  notificationIcon = Icon(
+                    CupertinoIcons.bell_fill,
+                    color: const Color(0xFF036666),
+                    size: 24.sp,
+                  );
+                });
+              });
+              return notificationIcon;
+            },
           ),
         ),
       ],

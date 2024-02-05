@@ -17,7 +17,7 @@ class RequestsViewBody extends StatelessWidget {
         if (state is DeclineMatchRequestSuccess) {
           await cubit.getMatchRequests();
         } else if (state is AcceptMatchRequestSuccess) {
-          SocketService.emitEvent('acceptPartnerRequest', {
+          SocketService.emit(eventName: 'acceptPartnerRequest', data: {
             "notifiedPartner": state.response.notifiedPartner,
             "matchId": state.response.matchId,
             "partnerUserName": state.response.acceptedPartner,

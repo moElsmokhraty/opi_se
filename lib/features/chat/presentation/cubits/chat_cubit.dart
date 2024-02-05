@@ -43,7 +43,7 @@ class ChatCubit extends Cubit<ChatState> {
     String messageContent,
     String messageType,
   ) {
-    SocketService.emitEvent('sendMessage', {
+    SocketService.emit(eventName: 'sendMessage', data: {
       'matchId': matchId,
       'messageSender': messageSender,
       'messageContent': messageContent,
@@ -52,10 +52,12 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void listenOnNewMessage() {
-    SocketService.listenOnEvent('newMessage', (eventData) {
-      var message = Message.fromJson(eventData);
-      messages.add(message);
-      emit(GetChatSuccess(messages));
-    });
+    SocketService.on(
+        eventName: 'newMessage',
+        handler: (eventData) {
+          var message = Message.fromJson(eventData);
+          messages.add(message);
+          emit(GetChatSuccess(messages));
+        });
   }
 }
