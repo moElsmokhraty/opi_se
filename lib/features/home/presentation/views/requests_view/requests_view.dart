@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'widgets/requests_app_bar.dart';
 import 'widgets/requests_view_body.dart';
 
 class RequestsView extends StatelessWidget {
@@ -7,22 +7,10 @@ class RequestsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: Text(
-          'Requests',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25.sp,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-      body: const SafeArea(
-        child: RequestsViewBody(),
+    return const SafeArea(
+      child: Scaffold(
+        appBar: RequestsAppBar(),
+        body: RequestsViewBody(),
       ),
     );
   }

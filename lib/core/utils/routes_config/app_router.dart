@@ -18,6 +18,7 @@ import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
 import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
+import 'package:opi_se/features/home/presentation/cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
 import 'package:opi_se/features/home/presentation/views/partner_request_profile_view/partner_request_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
@@ -40,6 +41,7 @@ import '../../../features/chat/presentation/cubits/chat_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/decline_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
+import '../../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
@@ -59,7 +61,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.trash,
+    initialLocation: RoutesConfig.home,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -144,7 +146,12 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.home,
-        builder: (context, state) => const HomeView(),
+        builder: (context, state) => BlocProvider<PartnerRecommendationsCubit>(
+          create: (context) => PartnerRecommendationsCubit(
+            getIt.get<GetPartnerRecommendationsUseCase>(),
+          )..getPartnerRecommendations(),
+          child: const HomeView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.chat,

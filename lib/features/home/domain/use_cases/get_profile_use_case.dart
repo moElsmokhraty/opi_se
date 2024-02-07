@@ -5,7 +5,7 @@ import '../../../../core/use_cases/use_case.dart';
 import '../../data/models/get_profile_response.dart';
 
 class GetProfileUseCase extends UseCase<GetProfileResponse, String> {
-  final MatchRequestsRepo _matchRequestRepository;
+  final RequestsRepo _matchRequestRepository;
 
   GetProfileUseCase(this._matchRequestRepository);
 

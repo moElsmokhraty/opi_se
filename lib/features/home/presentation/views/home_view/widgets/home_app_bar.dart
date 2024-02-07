@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
@@ -12,7 +14,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon notificationIcon = Icon(
+    Widget notificationIcon = Icon(
       CupertinoIcons.bell_fill,
       color: const Color(0xFF036666),
       size: 24.sp,
@@ -56,8 +58,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
-          tooltip: 'Notifications',
+          onPressed: () {
+            GoRouter.of(context).push(RoutesConfig.requests);
+          },
+          tooltip: 'Match Requests',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           icon: Icon(
             Icons.person_add_alt_1,
@@ -75,10 +79,26 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   eventName: 'showNotificationMark',
                   handler: (eventData) {
                     setState(() {
-                      notificationIcon = Icon(
-                        CupertinoIcons.bell_fill,
-                        color: const Color(0xFF036666),
-                        size: 24.sp,
+                      notificationIcon = Stack(
+                        children: [
+                          Icon(
+                            CupertinoIcons.bell_fill,
+                            color: const Color(0xFF036666),
+                            size: 24.sp,
+                          ),
+                          Positioned(
+                            top: 8.0,
+                            right: 4.0,
+                            child: Container(
+                              width: 8.w,
+                              height: 8.h,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     });
                   });

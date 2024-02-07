@@ -7,7 +7,7 @@ import '../../data/models/requests_models/decline_match_request_models/decline_m
 
 class DeclineMatchRequestUseCase
     extends UseCase<DeclineMatchResponse, DeclineMatchRequest> {
-  final MatchRequestsRepo _matchRequestRepository;
+  final RequestsRepo _matchRequestRepository;
 
   DeclineMatchRequestUseCase(this._matchRequestRepository);
 

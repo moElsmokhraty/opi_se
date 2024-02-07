@@ -6,7 +6,7 @@ import '../../data/models/requests_models/accept_match_response.dart';
 
 class AcceptMatchRequestsUseCase
     extends UseCase<AcceptMatchResponse, List<String>> {
-  final MatchRequestsRepo _matchRequestRepository;
+  final RequestsRepo _matchRequestRepository;
 
   AcceptMatchRequestsUseCase(this._matchRequestRepository);
 

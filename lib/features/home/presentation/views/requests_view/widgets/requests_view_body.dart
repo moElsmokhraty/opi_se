@@ -26,8 +26,10 @@ class RequestsViewBody extends StatelessWidget {
           await cubit.getMatchRequests();
         } else if (state is AcceptMatchRequestFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
+          await cubit.getMatchRequests();
         } else if (state is DeclineMatchRequestFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
+          await cubit.getMatchRequests();
         } else if (state is GetMatchRequestsFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
         } else if (state is DeclineMatchRequestSuccess) {

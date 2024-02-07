@@ -5,7 +5,7 @@ import '../../../../core/use_cases/no_param_use_case.dart';
 import '../../data/models/requests_models/get_match_requests_response/get_match_requests_response.dart';
 
 class GetMatchRequestsUseCase extends UseCase {
-  final MatchRequestsRepo _matchRequestRepository;
+  final RequestsRepo _matchRequestRepository;
 
   GetMatchRequestsUseCase(this._matchRequestRepository);
 

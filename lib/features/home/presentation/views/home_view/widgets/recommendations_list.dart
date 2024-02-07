@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'recommendation_item.dart';
-import 'package:opi_se/core/functions/validate_text.dart';
-import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
+import '../../../cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
 
 class RecommendationsList extends StatelessWidget {
   const RecommendationsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 16.h),
-      child: Column(
-        children: [
-          AuthTextField(
-            controller: TextEditingController(),
-            hintText: 'Search your study partner..',
-            validator: (value) {
-              return validateText('Partner Name', value!);
-            },
-            keyboardType: TextInputType.name,
-            prefixIcon: Icon(
-              Icons.search,
-              size: 24.sp,
-              color: const Color(0xFF036666),
+    final PartnerRecommendationsCubit cubit = BlocProvider.of(context);
+    return BlocBuilder<PartnerRecommendationsCubit,
+        PartnerRecommendationsState>(
+      builder: (context, state) {
+        if (state is GetPartnerRecommendationsLoading) {
+          return const Center(
+            child: CircularProgressIndicator(color: Color(0xFF036666)),
+          );
+        } else if (state is GetPartnerRecommendationsFailure) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Center(
+              child: Text(
+                state.failure.errMessage,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.sp,
+                ),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: 5,
-              itemBuilder: (context, index) => const RecommendationItem(),
+          );
+        } else {
+          return ListView.builder(
+            padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 16.h),
+            physics: const BouncingScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (context, index) => RecommendationItem(
+              userData: cubit.recommendations[index],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 }

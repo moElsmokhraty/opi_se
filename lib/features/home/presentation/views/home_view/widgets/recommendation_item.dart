@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class RecommendationItem extends StatelessWidget {
-  const RecommendationItem({super.key});
+  const RecommendationItem({super.key, required this.userData});
+
+  final UserData userData;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class RecommendationItem extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                'KH',
+                userData.userName![0] + userData.userName![1],
                 style: AppStyles.textStyle16.copyWith(fontSize: 20.sp),
               ),
             ),
@@ -46,14 +49,14 @@ class RecommendationItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Khadija Ahmed',
+                      userData.userName!,
                       style: AppStyles.textStyle24.copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      'Data Analyst',
+                      'Flutter Developer',
                       style: AppStyles.textStyle24.copyWith(
                         color: Colors.black.withOpacity(0.6),
                         fontSize: 15.sp,
@@ -63,7 +66,7 @@ class RecommendationItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '21 years old',
+                          '${userData.age} years',
                           style: AppStyles.textStyle24.copyWith(
                             color: Colors.black.withOpacity(0.6),
                             fontSize: 15.sp,
@@ -71,31 +74,34 @@ class RecommendationItem extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Container(
-                          height: 28.h,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5.h,
-                            horizontal: 10.w,
-                          ),
-                          alignment: Alignment.center,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1.w,
-                                color: const Color(0xFF036666),
-                              ),
-                              borderRadius: BorderRadius.circular(12.r),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5.h,
+                              horizontal: 10.w,
                             ),
-                          ),
-                          child: Text(
-                            'Take First Step',
-                            style: TextStyle(
-                              color: const Color(0xFF036666),
-                              fontSize: 12.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
+                            alignment: Alignment.center,
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: 1.w,
+                                  color: const Color(0xFF036666),
+                                ),
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            child: Text(
+                              'Take First Step',
+                              style: TextStyle(
+                                color: const Color(0xFF036666),
+                                fontSize: 12.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                                height: 0,
+                              ),
                             ),
                           ),
                         ),

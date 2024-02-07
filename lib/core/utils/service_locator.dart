@@ -4,6 +4,7 @@ import 'package:opi_se/features/notes/data/repos_impl/notes_repo_impl.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_notes_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
+import '../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -84,24 +85,24 @@ void setupServiceLocator() {
     GetChatUseCase(getIt.get<ChatRepoImpl>()),
   );
 
-  getIt.registerSingleton<MatchRequestsRepoImpl>(
-    MatchRequestsRepoImpl(getIt.get<ApiService>()),
+  getIt.registerSingleton<RequestsRepoImpl>(
+    RequestsRepoImpl(getIt.get<ApiService>()),
   );
 
   getIt.registerSingleton<GetMatchRequestsUseCase>(
-    GetMatchRequestsUseCase(getIt.get<MatchRequestsRepoImpl>()),
+    GetMatchRequestsUseCase(getIt.get<RequestsRepoImpl>()),
   );
 
   getIt.registerSingleton<DeclineMatchRequestUseCase>(
-    DeclineMatchRequestUseCase(getIt.get<MatchRequestsRepoImpl>()),
+    DeclineMatchRequestUseCase(getIt.get<RequestsRepoImpl>()),
   );
 
   getIt.registerSingleton<AcceptMatchRequestsUseCase>(
-    AcceptMatchRequestsUseCase(getIt.get<MatchRequestsRepoImpl>()),
+    AcceptMatchRequestsUseCase(getIt.get<RequestsRepoImpl>()),
   );
 
   getIt.registerSingleton<GetProfileUseCase>(
-    GetProfileUseCase(getIt.get<MatchRequestsRepoImpl>()),
+    GetProfileUseCase(getIt.get<RequestsRepoImpl>()),
   );
 
   getIt.registerSingleton<NotesRepoImpl>(
@@ -146,5 +147,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<RestoreNoteUseCase>(
     RestoreNoteUseCase(getIt.get<NotesRepoImpl>()),
+  );
+
+  getIt.registerSingleton<GetPartnerRecommendationsUseCase>(
+    GetPartnerRecommendationsUseCase(getIt.get<RequestsRepoImpl>()),
   );
 }
