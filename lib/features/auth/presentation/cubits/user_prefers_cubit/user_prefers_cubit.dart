@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:opi_se/features/auth/data/models/user_prefers_models/user_question.dart';
-import 'package:opi_se/features/auth/data/models/user_prefers_models/user_skill.dart';
+import '../../../data/models/login_models/login_response/user_skill.dart';
 import '../../../data/models/user_prefers_models/user_prefers_request.dart';
 import 'package:opi_se/features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 
@@ -50,7 +50,7 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
   ];
 
   void toggleSlider() {
-    if (skillController.text.isNotEmpty) {
+    if (skillController.text.trim().isNotEmpty) {
       sliderVisible = true;
       emit(SliderVisibilityChanged());
     } else {
@@ -80,7 +80,7 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
 
   void addSkill() {
     UserSkill newSkill = UserSkill(
-      skillName: skillController.text,
+      skillName: skillController.text.trim(),
       skillRate: skillLevel,
     );
 
@@ -136,8 +136,8 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
     ];
     var result = await _submitUserPrefersUseCase.call(
       UserPrefersRequest(
-        fieldOfStudy: fieldOfStudyController.text,
-        specialization: specializationController.text,
+        fieldOfStudy: fieldOfStudyController.text.trim(),
+        specialization: specializationController.text.trim(),
         userSkills: skills,
         userQuestions: finalQuestions,
       ),

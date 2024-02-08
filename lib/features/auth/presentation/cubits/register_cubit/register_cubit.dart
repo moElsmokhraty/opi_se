@@ -89,21 +89,21 @@ class RegisterCubit extends Cubit<RegisterState> {
   );
 
   List<Language> filteredLanguages() {
-    if (nativeLanguageController.text.isNotEmpty) {
+    if (nativeLanguageController.text.trim().isNotEmpty) {
       return [
         Language(
-          languageName: nativeLanguageController.text,
+          languageName: nativeLanguageController.text.trim(),
           level: int.parse(nativeLevelController.text),
         ),
         Language(
-          languageName: secondLanguageController.text,
+          languageName: secondLanguageController.text.trim(),
           level: int.parse(secondLevelController.text),
         ),
       ];
     } else {
       return [
         Language(
-          languageName: nativeLanguageController.text,
+          languageName: nativeLanguageController.text.trim(),
           level: int.parse(nativeLevelController.text),
         ),
       ];
@@ -115,13 +115,13 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterLoading());
     final result = await _registerUseCase.call(
       RegisterRequest(
-        userName: fullNameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-        confirmPassword: confirmPasswordController.text,
-        location: locationController.text,
-        age: int.parse(ageController.text),
-        gender: genderController.text.toLowerCase(),
+        userName: fullNameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        confirmPassword: confirmPasswordController.text.trim(),
+        location: locationController.text.trim(),
+        age: int.parse(ageController.text.trim()),
+        gender: genderController.text.trim().toLowerCase(),
         languages: filteredLanguages(),
       ),
     );

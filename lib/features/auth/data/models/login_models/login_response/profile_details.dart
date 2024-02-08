@@ -1,27 +1,25 @@
 import 'package:equatable/equatable.dart';
-import '../login_models/login_response/user_skill.dart';
-import 'user_question.dart';
 
-class UserPrefersRequest extends Equatable {
+import 'user_skill.dart';
+
+class ProfileDetails extends Equatable {
+  final String? id;
   final String? fieldOfStudy;
   final String? specialization;
-  final List<UserQuestion>? userQuestions;
   final List<UserSkill>? userSkills;
 
-  const UserPrefersRequest({
+  const ProfileDetails({
+    this.id,
     this.fieldOfStudy,
     this.specialization,
-    this.userQuestions,
     this.userSkills,
   });
 
-  factory UserPrefersRequest.fromJson(Map<String, dynamic> json) {
-    return UserPrefersRequest(
+  factory ProfileDetails.fromJson(Map<String, dynamic> json) {
+    return ProfileDetails(
+      id: json['_id'] as String?,
       fieldOfStudy: json['fieldOfStudy'] as String?,
       specialization: json['specialization'] as String?,
-      userQuestions: (json['userQuestions'] as List<dynamic>?)
-          ?.map((e) => UserQuestion.fromJson(e as Map<String, dynamic>))
-          .toList(),
       userSkills: (json['userSkills'] as List<dynamic>?)
           ?.map((e) => UserSkill.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,18 +27,18 @@ class UserPrefersRequest extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
+        '_id': id,
         'fieldOfStudy': fieldOfStudy,
         'specialization': specialization,
-        'userQuestions': userQuestions?.map((e) => e.toJson()).toList(),
         'userSkills': userSkills?.map((e) => e.toJson()).toList(),
       };
 
   @override
   List<Object?> get props {
     return [
+      id,
       fieldOfStudy,
       specialization,
-      userQuestions,
       userSkills,
     ];
   }

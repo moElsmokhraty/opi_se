@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'language.g.dart';
+
+@HiveType(typeId: 3)
 class Language extends Equatable {
   final String? languageName;
   final int? level;

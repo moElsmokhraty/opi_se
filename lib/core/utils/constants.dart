@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/models/user_cache.dart';
 
 double height = 812.h;
 
@@ -24,3 +25,7 @@ const Map<String, Color> noteColors = {
   '--note4': Color(0xFFE0FFC8),
   '--note5': Color(0xFFFFE6C8),
 };
+
+String boxName  = 'userCacheBox';
+
+UserCache? userCache;

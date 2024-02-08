@@ -5,6 +5,7 @@ import 'package:opi_se/core/functions/validate_text.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/functions/cache_user_data.dart';
 import 'package:opi_se/core/widgets/buttons/auth_button.dart';
 import 'package:opi_se/core/functions/validate_password.dart';
 import 'package:opi_se/core/widgets/text_fields/auth_text_field.dart';
@@ -31,7 +32,13 @@ class LoginViewBody extends StatelessWidget {
             showCustomSnackBar(context, state.errMessage);
           }
         } else if (state is LoginSuccess) {
-          showCustomSnackBar(context, 'Logged in successfully!');
+          if (state.response.data!.getUserPrefers!) {
+            GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
+          } else {
+            cacheUserData(state.response);
+            showCustomSnackBar(context, 'Logged in successfully!');
+            GoRouter.of(context).pushReplacement(RoutesConfig.home);
+          }
         }
       },
       builder: (context, state) {

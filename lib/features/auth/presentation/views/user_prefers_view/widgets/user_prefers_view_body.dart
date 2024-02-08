@@ -17,7 +17,7 @@ class UserPrefersViewBody extends StatelessWidget {
       builder: (context, state) {
         return PageView(
           controller: cubit.pageController,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           children: [
             UserPrefersPage(cubit: cubit),
             QuestionPage(

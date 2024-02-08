@@ -89,6 +89,14 @@ class QuestionPage extends StatelessWidget {
                     if (cubit.answers.contains(null)) {
                       showCustomSnackBar(
                           context, 'Please answer all questions');
+                    } else if (cubit.skills.isEmpty && !cubit.formKey.currentState!.validate()) {
+                      cubit.pageController.animateToPage(
+                        0,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                      showCustomSnackBar(
+                          context, 'Please add at least one skill');
                     } else {
                       await cubit.submitUserPrefers();
                     }

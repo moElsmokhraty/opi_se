@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
-import 'package:opi_se/features/auth/presentation/cubits/user_prefers_cubit/user_prefers_cubit.dart';
-
+import 'package:opi_se/core/functions/modify_user_prefers_cache.dart';
 import '../../../../../../core/utils/styling/styles.dart';
+import 'package:opi_se/core/functions/show_snack_bar.dart';
+import '../../../cubits/user_prefers_cubit/user_prefers_cubit.dart';
 
 class FinishButton extends StatelessWidget {
   const FinishButton({
@@ -16,11 +16,13 @@ class FinishButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserPrefersCubit cubit = BlocProvider.of<UserPrefersCubit>(context);
     return Align(
       alignment: Alignment.centerRight,
       child: BlocConsumer<UserPrefersCubit, UserPrefersState>(
         listener: (context, state) {
           if (state is SubmitUserPrefersSuccess) {
+            modifyUserPrefersCache(cubit);
             showCustomSnackBar(context, 'User Prefers Submitted Successfully');
           } else if (state is SubmitUserPrefersFailure) {
             showCustomSnackBar(context, state.errMessage);

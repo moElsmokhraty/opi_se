@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'partner.dart';
 import 'language.dart';
 import 'notification.dart';
 import '../../../../../home/data/models/requests_models/get_match_requests_response/partner_request.dart';
@@ -14,13 +15,13 @@ class UserData extends Equatable {
   final String? profileImage;
   final bool? isVerified;
   final int? numOfReports;
-  final dynamic partnerId;
-  final dynamic matchId;
+  final Partner? partner;
+  final String? matchId;
   final bool? isAvailable;
   final DateTime? joinedAt;
   final List<Language>? languages;
+  final bool? getUserPrefers;
   final List<PartnerRequest>? partnerRequests;
-  final List<dynamic>? history;
   final List<Notification>? notifications;
   final int? v;
 
@@ -35,13 +36,13 @@ class UserData extends Equatable {
     this.profileImage,
     this.isVerified,
     this.numOfReports,
-    this.partnerId,
+    this.partner,
     this.matchId,
     this.isAvailable,
     this.joinedAt,
     this.languages,
+    this.getUserPrefers,
     this.partnerRequests,
-    this.history,
     this.v,
     this.notifications,
   });
@@ -57,8 +58,10 @@ class UserData extends Equatable {
         profileImage: json['profileImage'] as String?,
         isVerified: json['isVerified'] as bool?,
         numOfReports: json['numOfReports'] as int?,
-        partnerId: json['partnerId'] as dynamic,
-        matchId: json['matchId'] as dynamic,
+        partner: json['partnerID'] == null
+            ? null
+            : Partner.fromJson(json['partnerId'] as Map<String, dynamic>),
+        matchId: json['matchId'] as String?,
         isAvailable: json['isAvailable'] as bool?,
         joinedAt: json['joinedAt'] == null
             ? null
@@ -69,10 +72,10 @@ class UserData extends Equatable {
         notifications: (json['notifications'] as List<dynamic>?)
             ?.map((e) => Notification.fromJson(e as Map<String, dynamic>))
             .toList(),
+        getUserPrefers: json['getUserPrefers'] as bool?,
         partnerRequests: (json['partnerRequests'] as List<dynamic>?)
             ?.map((e) => PartnerRequest.fromJson(e as Map<String, dynamic>))
             .toList(),
-        history: json['history'] as List<dynamic>?,
         v: json['__v'] as int?,
       );
 
@@ -87,13 +90,13 @@ class UserData extends Equatable {
         'profileImage': profileImage,
         'isVerified': isVerified,
         'numOfReports': numOfReports,
-        'partnerId': partnerId,
+        'partnerId': partner?.toJson(),
         'matchId': matchId,
         'isAvailable': isAvailable,
         'joinedAt': joinedAt?.toIso8601String(),
+        'getUserPrefers': getUserPrefers,
         'languages': languages?.map((e) => e.toJson()).toList(),
         'partnerRequests': partnerRequests,
-        'history': history,
         '__v': v,
       };
 
@@ -110,13 +113,13 @@ class UserData extends Equatable {
       profileImage,
       isVerified,
       numOfReports,
-      partnerId,
+      partner,
       matchId,
       isAvailable,
       joinedAt,
+      getUserPrefers,
       languages,
       partnerRequests,
-      history,
       v,
     ];
   }

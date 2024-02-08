@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/constants.dart';
+import '../../../domain/use_cases/login_use_case.dart';
 import '../../../data/models/login_models/login_request.dart';
 import '../../../data/models/login_models/login_response/login_response.dart';
-import '../../../domain/use_cases/login_use_case.dart';
 
 part 'login_state.dart';
 
@@ -37,11 +39,12 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login() async {
     if (!formKey.currentState!.validate()) return;
     emit(LoginLoading());
+    fcmToken = await FirebaseMessaging.instance.getToken();
     var result = await _loginUseCase.call(
       LoginRequest(
-        userName: emailController.text,
-        password: passwordController.text,
-        deviceToken: 'deviceToken',
+        userName: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        deviceToken: fcmToken,
       ),
     );
     result.fold((failure) {

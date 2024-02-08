@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../../../auth/data/models/login_models/login_response/language.dart';
 
-
 class EditProfileRequest extends Equatable {
   final String? userName;
   final String? email;

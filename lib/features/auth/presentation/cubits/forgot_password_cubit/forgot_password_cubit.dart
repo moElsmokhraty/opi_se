@@ -27,7 +27,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     if (!formKey.currentState!.validate()) return;
     emit(ForgotPasswordLoading());
     var result = await _forgotPasswordUseCase.call(
-      ForgotPasswordRequest(email: emailController.text),
+      ForgotPasswordRequest(email: emailController.text.trim()),
     );
     result.fold((failure) {
       emit(ForgotPasswordFailure(failure.errMessage));

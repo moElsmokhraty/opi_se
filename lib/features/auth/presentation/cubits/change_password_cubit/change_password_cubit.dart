@@ -61,9 +61,9 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     emit(ChangePasswordLoading());
     var result = await _changePasswordUseCase.call(
       ChangePasswordRequest(
-        oldPassword: currentPasswordController.text,
-        newPassword: newPasswordController.text,
-        confirmNewPassword: confirmNewPasswordController.text,
+        oldPassword: currentPasswordController.text.trim(),
+        newPassword: newPasswordController.text.trim(),
+        confirmNewPassword: confirmNewPasswordController.text.trim(),
       ),
     );
     result.fold((failure) {
