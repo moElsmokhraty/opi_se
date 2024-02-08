@@ -27,6 +27,7 @@ import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubi
 import 'package:opi_se/features/notes/presentation/views/add_note_view/add_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/edit_note_view/edit_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
+import 'package:opi_se/features/settings/presentation/cubits/edit_profile_cubit.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
@@ -43,6 +44,7 @@ import '../../../features/home/domain/use_cases/decline_match_request_use_case.d
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import '../../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
+import '../../../features/home/domain/use_cases/send_partner_request_use_case.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -57,6 +59,7 @@ import '../../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
 import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
+import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import '../constants.dart';
 
 abstract class AppRouter {
@@ -138,7 +141,12 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.editProfile,
-        builder: (context, state) => const EditProfileView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => EditProfileCubit(
+            getIt.get<EditProfileUseCase>(),
+          ),
+          child: const EditProfileView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.profile,
@@ -146,9 +154,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.home,
-        builder: (context, state) => BlocProvider<PartnerRecommendationsCubit>(
+        builder: (context, state) => BlocProvider(
           create: (context) => PartnerRecommendationsCubit(
             getIt.get<GetPartnerRecommendationsUseCase>(),
+            getIt.get<SendPartnerRequestsUseCase>(),
           )..getPartnerRecommendations(),
           child: const HomeView(),
         ),

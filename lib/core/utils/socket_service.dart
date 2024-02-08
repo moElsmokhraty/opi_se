@@ -5,37 +5,23 @@ import 'constants.dart';
 // ignore_for_file: avoid_print
 
 class SocketService {
-  static io.Socket? socket;
+  static late io.Socket socket;
 
   static void connect() {
     try {
-      socket = io.io(
-        APIConfig.baseUrl,
-        <String, dynamic>{
-          'transports': ['websocket'],
-          'autoConnect': true,
-          'autoReconnect': true,
-          'query': {
-            'userId': userId,
-            'matchId': matchId,
-            'email': email,
-            'fcmToken': fcmToken,
-            'nationalId': nationalId,
-            'token': token,
-          },
-        },
-      );
-      socket!.connect();
-      socket!.onConnect((_) {
+      configureSocket();
+      socket.connect();
+      socket.onConnect((_) {
         print('Connected to socket');
         emit(
-            eventName: 'joinUserRoom',
-            data: {},
-            ack: (data) {
-              print('joinUserRoom ack: $data');
-            });
+          eventName: 'joinUserRoom',
+          data: {},
+          ack: (data) {
+            print('joinUserRoom ack: $data');
+          },
+        );
       });
-      socket!.onDisconnect((_) {
+      socket.onDisconnect((_) {
         disconnect();
         print('Disconnected from socket');
       });
@@ -45,8 +31,27 @@ class SocketService {
   }
 
   static void disconnect() {
-    socket!.dispose();
-    socket!.disconnect();
+    socket.dispose();
+    socket.disconnect();
+  }
+
+  static void configureSocket() {
+    socket = io.io(
+      APIConfig.baseUrl,
+      <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': true,
+        'autoReconnect': true,
+        'query': {
+          'userId': userId,
+          'matchId': matchId,
+          'email': email,
+          'fcmToken': fcmToken,
+          'nationalId': nationalId,
+          'token': token,
+        },
+      },
+    );
   }
 
   static void emit({
@@ -54,18 +59,10 @@ class SocketService {
     Map<String, dynamic>? data,
     Function? ack,
   }) {
-    if (socket!.connected) {
-      try {
-        socket!.emitWithAck(eventName, data, ack: ack);
-        print('Emitted event: $eventName');
-      } catch (e) {
-        print('Error emitting event: $e');
-      }
-    } else {
-      connect();
-      Future.delayed(const Duration(seconds: 2), () {
-        socket!.emitWithAck(eventName, data, ack: ack);
-      });
+    try {
+      socket.emitWithAck(eventName, data, ack: ack);
+    } catch (e) {
+      print('Error emitting event: $e');
     }
   }
 
@@ -73,17 +70,12 @@ class SocketService {
     required String eventName,
     void Function(Map<String, dynamic>)? handler,
   }) {
-    if (socket!.connected) {
-      socket!.on(eventName, (eventData) {
+    try {
+      socket.on(eventName, (eventData) {
         handler!(eventData as Map<String, dynamic>);
       });
-    } else {
-      connect();
-      Future.delayed(const Duration(seconds: 2), () {
-        socket!.on(eventName, (eventData) {
-          handler!(eventData as Map<String, dynamic>);
-        });
-      });
+    } catch (e) {
+      print('Error listening to event: $e');
     }
   }
 }

@@ -8,10 +8,12 @@ class APIConfig {
   static const String uploadNationalId =
       'https://ocr-api-ysqv.onrender.com/extract_nationalId';
   static const String submitUserPrefers = 'submitUserPrefers';
+  static const String editProfile = 'editProfile';
   static const String getChat = 'getPartnerChat';
   static const String getMatchRequests = 'getMatchRequest';
   static const String acceptMatchRequest = 'acceptMatchRequest';
   static const String declineMatchRequest = 'declineMatchRequest';
+  static const String sendPartnerRequest = 'sendPartnerRequest';
   static const String getProfile = 'searchForSpecificPartner';
   static const String getNotes = 'getAllNotes';
   static const String addNote = 'addNote';

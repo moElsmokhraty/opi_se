@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
+import 'package:opi_se/features/home/presentation/cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class RecommendationItem extends StatelessWidget {
@@ -10,6 +12,7 @@ class RecommendationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PartnerRecommendationsCubit cubit = BlocProvider.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
       child: Container(
@@ -75,7 +78,10 @@ class RecommendationItem extends StatelessWidget {
                         ),
                         const Spacer(),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            print(userData.id!);
+                            await cubit.sendPartnerRequest(userData.id!);
+                          },
                           child: Container(
                             height: 28.h,
                             padding: EdgeInsets.symmetric(

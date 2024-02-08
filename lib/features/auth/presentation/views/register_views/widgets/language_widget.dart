@@ -37,7 +37,7 @@ class LanguageWidget extends StatelessWidget {
               SizedBox(height: screenHeight * 0.005),
               AuthTextField(
                 controller: languageController,
-                hintText: 'Your Language',
+                hintText: '$languageType Language',
                 obscureText: false,
                 prefixIcon: Icon(
                   Icons.language_outlined,

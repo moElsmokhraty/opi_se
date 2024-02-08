@@ -6,6 +6,7 @@ import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
+import '../../features/home/domain/use_cases/send_partner_request_use_case.dart';
 import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
@@ -13,6 +14,8 @@ import '../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../features/notes/domain/use_cases/flush_trash_use_case.dart';
 import '../../features/notes/domain/use_cases/restore_note_use_case.dart';
+import '../../features/settings/data/repos_impl/settings_repo_impl.dart';
+import '../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -151,5 +154,17 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<GetPartnerRecommendationsUseCase>(
     GetPartnerRecommendationsUseCase(getIt.get<RequestsRepoImpl>()),
+  );
+
+  getIt.registerSingleton<SendPartnerRequestsUseCase>(
+    SendPartnerRequestsUseCase(getIt.get<RequestsRepoImpl>()),
+  );
+
+  getIt.registerSingleton<SettingsRepoImpl>(
+    SettingsRepoImpl(getIt.get<ApiService>()),
+  );
+
+  getIt.registerSingleton<EditProfileUseCase>(
+    EditProfileUseCase(getIt.get<SettingsRepoImpl>()),
   );
 }

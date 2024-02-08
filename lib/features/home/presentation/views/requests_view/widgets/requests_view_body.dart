@@ -43,32 +43,43 @@ class RequestsViewBody extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is GetMatchRequestsFailure) {
-          return Center(
-            child: Text(
-              state.failure.errMessage,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/no_requests.png',
+                  width: double.infinity,
+                  height: 350.h,
+                ),
+                SizedBox(height: 25.h),
+                Text(
+                  'No Requests Found',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  state.failure.errMessage,
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.5),
+                    fontSize: 20.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
             ),
           );
         } else if (state is GetMatchRequestsLoading) {
           return const Center(
               child: CircularProgressIndicator(color: Color(0xff036666)));
         } else {
-          if (cubit.partnerRequests.isEmpty) {
-            return Center(
-              child: Text(
-                'No requests yet',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            );
-          }
           return ListView.builder(
             itemCount: cubit.partnerRequests.length,
             physics: const BouncingScrollPhysics(),

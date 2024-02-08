@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
-import '../../../../auth/data/models/login_models/login_response/user_data.dart';
+import '../../../auth/data/models/login_models/login_response/user_data.dart';
 
 class GetPartnerRecommendationsResponse extends Equatable {
   final String? message;
   final int? totalNumOfItems;
   final int? totalPages;
-  final int? currentPage;
+  final String? currentPage;
   final List<UserData>? recommendations;
 
   const GetPartnerRecommendationsResponse({
@@ -30,7 +30,7 @@ class GetPartnerRecommendationsResponse extends Equatable {
         message: json['message'] as String?,
         totalNumOfItems: json['totalNumOfItems'] as int?,
         totalPages: json['totalPages'] as int?,
-        currentPage: json['currentPage'] as int?,
+        currentPage: json['currentPage'] as String?,
         recommendations: (json['data'] as List<dynamic>?)
             ?.map((e) => UserData.fromJson(e as Map<String, dynamic>))
             .toList(),

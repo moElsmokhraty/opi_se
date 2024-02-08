@@ -15,6 +15,4 @@ abstract class TrashRepo {
 
   Future<Either<Failure, DeleteNoteFromTrashResponse>> deleteNoteFromTrash(
       DeleteNoteFromTrashRequest request);
-
-
 }
