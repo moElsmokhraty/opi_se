@@ -9,7 +9,6 @@ import '../../profile_view/widgets/about_me_widget.dart';
 import '../../profile_view/widgets/header_widget.dart';
 import '../../profile_view/widgets/id_widget.dart';
 import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
-import 'package:opi_se/features/home/presentation/views/profile_view/widgets/skills_widget.dart';
 
 class PartnerRequestViewBody extends StatelessWidget {
   const PartnerRequestViewBody({super.key, required this.requestId});
@@ -92,7 +91,7 @@ class PartnerRequestViewBody extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.025),
                 const AboutMeWidget(),
                 SizedBox(height: screenHeight * 0.025),
-                const ProfileSkillsWidget(),
+                //const ProfileSkillsWidget(),
               ],
             ),
           );

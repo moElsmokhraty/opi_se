@@ -16,6 +16,7 @@ import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_p
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
+import 'package:opi_se/features/dashboard/presentation/views/dashboard_view/dashboard_view.dart';
 import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
 import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
 import 'package:opi_se/features/home/presentation/cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
@@ -64,7 +65,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.editProfile,
+    initialLocation: RoutesConfig.dashboard,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -241,6 +242,10 @@ abstract class AppRouter {
           )..getTrash(page: 1, limit: 10),
           child: const TrashView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.dashboard,
+        builder: (context, state) => const DashboardView(),
       ),
     ],
   );

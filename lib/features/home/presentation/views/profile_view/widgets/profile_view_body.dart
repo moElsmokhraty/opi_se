@@ -1,9 +1,10 @@
-import 'header_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/utils/constants.dart';
+import 'profile_header_widget.dart';
+import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/widgets/id_widget.dart';
-import 'package:opi_se/features/home/presentation/views/profile_view/widgets/skills_widget.dart';
+import 'package:opi_se/features/home/presentation/views/profile_view/widgets/profile_skills_widget.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/widgets/about_me_widget.dart';
 
 class ProfileViewBody extends StatelessWidget {
@@ -18,10 +19,10 @@ class ProfileViewBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //const HeaderWidget(),
+          const ProfileHeaderWidget(),
           SizedBox(height: screenHeight * 0.01),
           Text(
-            'Mohamed Elsmokhraty',
+            userCache!.userName!,
             style: AppStyles.textStyle16.copyWith(
               fontSize: 25.sp,
               color: Colors.black,
@@ -29,7 +30,7 @@ class ProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.005),
           Text(
-            'Flutter Developer',
+            userCache!.specialization!,
             style: AppStyles.textStyle16.copyWith(
               color: Colors.black.withOpacity(0.8),
               fontWeight: FontWeight.w500,
@@ -37,7 +38,7 @@ class ProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.005),
           Text(
-            '21 Years',
+            '${userCache!.age} Years',
             style: AppStyles.textStyle16.copyWith(
               color: Colors.black.withOpacity(0.6),
               fontWeight: FontWeight.w400,
@@ -56,7 +57,7 @@ class ProfileViewBody extends StatelessWidget {
           SizedBox(height: screenHeight * 0.025),
           const AboutMeWidget(),
           SizedBox(height: screenHeight * 0.025),
-          const ProfileSkillsWidget(),
+          ProfileSkillsWidget(skills: userCache!.skills!),
         ],
       ),
     );

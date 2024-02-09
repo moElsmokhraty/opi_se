@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/utils/styling/styles.dart';
+import '../../../../../auth/data/models/login_models/login_response/user_skill.dart';
 
 class ProfileSkillsWidget extends StatelessWidget {
-  const ProfileSkillsWidget({super.key});
+  const ProfileSkillsWidget({super.key, required this.skills});
+
+  final List<UserSkill> skills;
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    final List<String> skills = ['Dart', 'Flutter', 'OOP', 'Java', 'C++'];
     return Container(
       width: double.infinity,
       decoration: ShapeDecoration(
@@ -44,12 +46,12 @@ class ProfileSkillsWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        skill,
+                        skill.skillName!,
                         style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                       ),
                       SizedBox(width: 12.w),
                       Text(
-                        '3',
+                       '${skill.skillRate!}',
                         style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                       ),
                     ],

@@ -49,13 +49,14 @@ class RequestsViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/no_requests.png',
+                  'assets/images/error.png',
                   width: double.infinity,
                   height: 350.h,
                 ),
                 SizedBox(height: 25.h),
                 Text(
-                  'No Requests Found',
+                  'Oops! Page not found ',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 30.sp,
@@ -66,6 +67,7 @@ class RequestsViewBody extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Text(
                   state.failure.errMessage,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 20.sp,
@@ -80,6 +82,43 @@ class RequestsViewBody extends StatelessWidget {
           return const Center(
               child: CircularProgressIndicator(color: Color(0xff036666)));
         } else {
+          if (cubit.partnerRequests.isEmpty) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/no_requests.png',
+                    width: double.infinity,
+                    height: 350.h,
+                  ),
+                  SizedBox(height: 25.h),
+                  Text(
+                    'No Requests Found',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  Text(
+                    'You don\'t have any requests at the moment',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 20.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
           return ListView.builder(
             itemCount: cubit.partnerRequests.length,
             physics: const BouncingScrollPhysics(),

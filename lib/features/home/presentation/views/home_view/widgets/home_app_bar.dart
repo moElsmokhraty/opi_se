@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../../core/utils/styling/styles.dart';
@@ -38,7 +39,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hi, Nada',
+                  'Hi, ${userCache!.userName!.split(' ').first}',
                   style: AppStyles.textStyle24.copyWith(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
