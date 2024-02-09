@@ -6,13 +6,14 @@ import '../../../../../../core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/functions/validate_text.dart';
-import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/gender_widget.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/register_label.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/language_widget.dart';
+
+import 'register_button.dart';
 
 class SecondRegisterViewBody extends StatelessWidget {
   const SecondRegisterViewBody({super.key});
@@ -39,7 +40,7 @@ class SecondRegisterViewBody extends StatelessWidget {
           key: cubit.secondFormKey,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+            padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 16.h, bottom: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -87,10 +88,12 @@ class SecondRegisterViewBody extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.005),
                 AuthTextField(
                   controller: cubit.locationController,
-                  hintText: 'Select Your Location',
+                  hintText: state is GetLocationLoading
+                      ? 'Loading...'
+                      : 'Enter Your Location',
                   readOnly: true,
-                  onTap: () {
-                    GoRouter.of(context).push(RoutesConfig.map);
+                  onTap: () async {
+                    await cubit.getLocation();
                   },
                   prefixIcon: Icon(
                     Icons.location_on_outlined,
@@ -122,40 +125,26 @@ class SecondRegisterViewBody extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 AuthTextField(
-                  readOnly: true,
+                  //readOnly: true,
                   controller: cubit.nationalIdController,
-                  hintText: state is UploadNationalIdImageLoading
-                      ? 'Uploading...'
-                      : 'Upload Your National ID',
-                  onTap: () {
-                    cubit.showBottomSheet(context);
-                  },
+                  hintText: 'Enter Your National ID',
+                  // is UploadNationalIdImageLoading
+                  //     ? 'Uploading...'
+                  //     : 'Upload Your National ID',
+                  // onTap: () {
+                  //   cubit.showBottomSheet(context);
+                  // },
                   prefixIcon: Icon(
                     CupertinoIcons.doc_person,
                     size: 21.sp,
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty || value.trim().isEmpty) {
-                      return 'Please Add File';
-                    } else {
-                      return null;
-                    }
+                    return validateText('NationalId', value!);
                   },
                 ),
                 SizedBox(height: screenHeight * 0.035),
-                state is RegisterLoading
-                    ? const Center(
-                        child:
-                            CircularProgressIndicator(color: Color(0xff036666)))
-                    : AuthButton(
-                        text: 'Sign Up',
-                        onPressed: () async {
-                          await cubit.register();
-                        },
-                        backColor: const Color(0xff036666),
-                        textColor: Colors.white,
-                      ),
+                RegisterButton(state: state),
               ],
             ),
           ),

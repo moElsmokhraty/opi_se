@@ -1,5 +1,8 @@
 bool validateLanguage(String language) {
-  return defaultLanguagesList.contains(language);
+  String capitalizedLanguage =
+      language[0].toUpperCase() + language.substring(1);
+  return defaultLanguagesList.contains(language) ||
+      defaultLanguagesList.contains(capitalizedLanguage);
 }
 
 final List<String> defaultLanguagesList = [

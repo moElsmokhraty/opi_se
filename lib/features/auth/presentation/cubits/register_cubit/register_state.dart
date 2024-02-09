@@ -30,3 +30,9 @@ class UploadNationalIdImageFailure extends RegisterState {
 
   final String errMessage;
 }
+
+class GetLocationLoading extends RegisterState {}
+
+class GetLocationSuccess extends RegisterState {}
+
+class GetLocationFailure extends RegisterState {}

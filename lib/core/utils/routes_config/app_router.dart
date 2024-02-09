@@ -65,7 +65,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.dashboard,
+    initialLocation: RoutesConfig.login,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
