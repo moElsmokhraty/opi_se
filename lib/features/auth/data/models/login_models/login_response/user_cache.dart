@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import '../../features/auth/data/models/login_models/login_response/partner.dart';
-import '../../features/auth/data/models/login_models/login_response/language.dart';
-import '../../features/auth/data/models/login_models/login_response/user_skill.dart';
+import 'language.dart';
+import 'partner.dart';
+import 'user_skill.dart';
 
 part 'user_cache.g.dart';
 

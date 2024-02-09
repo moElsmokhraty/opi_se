@@ -32,7 +32,7 @@ class NoteItem extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               await BlocProvider.of<NotesCubit>(context).pinNote(
-                matchId: matchId!,
+                matchId: userCache!.matchId!,
                 noteId: note!.id!,
                 isPinned: note!.isPinned! ? 'false' : 'true',
               );
@@ -131,7 +131,7 @@ class NoteItem extends StatelessWidget {
                 onTap: () async {
                   await BlocProvider.of<NotesCubit>(context).deleteNote(
                     DeleteNoteRequest(
-                      matchId: matchId!,
+                      matchId: userCache!.matchId!,
                       noteId: note!.id!,
                     ),
                   );

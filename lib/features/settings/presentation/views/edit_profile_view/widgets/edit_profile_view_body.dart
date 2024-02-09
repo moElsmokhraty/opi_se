@@ -19,62 +19,70 @@ class EditProfileViewBody extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Personal Information',
-            style: AppStyles.textStyle16.copyWith(
-              fontSize: 22.sp,
-              color: Colors.black,
+      child: Form(
+        key: cubit.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Personal Information',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 22.sp,
+                color: Colors.black,
+              ),
             ),
-          ),
-          SizedBox(height: screenHeight * 0.03),
-          Text(
-            'Username',
-            style: AppStyles.textStyle16.copyWith(
-              fontSize: 14.sp,
-              color: Colors.black,
+            SizedBox(height: screenHeight * 0.03),
+            Text(
+              'Username',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
             ),
-          ),
-          SizedBox(height: screenHeight * 0.01),
-          AuthTextField(
-            controller: cubit.userNameController,
-            hintText: 'Username',
-            validator: (value) {
-              return validateText('Username', value!);
-            },
-          ),
-          SizedBox(height: screenHeight * 0.02),
-          Text(
-            'Email',
-            style: AppStyles.textStyle16.copyWith(
-              fontSize: 14.sp,
-              color: Colors.black,
+            SizedBox(height: screenHeight * 0.01),
+            AuthTextField(
+              controller: cubit.userNameController,
+              hintText: 'Username',
+              validator: (value) {
+                return validateText('Username', value!);
+              },
             ),
-          ),
-          SizedBox(height: screenHeight * 0.01),
-          AuthTextField(
-            controller: cubit.emailController,
-            hintText: 'Email',
-            validator: (value) {
-              return validateEmail(value!);
-            },
-          ),
-          SizedBox(height: screenHeight * 0.02),
-          LanguageWidget(
-            languageType: 'First',
-            languageController: cubit.nativeLanguageController,
-            levelController: cubit.nativeLevelController,
-          ),
-          LanguageWidget(
-            languageType: 'Second',
-            languageController: cubit.secondLanguageController,
-            levelController: cubit.secondLevelController,
-          ),
-          SizedBox(height: screenHeight * 0.02),
-          const EditProfileButton(),
-        ],
+            SizedBox(height: screenHeight * 0.02),
+            Text(
+              'Email',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            AuthTextField(
+              controller: cubit.emailController,
+              hintText: 'Email',
+              validator: (value) {
+                return validateEmail(value!);
+              },
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            LanguageWidget(
+              languageType: 'First',
+              languageController: cubit.nativeLanguageController,
+              levelController: cubit.nativeLevelController,
+            ),
+            LanguageWidget(
+              languageType: 'Second',
+              languageController: cubit.secondLanguageController,
+              levelController: cubit.secondLevelController,
+            ),
+            LanguageWidget(
+              languageType: 'Third',
+              languageController: cubit.thirdLanguageController,
+              levelController: cubit.thirdLevelController,
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            const EditProfileButton(),
+          ],
+        ),
       ),
     );
   }

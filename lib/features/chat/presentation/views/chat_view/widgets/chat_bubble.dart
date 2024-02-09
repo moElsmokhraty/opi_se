@@ -11,7 +11,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSender = message?.messageSender == userId;
+    bool isSender = message?.messageSender == userCache!.id!;
     String? formattedDate = message?.sentAt == null
         ? ''
         : '${message?.sentAt?.hour.toString()}:${message?.sentAt?.minute.toString()} ${message!.sentAt!.hour < 12 ? 'AM' : 'PM'}';

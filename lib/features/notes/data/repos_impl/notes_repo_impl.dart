@@ -31,7 +31,7 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getNotes,
-        token: token,
+        token: userCache!.token!,
         params: {
           'matchId': matchId,
           'page': page,
@@ -55,7 +55,7 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.addNote,
-        token: token,
+        token: userCache!.token!,
         body: request.toJson(),
         params: {'matchId': matchId},
       );
@@ -77,7 +77,7 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.patch(
         endpoint: APIConfig.pinNote,
-        token: token,
+        token: userCache!.token!,
         body: {"isPinned": isPinned},
         params: {
           'matchId': matchId,
@@ -100,7 +100,7 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.deleteNote,
-        token: token,
+        token: userCache!.token!,
         params: request.toJson(),
       );
       return Right(DeleteNoteResponse.fromJson(data));
@@ -119,10 +119,10 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.patch(
         endpoint: APIConfig.editNote,
-        token: token,
+        token: userCache!.token!,
         body: request.toJson(),
         params: {
-          'matchId': matchId,
+          'matchId': userCache!.matchId!,
           'noteId': request.noteId,
         },
       );
@@ -141,7 +141,7 @@ class NotesRepoImpl implements NotesRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.restoreNote,
-        token: token,
+        token: userCache!.token!,
         params: request.toJson(),
       );
       return Right(RestoreNoteResponse.fromJson(data));

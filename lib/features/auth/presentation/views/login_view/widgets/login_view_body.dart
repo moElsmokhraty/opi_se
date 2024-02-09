@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opi_se/core/functions/validate_text.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,7 @@ class LoginViewBody extends StatelessWidget {
             GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
           } else {
             cacheUserData(state.response);
+            SocketService.connect();
             showCustomSnackBar(context, 'Logged in successfully!');
             GoRouter.of(context).pushReplacement(RoutesConfig.home);
           }

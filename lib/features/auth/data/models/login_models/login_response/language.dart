@@ -20,7 +20,6 @@ class Language extends Equatable {
   Map<String, dynamic> toJson() => {
         'languageName': languageName,
         'level': level,
-        '_id': id,
       };
 
   @override

@@ -13,13 +13,15 @@ class SocketService {
       socket.connect();
       socket.onConnect((_) {
         print('Connected to socket');
-        emit(
-          eventName: 'joinUserRoom',
-          data: {},
-          ack: (data) {
-            print('joinUserRoom ack: $data');
-          },
-        );
+        if (userCache != null) {
+          emit(
+            eventName: 'joinUserRoom',
+            data: {},
+            ack: (data) {
+              print('joinUserRoom ack: $data');
+            },
+          );
+        }
       });
       socket.onDisconnect((_) {
         disconnect();
@@ -43,12 +45,12 @@ class SocketService {
         'autoConnect': true,
         'autoReconnect': true,
         'query': {
-          'userId': userId,
-          'matchId': matchId,
-          'email': email,
-          'fcmToken': fcmToken,
-          'nationalId': nationalId,
-          'token': token,
+          'userId': userCache?.id,
+          'matchId': userCache?.matchId,
+          'email': userCache?.email,
+          'fcmToken': userCache?.fcmToken,
+          'nationalId': userCache?.nationalId,
+          'token': userCache?.token,
         },
       },
     );

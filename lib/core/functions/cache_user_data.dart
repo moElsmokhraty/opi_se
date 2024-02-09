@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import '../utils/constants.dart';
-import 'package:opi_se/core/models/user_cache.dart';
+import '../../features/auth/data/models/login_models/login_response/user_cache.dart';
 import '../../features/auth/data/models/login_models/login_response/login_response.dart';
 
 void cacheUserData(LoginResponse response) {
@@ -27,4 +27,5 @@ void cacheUserData(LoginResponse response) {
       skills: response.profileDetails?.userSkills,
     ),
   );
+  userCache = box.get('user');
 }

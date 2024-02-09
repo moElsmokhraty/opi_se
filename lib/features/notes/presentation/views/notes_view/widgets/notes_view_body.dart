@@ -16,7 +16,7 @@ class NotesViewBody extends StatelessWidget {
     NotesCubit cubit = BlocProvider.of<NotesCubit>(context);
     return RefreshIndicator(
       onRefresh: () async {
-        await cubit.getNotes(matchId!, 1, 10);
+        await cubit.getNotes(userCache!.matchId!, 1, 10);
       },
       child: BlocConsumer<NotesCubit, NotesState>(
         listener: (context, state) async {
@@ -28,12 +28,12 @@ class NotesViewBody extends StatelessWidget {
             } else {
               showCustomSnackBar(context, 'Note unpinned Successfully');
             }
-            await cubit.getNotes(matchId!, 1, 10);
+            await cubit.getNotes(userCache!.matchId!, 1, 10);
           } else if (state is PinNoteLoading) {
             showCustomSnackBar(context, 'Loading...');
           } else if (state is DeleteNoteSuccess) {
             showCustomSnackBar(context, 'Note deleted Successfully');
-            await cubit.getNotes(matchId!, 1, 10);
+            await cubit.getNotes(userCache!.matchId!, 1, 10);
           } else if (state is DeleteNoteFailure) {
             showCustomSnackBar(context, state.failure.errMessage);
           } else if (state is DeleteNoteLoading) {

@@ -31,7 +31,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.login,
-        token: token,
         body: request.toJson(),
       );
       return Right(LoginResponse.fromJson(data));
@@ -50,7 +49,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.register,
-        token: token,
         body: request.toJson(),
       );
       return Right(RegisterResponse.fromJson(data));
@@ -68,7 +66,7 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.changePassword,
-        token: token,
+        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(ChangePasswordResponse.fromJson(data));
@@ -86,7 +84,7 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.forgotPassword,
-        token: token,
+        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(ForgotPasswordResponse.fromJson(data));
@@ -105,7 +103,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.verifyAccount,
-        token: token,
         params: {'email': email},
       );
       return Right(VerifyAccountResponse.fromJson(data));
@@ -157,7 +154,7 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.submitUserPrefers,
-        token: token,
+        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(UserPrefersResponse.fromJson(data));

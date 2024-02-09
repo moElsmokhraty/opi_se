@@ -64,7 +64,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.userPrefers,
+    initialLocation: RoutesConfig.editProfile,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -144,7 +144,7 @@ abstract class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => EditProfileCubit(
             getIt.get<EditProfileUseCase>(),
-          ),
+          )..setInitialValues(),
           child: const EditProfileView(),
         ),
       ),
@@ -210,7 +210,7 @@ abstract class AppRouter {
             getIt.get<GetNotesUseCase>(),
             getIt.get<PinNoteUseCase>(),
             getIt.get<DeleteNoteUseCase>(),
-          )..getNotes(matchId!, 1, 10),
+          )..getNotes(userCache!.matchId!, 1, 10),
           child: const NotesView(),
         ),
       ),

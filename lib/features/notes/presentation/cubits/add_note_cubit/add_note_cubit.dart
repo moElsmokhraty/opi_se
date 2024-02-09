@@ -46,7 +46,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
             (k) => noteColors[k] == backgroundColor,
           ),
         ),
-        matchId,
+        userCache!.matchId!,
       ]);
       result.fold(
         (failure) => emit(AddNoteFailure(failure)),

@@ -24,8 +24,9 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getMatchRequests,
-        token: token,
+        token: userCache!.token!,
       );
+      print(data);
       return Right(GetMatchRequestsResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
@@ -43,7 +44,7 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.declineMatchRequest,
-        token: token,
+        token: userCache!.token!,
         deviceToken: fcmToken,
         body: request.toJson(),
       );
@@ -65,7 +66,7 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.acceptMatchRequest,
-        token: token,
+        token: userCache!.token!,
         deviceToken: fcmToken,
         params: {
           'partner2Id': partner2Id,
@@ -87,7 +88,7 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getProfile,
-        token: token,
+        token: userCache!.token!,
         params: {'userId': userId},
       );
       return Right(GetProfileResponse.fromJson(data));

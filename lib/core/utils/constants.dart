@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/core/models/user_cache.dart';
+import '../../features/auth/data/models/login_models/login_response/user_cache.dart';
 
 double height = 812.h;
 
 double width = 375.w;
-
-String? token;
-
-String? userId;
-
-String? email;
-
-String? nationalId;
-
-String? matchId;
 
 String? fcmToken;
 
@@ -26,6 +16,6 @@ const Map<String, Color> noteColors = {
   '--note5': Color(0xFFFFE6C8),
 };
 
-String boxName  = 'userCacheBox';
+String boxName = 'userCacheBox';
 
 UserCache? userCache;

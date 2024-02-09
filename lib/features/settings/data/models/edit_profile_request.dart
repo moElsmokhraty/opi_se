@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import '../../../auth/data/models/login_models/login_response/language.dart';
 
 class EditProfileRequest extends Equatable {
@@ -19,8 +20,8 @@ class EditProfileRequest extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        'userName': userName,
-        'email': email,
+        if (userName != userCache!.userName) 'userName': userName,
+        if (email != userCache!.email) 'email': email,
         'languages': languages?.map((e) => e.toJson()).toList(),
       };
 

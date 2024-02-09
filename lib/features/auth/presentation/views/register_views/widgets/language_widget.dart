@@ -122,7 +122,8 @@ class LanguageWidget extends StatelessWidget {
                   onSelected: (value) {
                     levelController.text = value.toString();
                   },
-                  initialSelection: '1',
+                  initialSelection:
+                      levelController.text.isEmpty ? '1' : levelController.text,
                 ),
               ),
             ],

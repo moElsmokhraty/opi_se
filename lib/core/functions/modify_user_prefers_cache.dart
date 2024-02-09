@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import '../utils/constants.dart';
-import '../models/user_cache.dart';
+import '../../features/auth/data/models/login_models/login_response/user_cache.dart';
 import '../../features/auth/presentation/cubits/user_prefers_cubit/user_prefers_cubit.dart';
 
 void modifyUserPrefersCache(UserPrefersCubit cubit) {
