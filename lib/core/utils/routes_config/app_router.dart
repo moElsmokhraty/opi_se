@@ -15,6 +15,7 @@ import 'package:opi_se/features/auth/presentation/views/register_views/map_view.
 import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_prefers_view.dart';
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
+import 'package:opi_se/features/chat/presentation/views/chat_media_view/chat_media_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/dashboard/presentation/views/dashboard_view/dashboard_view.dart';
 import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
@@ -65,7 +66,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.login,
+    initialLocation: RoutesConfig.chatMedia,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -171,6 +172,10 @@ abstract class AppRouter {
           )..getChat('657864d6b9aeadd65b0d92b9'),
           child: const ChatView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.chatMedia,
+        builder: (context, state) => const ChatMediaView(),
       ),
       GoRoute(
         path: RoutesConfig.call,

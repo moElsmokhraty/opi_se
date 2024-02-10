@@ -17,6 +17,7 @@ abstract class RoutesConfig {
   static const String requests = '/requests';
   static const String progress = '/progress';
   static const String chat = '/chat';
+  static const String chatMedia = '/chat-media';
   static const String call = '/call';
   static const String notes = '/notes';
   static const String addNote = '/add-note';
