@@ -25,4 +25,5 @@ class APIConfig {
   static const String deleteNoteFromTrash = 'deleteNoteFromTrash';
   static const String restoreNote = 'restoreNote';
   static const String getPartnerRecommendations = 'getPartnerRecommendation';
+  static const changeProfileImage = 'changeProfileImage';
 }

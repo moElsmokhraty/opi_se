@@ -1,14 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import '../../../../../../core/utils/styling/styles.dart';
+import '../../../cubits/profile_cubit/profile_cubit.dart';
 
 class ProfileHeaderWidget extends StatelessWidget {
-  const ProfileHeaderWidget({super.key});
+  const ProfileHeaderWidget({super.key, required this.state});
+
+  final ProfileState state;
 
   @override
   Widget build(BuildContext context) {
+    ProfileCubit cubit = BlocProvider.of<ProfileCubit>(context);
     return Stack(
       children: [
         Column(
@@ -53,35 +59,55 @@ class ProfileHeaderWidget extends StatelessWidget {
           left: 11.w,
           child: Stack(
             children: [
-              Container(
-                height: 150.h,
-                width: 150.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 8.w,
-                  ),
-                  color: const Color(0XFF9AC2C2), //by abdelaziz wal3ana
-                ),
-                child: CircleAvatar(
-                  radius: 65.r,
-                  backgroundColor: const Color(0XFF9AC2C2),
-                  child: !userCache!.profileImage!.startsWith('http')
-                      ? Text(
-                          userCache!.userName![0].toUpperCase() +
-                              userCache!.userName![1].toUpperCase(),
-                          style: AppStyles.textStyle16.copyWith(
-                            fontSize: 30.sp,
-                          ),
-                        )
-                      : CachedNetworkImage(
-                          imageUrl: userCache!.profileImage!,
-                          height: 150.h,
-                          width: 150.w,
-                          fit: BoxFit.cover,
-                        ),
-                ),
+              StatefulBuilder(
+                builder: (
+                  BuildContext context,
+                  void Function(void Function()) setState,
+                ) {
+                  if (state is GetProfileSuccess){
+                    setState(() {});
+                  }
+                  return Container(
+                    height: 150.h,
+                    width: 150.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 8.w,
+                      ),
+                      color: const Color(0XFF9AC2C2),
+                    ),
+                    child: CircleAvatar(
+                      radius: 65.r,
+                      backgroundColor: const Color(0XFF9AC2C2),
+                      child: userCache!.profileImage! == 'default.png'
+                          ? Text(
+                              userCache!.userName![0].toUpperCase() +
+                                  userCache!.userName![1].toUpperCase(),
+                              style: AppStyles.textStyle16.copyWith(
+                                fontSize: 30.sp,
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(150.r),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: CachedNetworkImage(
+                                imageUrl: userCache!.profileImage!,
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Color(0XFF036666),
+                                  ),
+                                ),
+                                height: 150.h,
+                                width: 150.w,
+                                alignment: Alignment.center,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
+                  );
+                },
               ),
               Positioned(
                 bottom: 10.h,
@@ -111,6 +137,9 @@ class ProfileHeaderWidget extends StatelessWidget {
                       return [
                         PopupMenuItem(
                           value: 'upload',
+                          onTap: () async {
+                            await cubit.pickImage();
+                          },
                           child: Row(
                             children: [
                               Icon(
@@ -121,6 +150,29 @@ class ProfileHeaderWidget extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Text(
                                 'Upload Photo',
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'take',
+                          onTap: () async {
+                            await cubit.takeImage();
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.camera,
+                                color: Colors.black,
+                                size: 18.sp,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                'Take Photo',
                                 style: TextStyle(
                                   color: Colors.black.withOpacity(0.7),
                                   fontSize: 14.sp,
@@ -148,6 +200,9 @@ class ProfileHeaderWidget extends StatelessWidget {
                               ),
                             ],
                           ),
+                          onTap: () async {
+                            await cubit.deleteProfileImage();
+                          },
                         ),
                       ];
                     },

@@ -42,11 +42,14 @@ import '../../../features/auth/presentation/views/register_views/second_register
 import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
 import '../../../features/chat/presentation/cubits/chat_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
+import '../../../features/home/domain/use_cases/change_profile_image_use_case.dart';
 import '../../../features/home/domain/use_cases/decline_match_request_use_case.dart';
+import '../../../features/home/domain/use_cases/delete_profile_image_use_case.dart';
 import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart';
 import '../../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/domain/use_cases/send_partner_request_use_case.dart';
+import '../../../features/home/presentation/cubits/profile_cubit/profile_cubit.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -66,7 +69,7 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.chatMedia,
+    initialLocation: RoutesConfig.profile,
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -152,7 +155,14 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.profile,
-        builder: (context, state) => const ProfileView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => ProfileCubit(
+            getIt.get<GetProfileUseCase>(),
+            getIt.get<DeleteProfileImageUseCase>(),
+            getIt.get<ChangeProfileImageUseCase>(),
+          )..getProfile(),
+          child: const ProfileView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.home,
