@@ -27,34 +27,57 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: double.infinity,
       leading: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 18.h),
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/images/avatar_image.png',
-              width: 60.w,
-              height: 60.h,
-            ),
-            SizedBox(width: 10.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Hi, ${userCache!.userName!.split(' ').first}',
-                  style: AppStyles.textStyle24.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
+        child: GestureDetector(
+          onTap: () {
+            GoRouter.of(context).push(RoutesConfig.manageProfile);
+          },
+          child: Row(
+            children: [
+              userCache!.profileImage != 'default.png'
+                  ? CircleAvatar(
+                      radius: 24.r,
+                      backgroundImage: NetworkImage(userCache!.profileImage!),
+                    )
+                  : Container(
+                      width: 50.w,
+                      height: 50.h,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color(0XFF9AC2C2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        userCache!.userName![0].toUpperCase() +
+                            userCache!.userName![1].toUpperCase(),
+                        style: AppStyles.textStyle16.copyWith(
+                          fontSize: 20.sp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+              SizedBox(width: 10.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Hi, ${userCache!.userName!.split(' ').first}',
+                    style: AppStyles.textStyle24.copyWith(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                Text(
-                  'Welcome Back!',
-                  style: AppStyles.textStyle24.copyWith(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w400,
+                  Text(
+                    'Welcome Back!',
+                    style: AppStyles.textStyle24.copyWith(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
       actions: [

@@ -27,6 +27,7 @@ class SecondRegisterViewBody extends StatelessWidget {
         if (state is RegisterFailure) {
           showCustomSnackBar(context, state.errMessage);
         } else if (state is RegisterSuccess) {
+          GoRouter.of(context).pop();
           GoRouter.of(context).pushReplacement(
             RoutesConfig.verifyAccount,
             extra: cubit.emailController.text,

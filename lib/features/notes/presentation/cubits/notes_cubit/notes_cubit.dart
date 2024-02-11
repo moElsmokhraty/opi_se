@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/errors/server_failure.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/pin_note_response.dart';
 import '../../../domain/use_cases/pin_note_use_case.dart';
@@ -25,7 +26,15 @@ class NotesCubit extends Cubit<NotesState> {
 
   List<Note> notes = [];
 
-  Future<void> getNotes(String matchId, int page, int limit) async {
+  Future<void> getNotes(String? matchId, int page, int limit) async {
+    if (matchId == null) {
+      emit(
+        GetNotesFailure(
+          failure: ServerFailure(errMessage: 'You do not have a student partner yet!'),
+        ),
+      );
+      return;
+    }
     emit(GetNotesLoading());
     var result = await _getNotesUseCase.call([matchId, page, limit]);
     result.fold(

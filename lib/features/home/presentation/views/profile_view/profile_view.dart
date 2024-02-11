@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'widgets/profile_view_body.dart';
 
 class ProfileView extends StatelessWidget {
@@ -6,9 +8,28 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: ProfileViewBody(),
+        appBar: AppBar(
+          leading: GestureDetector(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16.w),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 24.sp,
+              ),
+            ),
+            onTap: () {
+              GoRouter.of(context).pop();
+            },
+          ),
+          toolbarHeight: 50.h,
+          leadingWidth: 75.w,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+        ),
+        body: const ProfileViewBody(),
       ),
     );
   }

@@ -26,7 +26,6 @@ class RequestsRepoImpl implements RequestsRepo {
         endpoint: APIConfig.getMatchRequests,
         token: userCache!.token!,
       );
-      print(data);
       return Right(GetMatchRequestsResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {

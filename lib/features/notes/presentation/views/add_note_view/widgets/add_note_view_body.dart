@@ -100,7 +100,7 @@ class AddNoteViewBody extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             GoRouter.of(context)
-                                .pushReplacement(RoutesConfig.notes);
+                                .pushReplacement(RoutesConfig.homeLayout);
                           },
                           tooltip: 'Discard Note',
                           icon: Container(

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/service_locator.dart';
+import 'package:opi_se/core/widgets/home_layout.dart';
 import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.dart';
 import 'package:opi_se/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/change_password_cubit/change_password_cubit.dart';
@@ -38,6 +39,7 @@ import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
+import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
 import '../../../features/chat/presentation/cubits/chat_cubit.dart';
@@ -69,7 +71,11 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.profile,
+    initialLocation: userCache == null
+        ? RoutesConfig.authOptions
+        : (userCache!.getUserPrefers == true
+            ? RoutesConfig.userPrefers
+            : RoutesConfig.homeLayout),
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -164,6 +170,9 @@ abstract class AppRouter {
           child: const ProfileView(),
         ),
       ),
+      GoRoute(
+          path: RoutesConfig.homeLayout,
+          builder: (context, state) => const HomeLayout()),
       GoRoute(
         path: RoutesConfig.home,
         builder: (context, state) => BlocProvider(
@@ -261,6 +270,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.dashboard,
         builder: (context, state) => const DashboardView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.manageProfile,
+        builder: (context, state) => const ManageProfileView(),
       ),
     ],
   );

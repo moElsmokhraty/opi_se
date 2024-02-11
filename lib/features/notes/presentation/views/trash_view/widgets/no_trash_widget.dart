@@ -19,6 +19,7 @@ class NoTrashWidget extends StatelessWidget {
           SizedBox(height: 22.h),
           Text(
             'No Notes in Trash yet',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 28.sp,
               fontFamily: 'Inter',

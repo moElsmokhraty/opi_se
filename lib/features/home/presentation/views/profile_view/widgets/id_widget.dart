@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/functions/show_snack_bar.dart';
+import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class IDWidget extends StatelessWidget {
@@ -38,7 +39,7 @@ class IDWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w),
                   Text(
-                    'https://smokhraty27/opise.com',
+                    'https://opi-se.vercel.app/profile?userid=${userCache!.id!}',
                     style: AppStyles.textStyle12.copyWith(
                       fontSize: 14.sp,
                       color: Colors.black,
@@ -54,7 +55,7 @@ class IDWidget extends StatelessWidget {
             bottom: 20.h,
             child: GestureDetector(
               onTap: () {
-                Clipboard.setData(const ClipboardData(text: 'lol'));
+                Clipboard.setData(ClipboardData(text: 'https://opi-se.vercel.app/profile?userid=${userCache!.id!}'));
                 showCustomSnackBar(context, 'Copied to clipboard');
               },
               child: Icon(

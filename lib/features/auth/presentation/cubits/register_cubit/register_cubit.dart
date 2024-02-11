@@ -42,6 +42,16 @@ class RegisterCubit extends Cubit<RegisterState> {
     nationalIdController.dispose();
     firstFormKey.currentState?.reset();
     secondFormKey.currentState?.reset();
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    ageController.clear();
+    locationController.clear();
+    nativeLanguageController.clear();
+    nativeLevelController.clear();
+    secondLanguageController.clear();
+    secondLevelController.clear();
+    nationalIdController.clear();
     super.close();
   }
 
@@ -92,7 +102,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   );
 
   List<Language> filteredLanguages() {
-    if (nativeLanguageController.text.trim().isNotEmpty) {
+    if (nativeLanguageController.text.trim().isNotEmpty &&
+        secondLanguageController.text.trim().isNotEmpty) {
       return [
         Language(
           languageName: nativeLanguageController.text.trim(),
@@ -126,6 +137,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         age: int.parse(ageController.text.trim()),
         gender: genderController.text.trim().toLowerCase(),
         languages: filteredLanguages(),
+        nationalId: nationalIdController.text.trim(),
       ),
     );
     result.fold((failure) {
@@ -160,21 +172,14 @@ class RegisterCubit extends Cubit<RegisterState> {
     final Dio dio = Dio(
       BaseOptions(
         baseUrl: 'https://maps.googleapis.com/maps/api/',
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        sendTimeout: const Duration(seconds: 30),
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+        sendTimeout: const Duration(seconds: 60),
         receiveDataWhenStatusError: true,
       ),
     );
 
     clearLocationAndEmitLoading();
-
-    await Geolocator.requestPermission();
-
-    if (!await Geolocator.isLocationServiceEnabled()) {
-      updateLocationAndEmitFailure('Location Service is Disabled');
-      return;
-    }
 
     final permissionStatus = await Geolocator.checkPermission();
 
@@ -183,6 +188,13 @@ class RegisterCubit extends Cubit<RegisterState> {
       return;
     } else if (permissionStatus == LocationPermission.deniedForever) {
       updateLocationAndEmitFailure('Location Permission is Denied Forever');
+      return;
+    }
+
+    await Geolocator.requestPermission();
+
+    if (!await Geolocator.isLocationServiceEnabled()) {
+      updateLocationAndEmitFailure('Location Service is Disabled');
       return;
     }
 
@@ -198,6 +210,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       handleGeoCodingApiResponse(response);
     } catch (e) {
+      print(e.toString());
       updateLocationAndEmitFailure('Error, try again');
     }
   }
@@ -215,7 +228,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   void handleGeoCodingApiResponse(Response response) {
     if (response.statusCode == 200) {
       var result = response.data;
-      String location = result['results'][0]['plus_code']['compound_code'];
+      print(result.toString());
+      String location = result['results'][0]['formatted_address'];
       locationController.text =
           location.substring(location.indexOf(' ') + 1).trim();
       emit(GetLocationSuccess());

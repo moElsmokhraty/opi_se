@@ -34,12 +34,14 @@ class LoginViewBody extends StatelessWidget {
           }
         } else if (state is LoginSuccess) {
           if (state.response.data!.getUserPrefers!) {
+            cacheUserData(state.response);
             GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
+            showCustomSnackBar(context, 'Please set your prefers first!');
           } else {
             cacheUserData(state.response);
             SocketService.connect();
             showCustomSnackBar(context, 'Logged in successfully!');
-            GoRouter.of(context).pushReplacement(RoutesConfig.home);
+            GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
           }
         }
       },

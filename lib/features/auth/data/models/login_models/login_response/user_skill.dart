@@ -5,11 +5,11 @@ part 'user_skill.g.dart';
 
 @HiveType(typeId: 2)
 class UserSkill extends Equatable {
-  final String? skillName;
-  final int? skillRate;
-  final String? id;
+  String? skillName;
+  int? skillRate;
+  String? id;
 
-  const UserSkill({this.skillName, this.skillRate, this.id});
+  UserSkill({this.skillName, this.skillRate, this.id});
 
   factory UserSkill.fromJson(Map<String, dynamic> json) => UserSkill(
         skillName: json['skillName'] as String?,

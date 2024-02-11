@@ -4,6 +4,7 @@ import 'package:opi_se/core/errors/failure.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import '../../domain/repos/chat_repo.dart';
 import '../models/get_chat_response/get_chat_response.dart';
 
@@ -14,17 +15,18 @@ class ChatRepoImpl implements ChatRepo {
 
   @override
   Future<Either<Failure, GetChatResponse>> getChat(
-    String userId, {
+    String matchId, {
     int page = 1,
     int limit = 10,
   }) async {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getChat,
-        body: {'matchId': '657864d6b9aeadd65b0d92b9'},
+        token: userCache!.token!,
         params: {
           'page': page,
           'limit': limit,
+          'matchId': matchId,
         },
       );
       return Right(GetChatResponse.fromJson(data));

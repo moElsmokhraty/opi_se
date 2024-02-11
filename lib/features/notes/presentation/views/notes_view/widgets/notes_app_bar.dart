@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 
 class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -28,7 +29,9 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
         GestureDetector(
           child: IconButton(
             onPressed: () {
-              GoRouter.of(context).pushReplacement(RoutesConfig.addNote);
+              if (userCache!.matchId != null) {
+                GoRouter.of(context).push(RoutesConfig.addNote);
+              }
             },
             tooltip: 'Add Note',
             icon: Container(
@@ -52,7 +55,9 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(width: 8.w),
         IconButton(
           onPressed: () {
-            GoRouter.of(context).pushReplacement(RoutesConfig.trash);
+            if (userCache!.matchId != null) {
+              GoRouter.of(context).pushReplacement(RoutesConfig.trash);
+            }
           },
           tooltip: 'Trash',
           icon: Icon(

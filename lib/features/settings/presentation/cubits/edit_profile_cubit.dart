@@ -44,7 +44,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   TextEditingController thirdLevelController = TextEditingController();
 
   void setInitialValues() {
-    print(userCache?.email ?? '');
     userNameController.text = userCache?.userName ?? '';
     emailController.text = userCache?.email ?? '';
     if (userCache?.languages?.isNotEmpty ?? false) {

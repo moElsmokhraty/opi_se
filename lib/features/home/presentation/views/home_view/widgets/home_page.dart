@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: 'You\nCan Find The\nPerfect Study Partner',
+                  text: 'You Can Find The Perfect Study Partner',
                   style: AppStyles.textStyle24.copyWith(
                     fontSize: 30.sp,
                     fontWeight: FontWeight.w600,
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.03),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur elit, sed nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velitesse cillum dolore eu fugiat nulla',
+            'Welcome to our learning community! Step into a world of opportunity at Opi Se where learning is a shared journey. Start exploring, connecting, and achieving your academic goals.',
             style: AppStyles.textStyle24.copyWith(
               fontSize: 15.sp,
               color: Colors.black.withOpacity(0.6),

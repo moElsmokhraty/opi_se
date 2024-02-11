@@ -8,19 +8,19 @@ part 'user_cache.g.dart';
 @HiveType(typeId: 0)
 class UserCache extends HiveObject {
   @HiveField(0)
-  final String? id;
+  String? id;
   @HiveField(1)
   String? userName;
   @HiveField(2)
   String? email;
   @HiveField(3)
-  final int? age;
+  int? age;
   @HiveField(4)
-  final String? gender;
+  String? gender;
   @HiveField(5)
-  final String? location;
+  String? location;
   @HiveField(6)
-  final String? nationalId;
+  String? nationalId;
   @HiveField(7)
   String? profileImage;
   @HiveField(8)
@@ -38,9 +38,9 @@ class UserCache extends HiveObject {
   @HiveField(14)
   Partner? partner;
   @HiveField(15)
-  final String? token;
+  String? token;
   @HiveField(16)
-  final String? fcmToken;
+  String? fcmToken;
 
   UserCache({
     this.id,

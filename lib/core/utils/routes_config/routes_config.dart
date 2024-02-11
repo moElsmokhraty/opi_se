@@ -12,6 +12,7 @@ abstract class RoutesConfig {
   static const String questions = '/questions';
   static const String editProfile = '/edit-profile';
   static const String profile = '/profile';
+  static const String homeLayout = '/home-layout';
   static const String home = '/home';
   static const String partnerRequestProfile = '/partner-request-profile';
   static const String requests = '/requests';
@@ -24,4 +25,5 @@ abstract class RoutesConfig {
   static const String editNote = '/edit-note';
   static const String trash = '/trash';
   static const String dashboard = '/dashboard';
+  static const String manageProfile = '/manage-profile';
 }

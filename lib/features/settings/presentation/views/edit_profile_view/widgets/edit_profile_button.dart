@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import '../../../cubits/edit_profile_cubit.dart';
 import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../../../auth/data/models/login_models/login_response/user_cache.dart';
@@ -24,7 +23,7 @@ class EditProfileButton extends StatelessWidget {
           userCache!.email = cubit.emailController.text;
           userCache!.languages = cubit.getLanguages();
           Hive.box<UserCache>(boxName).put('user', userCache!);
-          GoRouter.of(context).go(RoutesConfig.home);
+          GoRouter.of(context).pop();
           showCustomSnackBar(context, 'Profile updated successfully');
         }
       },

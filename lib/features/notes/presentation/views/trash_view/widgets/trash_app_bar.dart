@@ -34,7 +34,7 @@ class TrashAppBar extends StatelessWidget implements PreferredSizeWidget {
           size: 24.sp,
         ),
         onPressed: () {
-          GoRouter.of(context).go(RoutesConfig.notes);
+          GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
         },
       ),
       actions: [

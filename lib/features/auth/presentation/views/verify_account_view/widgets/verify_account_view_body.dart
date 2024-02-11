@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'resend_mail_button.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import '../../../../../../core/functions/show_snack_bar.dart';
-import '../../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../cubits/verify_account_cubit/verify_account_cubit.dart';
 
 class VerifyAccountViewBody extends StatelessWidget {
@@ -32,21 +30,6 @@ class VerifyAccountViewBody extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context).pushReplacement(RoutesConfig.login);
-                  },
-                  child: Text(
-                    'Skip',
-                    style: AppStyles.textStyle12.copyWith(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
               Image.asset(
                 'assets/images/verify_account.png',
                 height: 350.h,

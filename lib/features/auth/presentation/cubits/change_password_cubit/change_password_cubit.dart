@@ -28,7 +28,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   bool newObscureText = true;
 
-  bool confirmNewObscureText = false;
+  bool confirmNewObscureText = true;
 
   Icon oldIcon = Icon(
     Icons.visibility_outlined,

@@ -42,6 +42,10 @@ class NotesViewBody extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is GetNotesFailure) {
+            if (state.failure.errMessage ==
+                'You do not have a student partner yet!') {
+              return const NoNotesWidget();
+            }
             return CustomErrorWidget(
               errorMessage: state.failure.errMessage,
               onPressed: () {},

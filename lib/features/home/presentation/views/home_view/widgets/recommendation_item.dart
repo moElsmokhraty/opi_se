@@ -79,7 +79,6 @@ class RecommendationItem extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                           onTap: () async {
-                            print(userData.id!);
                             await cubit.sendPartnerRequest(userData.id!);
                           },
                           child: Container(

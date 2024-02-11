@@ -6,7 +6,6 @@ import 'change_password_button.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import '../../../../../../core/functions/validate_password.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
 import '../../../cubits/change_password_cubit/change_password_cubit.dart';
 
@@ -20,7 +19,8 @@ class ChangePasswordViewBody extends StatelessWidget {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-          GoRouter.of(context).pushReplacement(RoutesConfig.successfulChange);
+          GoRouter.of(context).pop();
+          showCustomSnackBar(context, 'Password changed successfully');
         } else if (state is ChangePasswordFailure) {
           showCustomSnackBar(context, state.errMessage);
         }

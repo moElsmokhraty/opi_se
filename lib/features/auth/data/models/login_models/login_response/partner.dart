@@ -5,11 +5,11 @@ part 'partner.g.dart';
 
 @HiveType(typeId: 1)
 class Partner extends Equatable {
-  final String? id;
-  final String? userName;
-  final String? profileImage;
+  String? id;
+  String? userName;
+  String? profileImage;
 
-  const Partner({this.id, this.userName, this.profileImage});
+  Partner({this.id, this.userName, this.profileImage});
 
   factory Partner.fromJson(Map<String, dynamic> json) => Partner(
         id: json['_id'] as String?,

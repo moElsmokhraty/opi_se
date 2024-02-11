@@ -5,11 +5,11 @@ part 'language.g.dart';
 
 @HiveType(typeId: 3)
 class Language extends Equatable {
-  final String? languageName;
-  final int? level;
-  final String? id;
+  String? languageName;
+  int? level;
+  String? id;
 
-  const Language({this.languageName, this.level, this.id});
+  Language({this.languageName, this.level, this.id});
 
   factory Language.fromJson(Map<String, dynamic> json) => Language(
         languageName: json['languageName'] as String?,

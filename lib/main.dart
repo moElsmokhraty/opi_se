@@ -1,3 +1,4 @@
+import 'core/cubits/app_cubit.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +36,7 @@ Future<void> main() async {
           getIt.get<UploadNationalIdUseCase>(),
         ),
       ),
+      BlocProvider(create: (context) => AppCubit()),
     ],
     child: const OpiSe(),
   ));

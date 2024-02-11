@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AuthAppBar({super.key});
+  const AuthAppBar({super.key, this.actions});
+
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize => Size.fromHeight(60.h);
@@ -26,6 +28,7 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 60.h,
       scrolledUnderElevation: 0.0,
       backgroundColor: Colors.white,
+      actions: actions,
     );
   }
 }
