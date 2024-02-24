@@ -72,7 +72,7 @@ class TrashItem extends StatelessWidget {
                           matchId: note!.matchId!,
                         ),
                       );
-                    } else {
+                    } else if (value == 'delete'){
                       await cubit.deleteNoteFromTrash(
                         DeleteNoteFromTrashRequest(
                           noteId: note!.id!,
@@ -81,7 +81,7 @@ class TrashItem extends StatelessWidget {
                       );
                     }
                   },
-                  offset: const Offset(-150, 10),
+                  offset: Offset(0, 20.h),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
@@ -89,11 +89,11 @@ class TrashItem extends StatelessWidget {
                     return [
                       const PopupMenuItem(
                         value: 'delete',
-                        child: Text('Delete            '),
+                        child: Text('Delete'),
                       ),
                       const PopupMenuItem(
                         value: 'restore',
-                        child: Text('Restore            '),
+                        child: Text('Restore'),
                       ),
                     ];
                   },

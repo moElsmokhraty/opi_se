@@ -75,8 +75,7 @@ class NoteItem extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context)
-                      .pushReplacement(RoutesConfig.editNote, extra: note!);
+                  GoRouter.of(context).push(RoutesConfig.editNote, extra: note!);
                 },
                 child: Container(
                   width: 22.w,

@@ -79,6 +79,43 @@ class RecommendationsList extends StatelessWidget {
               ),
             );
           } else {
+            if (cubit.recommendations.isEmpty) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/no_requests.png',
+                      width: double.infinity,
+                      height: 350.h,
+                    ),
+                    SizedBox(height: 25.h),
+                    Text(
+                      'No Recommendations Found',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30.sp,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      'You don\'t have recommendations yet.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: 20.sp,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
             return ListView.builder(
               padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 16.h),
               physics: const BouncingScrollPhysics(),

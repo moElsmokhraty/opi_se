@@ -36,6 +36,7 @@ class ManageProfileAppBar extends StatelessWidget
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 28.sp,
+                fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
               ),
             ),

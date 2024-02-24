@@ -97,7 +97,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {},
           tooltip: 'Notifications',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: StatefulBuilder(
+          icon: userCache?.matchId != null ? StatefulBuilder(
             builder: (context, setState) {
               SocketService.on(
                   eventName: 'showNotificationMark',
@@ -128,7 +128,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   });
               return notificationIcon;
             },
-          ),
+          ) : notificationIcon,
         ),
       ],
     );

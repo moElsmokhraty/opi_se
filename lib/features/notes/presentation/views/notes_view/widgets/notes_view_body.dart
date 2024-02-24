@@ -44,7 +44,8 @@ class NotesViewBody extends StatelessWidget {
           if (state is GetNotesFailure) {
             if (state.failure.errMessage ==
                 'You do not have a student partner yet!') {
-              return const NoNotesWidget();
+              return const NoNotesWidget(
+                  message: 'You do not have a student partner yet!');
             }
             return CustomErrorWidget(
               errorMessage: state.failure.errMessage,
@@ -56,7 +57,10 @@ class NotesViewBody extends StatelessWidget {
             );
           } else {
             if (cubit.notes.isEmpty) {
-              return const NoNotesWidget();
+              return const NoNotesWidget(
+                message:
+                    'No notes are available yet. Start creating your first note.',
+              );
             } else {
               return GridView.builder(
                 itemCount: cubit.notes.length,

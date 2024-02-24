@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 
+import '../../../../../../core/utils/constants.dart';
+
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ChatAppBar({super.key});
 
@@ -23,7 +25,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SizedBox(width: 10.w),
           Text(
-            'Nada Abdel nasser',
+            userCache!.partner?.userName ?? 'Partner Chat',
             style: AppStyles.textStyle24.copyWith(
               color: const Color(0xFF203140),
               fontSize: 16.sp,

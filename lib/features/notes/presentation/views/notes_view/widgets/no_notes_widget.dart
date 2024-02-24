@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NoNotesWidget extends StatelessWidget {
-  const NoNotesWidget({super.key});
+  const NoNotesWidget({super.key, required this.message});
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class NoNotesWidget extends StatelessWidget {
           ),
           SizedBox(height: 22.h),
           Text(
-            'No notes are available yet. Start creating your first note.',
+            message,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20.sp,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../models/get_profile_response.dart';
 import '../../../../core/utils/constants.dart';
 import 'package:opi_se/core/errors/failure.dart';
@@ -63,6 +64,7 @@ class RequestsRepoImpl implements RequestsRepo {
     String nationalId,
   ) async {
     try {
+      fcmToken = await FirebaseMessaging.instance.getToken();
       var data = await _apiService.post(
         endpoint: APIConfig.acceptMatchRequest,
         token: userCache!.token!,

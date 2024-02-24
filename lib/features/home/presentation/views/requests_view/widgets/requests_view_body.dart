@@ -19,18 +19,6 @@ class RequestsViewBody extends StatelessWidget {
       listener: (context, state) async {
         if (state is DeclineMatchRequestSuccess) {
           await cubit.getMatchRequests();
-        } else if (state is AcceptMatchRequestSuccess) {
-          userCache!.matchId = state.response.matchId;
-          userCache!.partner?.id = state.response.notifiedPartner;
-          Hive.box<UserCache>(boxName).put('user', userCache!);
-          userCache = Hive.box<UserCache>(boxName).get('user');
-          // SocketService.emit(eventName: 'acceptPartnerRequest', data: {
-          //   "notifiedPartner": state.response.notifiedPartner,
-          //   "matchId": state.response.matchId,
-          //   "partnerUserName": state.response.acceptedPartner,
-          //   "partnerImage": "default.png"
-          // });
-          await cubit.getMatchRequests();
         } else if (state is AcceptMatchRequestFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
           await cubit.getMatchRequests();

@@ -18,18 +18,17 @@ class ChatCubit extends Cubit<ChatState> {
 
   List<Message> messages = [];
 
-  Future<void> getChat(
-    String? matchId, {
+  Future<void> getChat({
     int page = 1,
     int limit = 10,
   }) async {
-    if (matchId == null) {
+    if (userCache?.matchId == null) {
       emit(GetChatFailure('You do not have a student partner yet!'));
       return;
     }
     emit(GetChatLoading());
     var result = await _getChatUseCase.call({
-      'matchId': matchId,
+      'matchId': userCache?.matchId,
       'page': page,
       'limit': limit,
     });
@@ -44,6 +43,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   void sendMessage() {
     if (messageController.text.trim().isNotEmpty) {
+      print(userCache?.matchId);
       SocketService.emit(
           eventName: 'sendMessage',
           data: {
@@ -53,9 +53,17 @@ class ChatCubit extends Cubit<ChatState> {
           },
           ack: (data) {
             if (data['success'] == true) {
-              print(data['data']);
+              print(data.toString());
               messageController.clear();
-              messages.add(Message.fromJson(data['data']));
+              messages.insert(
+                  0,
+                  Message(
+                    id: data['data']['_id'],
+                    messageContent: data['data']['messageContent'],
+                    messageSender: data['data']['messageSender'],
+                    messageType: data['data']['messageType'],
+                    sentAt: DateTime.now(),
+                  ));
               emit(GetChatSuccess(messages));
             } else {
               emit(GetChatFailure(data['message']));
@@ -65,11 +73,12 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void listenOnNewMessage() {
+    print('listening on new message');
     SocketService.on(
         eventName: 'receiveMessage',
-        handler: (eventData) {
-          var message = Message.fromJson(eventData);
-          messages.add(message);
+        handler: (data) {
+          print('detected new message: $data');
+          messages.insert(0, Message.fromJson(data));
           emit(GetChatSuccess(messages));
         });
   }

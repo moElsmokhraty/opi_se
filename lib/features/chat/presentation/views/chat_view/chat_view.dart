@@ -16,9 +16,9 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChatCubit(
-        getIt.get<GetChatUseCase>(),
-      )..getChat(userCache!.matchId, page: 1, limit: 10),
+      create: (context) => ChatCubit(getIt.get<GetChatUseCase>())
+        ..getChat(page: 1, limit: 20)
+        ..listenOnNewMessage(),
       child: SafeArea(
         child: BlocConsumer<ChatCubit, ChatState>(
           listener: (context, state) {

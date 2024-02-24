@@ -91,6 +91,7 @@ class LanguageWidget extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.r),
                     ),
+
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.r),
                       borderSide: BorderSide(

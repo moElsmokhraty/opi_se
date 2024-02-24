@@ -70,11 +70,12 @@ class SocketService {
 
   static void on({
     required String eventName,
-    void Function(Map<String, dynamic>)? handler,
+    Function(Map<String, dynamic>)? handler,
   }) {
     try {
-      socket.on(eventName, (eventData) {
-        handler!(eventData as Map<String, dynamic>);
+      socket.on(eventName, (data) {
+        print('Received event: $eventName');
+        handler!(data as Map<String, dynamic>);
       });
     } catch (e) {
       print('Error listening to event: $e');

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/get_profile_response.dart';
@@ -75,6 +76,25 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
       (response) {
         userData = response.data;
         emit(GetProfileSuccess(response));
+      },
+    );
+  }
+
+  void emitAcceptPartnerRequest({
+    required String notifiedPartner,
+    required String matchId,
+    required String partnerUserName,
+  }) {
+    SocketService.emit(
+      eventName: 'acceptPartnerRequest',
+      data: {
+        "notifiedPartner": notifiedPartner,
+        "matchId": matchId,
+        "partnerUserName": partnerUserName,
+        "partnerImage": "default.png",
+      },
+      ack: (data) {
+        print(data);
       },
     );
   }

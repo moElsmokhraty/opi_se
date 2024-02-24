@@ -62,7 +62,7 @@ class TrashRepoImpl implements TrashRepo {
       DeleteNoteFromTrashRequest request) async {
     try {
       var data = await _apiService.delete(
-        endpoint: APIConfig.flushTrash,
+        endpoint: APIConfig.deleteNoteFromTrash,
         token: userCache!.token!,
         params: request.toJson(),
       );

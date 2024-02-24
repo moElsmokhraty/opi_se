@@ -1,3 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:opi_se/core/utils/constants.dart';
+import 'package:opi_se/core/utils/notifications_services.dart';
+
 import 'core/cubits/app_cubit.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +30,10 @@ Future<void> main() async {
   );
   await setupHiveDB();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  //await FirebaseMessaging.instance.requestPermission();
+  //await NotificationsServices.init();
   setupServiceLocator();
-  SocketService.connect();
+  if (userCache?.matchId != null) SocketService.connect();
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(

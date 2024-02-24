@@ -185,12 +185,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.chat,
-        builder: (context, state) => BlocProvider(
-          create: (context) => ChatCubit(
-            getIt.get<GetChatUseCase>(),
-          )..getChat('657864d6b9aeadd65b0d92b9'),
-          child: const ChatView(),
-        ),
+        builder: (context, state) => const ChatView(),
       ),
       GoRoute(
         path: RoutesConfig.chatMedia,

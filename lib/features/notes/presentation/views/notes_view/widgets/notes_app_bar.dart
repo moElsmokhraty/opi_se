@@ -30,7 +30,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: IconButton(
             onPressed: () {
               if (userCache!.matchId != null) {
-                GoRouter.of(context).push(RoutesConfig.addNote);
+                GoRouter.of(context).pushReplacement(RoutesConfig.addNote);
               }
             },
             tooltip: 'Add Note',
