@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/errors/failure.dart';
 import 'package:opi_se/core/utils/constants.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
+import 'package:opi_se/core/errors/server_failure.dart';
 import '../../../domain/use_cases/add_note_use_case.dart';
-import '../../../data/models/add_note_models/add_note_request.dart';
-import '../../../data/models/add_note_models/add_note_response.dart';
 
 part 'add_note_state.dart';
 
@@ -35,22 +35,26 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     }
   }
 
-  Future<void> addNote() async {
+  void addNote() {
     if (formKey.currentState!.validate()) {
-      emit(AddNoteLoading());
-      var result = await addNoteUseCase.call([
-        AddNoteRequest(
-          noteTitle: titleController.text.trim(),
-          noteContent: contentController.text.trim(),
-          noteColor: noteColors.keys.firstWhere(
+      SocketService.emit(
+        eventName: 'addNote',
+        data: {
+          'noteTitle': titleController.text,
+          'noteContent': contentController.text,
+          'noteColor': noteColors.keys.firstWhere(
             (k) => noteColors[k] == backgroundColor,
           ),
-        ),
-        userCache!.matchId!,
-      ]);
-      result.fold(
-        (failure) => emit(AddNoteFailure(failure)),
-        (response) => emit(AddNoteSuccess(response)),
+        },
+        ack: (data) {
+          if (data['success'] == true) {
+            emit(AddNoteSuccess());
+          } else {
+            emit(AddNoteFailure(
+              ServerFailure(errMessage: 'Error while adding note!'),
+            ));
+          }
+        },
       );
     }
   }

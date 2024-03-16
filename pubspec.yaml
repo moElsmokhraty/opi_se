@@ -44,20 +44,22 @@ dependencies:
   flutter_screenutil: ^5.9.0
   cached_network_image: ^3.3.1
   equatable: ^2.0.5
-  syncfusion_flutter_sliders: ^24.2.7
+  syncfusion_flutter_sliders: ^24.2.8
   cupertino_icons: ^1.0.6
   geolocator: ^10.1.0
   socket_io_client: ^2.0.3+1
   persistent_bottom_nav_bar: ^5.0.2
   easy_stepper: ^0.8.3
   open_street_map_search_and_pick: ^0.1.1
-  firebase_core: ^2.25.4
-  firebase_messaging: ^14.7.16
+  firebase_core: ^2.25.5
+  firebase_messaging: ^14.7.17
   intl: ^0.19.0
   flutter_collapsing_toolbar: ^1.0.0
   webview_flutter: ^4.7.0
   flutter_local_notifications: ^16.3.2
   flutter_polls: ^0.1.6
+  flutter_form_builder: ^9.2.1
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

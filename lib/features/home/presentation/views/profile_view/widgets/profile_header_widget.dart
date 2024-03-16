@@ -64,7 +64,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                   BuildContext context,
                   void Function(void Function()) setState,
                 ) {
-                  if (state is GetProfileSuccess){
+                  if (state is GetProfileSuccess) {
                     setState(() {});
                   }
                   return Container(

@@ -58,7 +58,7 @@ class UserData extends Equatable {
         profileImage: json['profileImage'] as String?,
         isVerified: json['isVerified'] as bool?,
         numOfReports: json['numOfReports'] as int?,
-        partner: json['partnerID'] == null
+        partner: json['partnerId'] == null
             ? null
             : Partner.fromJson(json['partnerId'] as Map<String, dynamic>),
         matchId: json['matchId'] as String?,

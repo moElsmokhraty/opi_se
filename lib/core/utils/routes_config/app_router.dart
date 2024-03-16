@@ -26,7 +26,6 @@ import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart
 import 'package:opi_se/features/home/presentation/views/partner_request_profile_view/partner_request_view.dart';
 import 'package:opi_se/features/home/presentation/views/profile_view/profile_view.dart';
 import 'package:opi_se/features/notes/presentation/cubits/add_note_cubit/add_note_cubit.dart';
-import 'package:opi_se/features/notes/presentation/cubits/notes_cubit/notes_cubit.dart';
 import 'package:opi_se/features/notes/presentation/views/add_note_view/add_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/edit_note_view/edit_note_view.dart';
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
@@ -41,8 +40,8 @@ import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_a
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
-import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
-import '../../../features/chat/presentation/cubits/chat_cubit.dart';
+import '../../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
+import '../../../features/chat/presentation/cubits/chat_media_cubit/chat_media_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/change_profile_image_use_case.dart';
 import '../../../features/home/domain/use_cases/decline_match_request_use_case.dart';
@@ -56,12 +55,9 @@ import '../../../features/home/presentation/views/requests_view/requests_view.da
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
-import '../../../features/notes/domain/use_cases/delete_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/edit_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/flush_trash_use_case.dart';
-import '../../../features/notes/domain/use_cases/get_notes_use_case.dart';
 import '../../../features/notes/domain/use_cases/get_trash_use_case.dart';
-import '../../../features/notes/domain/use_cases/pin_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
@@ -71,11 +67,12 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: userCache == null
-        ? RoutesConfig.authOptions
-        : (userCache!.getUserPrefers == true
-            ? RoutesConfig.userPrefers
-            : RoutesConfig.homeLayout),
+    initialLocation: RoutesConfig.chatMedia,
+    // userCache == null
+    //     ? RoutesConfig.authOptions
+    //     : (userCache!.getUserPrefers == true
+    //         ? RoutesConfig.userPrefers
+    //         : RoutesConfig.homeLayout),
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,
@@ -189,7 +186,12 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.chatMedia,
-        builder: (context, state) => const ChatMediaView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => ChatMediaCubit(
+            getIt.get<GetChatMediaUseCase>(),
+          )..getChatMedia(page: 1, limit: 10),
+          child: const ChatMediaView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.call,
@@ -225,14 +227,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.notes,
-        builder: (context, state) => BlocProvider(
-          create: (context) => NotesCubit(
-            getIt.get<GetNotesUseCase>(),
-            getIt.get<PinNoteUseCase>(),
-            getIt.get<DeleteNoteUseCase>(),
-          )..getNotes(userCache!.matchId!, 1, 10),
-          child: const NotesView(),
-        ),
+        builder: (context, state) => const NotesView(),
       ),
       GoRoute(
         path: RoutesConfig.addNote,

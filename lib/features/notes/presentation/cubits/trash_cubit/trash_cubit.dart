@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/errors/server_failure.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/flush_trash_response.dart';
 import '../../../domain/use_cases/get_trash_use_case.dart';
@@ -70,12 +72,19 @@ class TrashCubit extends Cubit<TrashState> {
     );
   }
 
-  Future<void> restoreNote(RestoreNoteRequest request) async {
-    emit(RestoreNoteLoading());
-    var result = await _restoreNoteUseCase.call(request);
-    result.fold(
-      (failure) => emit(RestoreNoteFailure(failure: failure)),
-      (response) => emit(RestoreNoteSuccess(response: response)),
+  Future<void> restoreNote(Note note) async {
+    SocketService.emit(
+      eventName: 'restoreNote',
+      data: note.toJson(),
+      ack: (data) {
+        if (data['success'] == true) {
+          emit(RestoreNoteSuccess());
+        } else {
+          emit(RestoreNoteFailure(
+            failure: ServerFailure(errMessage: 'Error while restoring note'),
+          ));
+        }
+      },
     );
   }
 }

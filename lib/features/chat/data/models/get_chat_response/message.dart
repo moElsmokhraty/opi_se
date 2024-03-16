@@ -22,7 +22,7 @@ class Message extends Equatable {
         id: json['_id'] as String?,
         sentAt: json['sentAt'] == null
             ? null
-            : DateTime.parse(json['sentAt'] as String),
+            : DateTime.parse(json['sentAt'] as String).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {

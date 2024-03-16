@@ -10,13 +10,10 @@ class NotificationsServices {
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
             onDidReceiveLocalNotification: (id, title, body, payload) {});
-    const LinuxInitializationSettings initializationSettingsLinux =
-        LinuxInitializationSettings(defaultActionName: 'Open notification');
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
-      linux: initializationSettingsLinux,
     );
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -31,9 +28,9 @@ class NotificationsServices {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       enableVibration: true,
-      'your channel id',
-      'your channel name',
-      channelDescription: 'your channel description',
+      'Opise notifications',
+      'Opise notifications',
+      channelDescription: 'Opise notifications',
       importance: Importance.max,
       priority: Priority.high,
       showWhen: false,

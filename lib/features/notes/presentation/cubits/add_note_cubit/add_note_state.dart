@@ -9,11 +9,7 @@ class NoteColorChanged extends AddNoteState {}
 
 class AddNoteLoading extends AddNoteState {}
 
-class AddNoteSuccess extends AddNoteState {
-  final AddNoteResponse response;
-
-  AddNoteSuccess(this.response);
-}
+class AddNoteSuccess extends AddNoteState {}
 
 class AddNoteFailure extends AddNoteState {
   final Failure failure;

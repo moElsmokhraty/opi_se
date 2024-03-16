@@ -18,7 +18,8 @@ class GetProfileResponse extends Equatable {
           : UserData.fromJson(json['data'] as Map<String, dynamic>),
       profileDetails: json['profileDetails'] == null
           ? null
-          : ProfileDetails.fromJson(json['profileDetails'] as Map<String, dynamic>),
+          : ProfileDetails.fromJson(
+              json['profileDetails'] as Map<String, dynamic>),
     );
   }
 

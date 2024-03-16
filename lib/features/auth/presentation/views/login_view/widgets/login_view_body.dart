@@ -22,7 +22,7 @@ class LoginViewBody extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
     return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is LoginFailure) {
           if (state.errMessage == 'please verify your account first !') {
             GoRouter.of(context).pushReplacement(
@@ -33,19 +33,13 @@ class LoginViewBody extends StatelessWidget {
             showCustomSnackBar(context, state.errMessage);
           }
         } else if (state is LoginSuccess) {
-          if (state.response.data!.getUserPrefers!) {
-            cacheUserData(state.response);
-            GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
-            showCustomSnackBar(context, 'Please set your prefers first!');
-          } else {
-            cacheUserData(state.response);
+          print(state.response.data?.partner?.profileImage);
+          await cacheUserData(state.response).then((value) {
+            SocketService.connect();
+          });
+          if (context.mounted) {
             showCustomSnackBar(context, 'Logged in successfully!');
             GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
-            if (state.response.data?.matchId != null) {
-              Future.delayed(const Duration(seconds: 1), () {
-                SocketService.connect();
-              });
-            }
           }
         }
       },

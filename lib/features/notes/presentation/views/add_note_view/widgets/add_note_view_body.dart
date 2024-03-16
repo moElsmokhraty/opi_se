@@ -16,7 +16,7 @@ class AddNoteViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is AddNoteSuccess) {
           showCustomSnackBar(context, 'Note Added Successfully');
-          GoRouter.of(context).pushReplacement(RoutesConfig.notes);
+          GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
         } else if (state is AddNoteFailure) {
           showCustomSnackBar(context, state.failure.errMessage);
         } else if (state is AddNoteLoading) {
@@ -119,9 +119,7 @@ class AddNoteViewBody extends StatelessWidget {
                         ),
                         SizedBox(width: 10.w),
                         IconButton(
-                          onPressed: () async {
-                            await cubit.addNote();
-                          },
+                          onPressed: () => cubit.addNote(),
                           tooltip: 'Save Note',
                           icon: Container(
                             height: 30.h,

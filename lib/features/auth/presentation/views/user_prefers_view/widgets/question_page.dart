@@ -89,7 +89,8 @@ class QuestionPage extends StatelessWidget {
                     if (cubit.answers.contains(null)) {
                       showCustomSnackBar(
                           context, 'Please answer all questions');
-                    } else if (cubit.skills.isEmpty && !cubit.formKey.currentState!.validate()) {
+                    } else if (cubit.skills.isEmpty &&
+                        !cubit.formKey.currentState!.validate()) {
                       cubit.pageController.animateToPage(
                         0,
                         duration: const Duration(milliseconds: 500),

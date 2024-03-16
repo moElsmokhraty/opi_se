@@ -41,7 +41,8 @@ class SecondRegisterViewBody extends StatelessWidget {
           key: cubit.secondFormKey,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 16.h, bottom: 24.h),
+            padding: EdgeInsets.only(
+                left: 24.w, right: 24.w, top: 16.h, bottom: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

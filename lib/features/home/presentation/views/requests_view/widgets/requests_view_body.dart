@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:opi_se/core/utils/constants.dart';
-import 'package:opi_se/core/utils/socket_service.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/user_cache.dart';
 import 'request_item.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import '../../../cubits/match_requests_cubit/match_requests_cubit.dart';

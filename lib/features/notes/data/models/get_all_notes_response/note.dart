@@ -6,12 +6,12 @@ class Note extends Equatable {
   final String? matchId;
   final String? noteTitle;
   final String? noteContent;
-  final bool? isPinned;
+  bool? isPinned;
   final String? noteColor;
   final DateTime? createdAt;
   final int? v;
 
-  const Note({
+  Note({
     this.id,
     this.userId,
     this.matchId,

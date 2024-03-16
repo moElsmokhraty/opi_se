@@ -41,7 +41,8 @@ class ProfileViewBody extends StatelessWidget {
           child: SingleChildScrollView(
             clipBehavior: Clip.none,
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 20.h),
+            padding: EdgeInsets.only(
+                top: 10.h, left: 20.w, right: 20.w, bottom: 20.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

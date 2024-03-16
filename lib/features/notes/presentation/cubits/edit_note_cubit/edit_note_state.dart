@@ -9,11 +9,7 @@ class NoteColorChanged extends EditNoteState {}
 
 class EditNoteLoading extends EditNoteState {}
 
-class EditNoteSuccess extends EditNoteState {
-  final EditNoteResponse response;
-
-  EditNoteSuccess(this.response);
-}
+class EditNoteSuccess extends EditNoteState {}
 
 class EditNoteFailure extends EditNoteState {
   final Failure failure;

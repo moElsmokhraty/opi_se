@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opi_se/features/chat/presentation/cubits/chat_cubit.dart';
+import 'package:opi_se/features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
 import '../../../../../../core/utils/constants.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/chat/data/models/get_chat_response/message.dart';

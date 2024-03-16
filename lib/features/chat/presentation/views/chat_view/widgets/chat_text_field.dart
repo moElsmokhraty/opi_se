@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/utils/constants.dart';
 
-import '../../../cubits/chat_cubit.dart';
+import '../../../cubits/chat_cubit/chat_cubit.dart';
 
 class ChatTextField extends StatelessWidget {
-  const ChatTextField({super.key, required this.cubit});
-
-  final ChatCubit cubit;
+  const ChatTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ChatCubit cubit = BlocProvider.of<ChatCubit>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
       decoration: BoxDecoration(
@@ -21,13 +22,11 @@ class ChatTextField extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
-            padding: EdgeInsets.zero,
-            icon: Icon(
-              CupertinoIcons.paperclip,
-              color: const Color(0XFF000E08).withOpacity(0.5),
-              size: 24.sp,
-            ),
+            icon: Icon(CupertinoIcons.paperclip, size: 24.sp),
+            color: const Color(0XFF000E08).withOpacity(0.5),
+            onPressed: () {
+              cubit.toggleMediaOptions();
+            },
           ),
           Expanded(
             child: Container(

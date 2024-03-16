@@ -13,14 +13,20 @@ class SocketService {
       socket.connect();
       socket.onConnect((_) {
         print('Connected to socket');
-        if (userCache != null) {
+        emit(
+          eventName: 'joinUserRoom',
+          data: {},
+          ack: (data) {
+            print('joinUserRoom ack: $data');
+          },
+        );
+        if (userCache!.matchId != null) {
           emit(
-            eventName: 'joinUserRoom',
-            data: {},
-            ack: (data) {
-              print('joinUserRoom ack: $data');
-            },
-          );
+              eventName: 'joinMatchRoom',
+              data: {},
+              ack: (data) {
+                print('joinMatchRoom ack: $data');
+              });
         }
       });
       socket.onDisconnect((_) {
@@ -35,6 +41,7 @@ class SocketService {
   static void disconnect() {
     socket.dispose();
     socket.disconnect();
+    socket.destroy();
   }
 
   static void configureSocket() {
@@ -45,12 +52,10 @@ class SocketService {
         'autoConnect': true,
         'autoReconnect': true,
         'query': {
-          //'userId': userCache?.id,
-          'matchId': userCache?.matchId,
-          // 'email': userCache?.email,
-          // 'fcmToken': userCache?.fcmToken,
-          // 'nationalId': userCache?.nationalId,
+          'userId': userCache?.id,
           'token': userCache?.token,
+          'roomId': userCache?.id,
+          if (userCache?.matchId != null) 'matchId': userCache?.matchId,
         },
       },
     );
@@ -70,15 +75,14 @@ class SocketService {
 
   static void on({
     required String eventName,
-    Function(Map<String, dynamic>)? handler,
+    Function(dynamic)? handler,
   }) {
     try {
       socket.on(eventName, (data) {
-        print('Received event: $eventName');
-        handler!(data as Map<String, dynamic>);
+        handler!(data as dynamic);
       });
     } catch (e) {
-      print('Error listening to event: $e');
+      print('Error listening to event: $eventName  ----- $e');
     }
   }
 }

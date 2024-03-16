@@ -55,7 +55,9 @@ class IDWidget extends StatelessWidget {
             bottom: 20.h,
             child: GestureDetector(
               onTap: () {
-                Clipboard.setData(ClipboardData(text: 'https://opi-se.vercel.app/profile?userid=${userCache!.id!}'));
+                Clipboard.setData(ClipboardData(
+                    text:
+                        'https://opi-se.vercel.app/profile?userid=${userCache!.id!}'));
                 showCustomSnackBar(context, 'Copied to clipboard');
               },
               child: Icon(

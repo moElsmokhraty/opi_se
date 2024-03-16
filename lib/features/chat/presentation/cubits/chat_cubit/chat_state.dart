@@ -1,9 +1,9 @@
 part of 'chat_cubit.dart';
 
 @immutable
-abstract class ChatState {}
+sealed class ChatState {}
 
-class ChatInitial extends ChatState {}
+final class ChatInitial extends ChatState {}
 
 class GetChatLoading extends ChatState {}
 
@@ -18,3 +18,5 @@ class GetChatFailure extends ChatState {
 
   GetChatFailure(this.message);
 }
+
+class ChatMediaOptionsToggled extends ChatState {}

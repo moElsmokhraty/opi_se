@@ -1,15 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:opi_se/features/mental_health/data/repo_impl/mental_health_repo_impl.dart';
+import 'package:opi_se/features/mental_health/domain/repo/mental_health_repo.dart';
 import 'package:opi_se/features/notes/data/repos_impl/notes_repo_impl.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_notes_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
+import '../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
 import '../../features/home/data/repos_impl/profile_repo_impl.dart';
 import '../../features/home/domain/use_cases/change_profile_image_use_case.dart';
 import '../../features/home/domain/use_cases/delete_profile_image_use_case.dart';
 import '../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/home/domain/use_cases/send_partner_request_use_case.dart';
+import '../../features/mental_health/domain/use_cases/get_mental_support_use_case.dart';
 import '../../features/notes/data/repos_impl/trash_repo_impl.dart';
 import '../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
@@ -181,5 +185,17 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<ChangeProfileImageUseCase>(
     ChangeProfileImageUseCase(getIt.get<ProfileRepoImpl>()),
+  );
+
+  getIt.registerSingleton<MentalHealthRepo>(
+    MentalHealthRepoImpl(),
+  );
+
+  getIt.registerSingleton<GetMentalSupportUseCase>(
+    GetMentalSupportUseCase(getIt.get<MentalHealthRepo>()),
+  );
+
+  getIt.registerSingleton<GetChatMediaUseCase>(
+    GetChatMediaUseCase(getIt.get<ChatRepoImpl>()),
   );
 }

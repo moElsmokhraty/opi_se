@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/user_cache.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/get_profile_response.dart';
@@ -93,9 +96,38 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
         "partnerUserName": partnerUserName,
         "partnerImage": "default.png",
       },
-      ack: (data) {
-        print(data);
+    );
+  }
+
+  void listenOnMatchRequestApproved() {
+    SocketService.on(
+      eventName: 'matchRequestApproved',
+      handler: (eventData) async {
+        await updateCache(
+          notifiedPartner: eventData['notifiedPartner'],
+          matchId: eventData['matchId'],
+          partnerUserName: eventData['partnerUserName'],
+          partnerImage: eventData['partnerImage'],
+        ).then((value) {
+          SocketService.connect();
+        });
+        await getMatchRequests();
       },
     );
+  }
+
+  Future<void> updateCache({
+    required String notifiedPartner,
+    required String matchId,
+    required String partnerUserName,
+    required String partnerImage,
+  }) async {
+    userCache!.matchId = matchId;
+    userCache!.partner?.id = notifiedPartner;
+    userCache!.partner?.userName = partnerUserName;
+    userCache!.partner?.profileImage = partnerImage;
+    await Hive.box<UserCache>(boxName).put('user', userCache!).then((value) {
+      SocketService.connect();
+    });
   }
 }

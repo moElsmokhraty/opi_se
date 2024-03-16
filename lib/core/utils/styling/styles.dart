@@ -25,4 +25,11 @@ abstract class AppStyles {
     color: const Color(0xff010101),
     overflow: TextOverflow.ellipsis,
   );
+
+  static TextStyle textStyle22 = TextStyle(
+    fontSize: 22.sp,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
 }

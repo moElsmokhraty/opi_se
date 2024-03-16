@@ -28,6 +28,12 @@ class RequestItem extends StatelessWidget {
             matchId: state.response.matchId!,
             partnerUserName: partnerRequest!.partnerUserName!,
           );
+          cubit.updateCache(
+            notifiedPartner: state.response.notifiedPartner!,
+            matchId: state.response.matchId!,
+            partnerUserName: partnerRequest!.partnerUserName!,
+            partnerImage: "default.png",
+          );
           showCustomSnackBar(context, 'Request accepted successfully');
           await cubit.getMatchRequests();
         }

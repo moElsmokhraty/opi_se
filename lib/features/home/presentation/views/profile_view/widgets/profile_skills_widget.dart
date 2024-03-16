@@ -51,7 +51,7 @@ class ProfileSkillsWidget extends StatelessWidget {
                       ),
                       SizedBox(width: 12.w),
                       Text(
-                       '${skill.skillRate!}',
+                        '${skill.skillRate!}',
                         style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                       ),
                     ],

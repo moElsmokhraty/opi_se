@@ -56,25 +56,28 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
               SizedBox(width: 10.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 8.h),
-                  Text(
-                    'Hi, ${userCache!.userName!.split(' ').first}',
-                    style: AppStyles.textStyle24.copyWith(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
+              SizedBox(
+                width: 200.w,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Hi, ${userCache!.userName!.split(' ').first}',
+                      style: AppStyles.textStyle24.copyWith(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Welcome Back!',
-                    style: AppStyles.textStyle24.copyWith(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w400,
+                    Text(
+                      'Welcome Back!',
+                      style: AppStyles.textStyle24.copyWith(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),
@@ -97,38 +100,40 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {},
           tooltip: 'Notifications',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: userCache?.matchId != null ? StatefulBuilder(
-            builder: (context, setState) {
-              SocketService.on(
-                  eventName: 'showNotificationMark',
-                  handler: (eventData) {
-                    setState(() {
-                      notificationIcon = Stack(
-                        children: [
-                          Icon(
-                            CupertinoIcons.bell_fill,
-                            color: const Color(0xFF036666),
-                            size: 24.sp,
-                          ),
-                          Positioned(
-                            top: 8.0,
-                            right: 4.0,
-                            child: Container(
-                              width: 8.w,
-                              height: 8.h,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(4.r),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    });
-                  });
-              return notificationIcon;
-            },
-          ) : notificationIcon,
+          icon: userCache?.matchId != null
+              ? StatefulBuilder(
+                  builder: (context, setState) {
+                    SocketService.on(
+                        eventName: 'showNotificationMark',
+                        handler: (eventData) {
+                          setState(() {
+                            notificationIcon = Stack(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.bell_fill,
+                                  color: const Color(0xFF036666),
+                                  size: 24.sp,
+                                ),
+                                Positioned(
+                                  top: 8.0,
+                                  right: 4.0,
+                                  child: Container(
+                                    width: 8.w,
+                                    height: 8.h,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                        });
+                    return notificationIcon;
+                  },
+                )
+              : notificationIcon,
         ),
       ],
     );

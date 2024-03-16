@@ -35,11 +35,7 @@ class PinNoteFailure extends NotesState {
 
 class DeleteNoteLoading extends NotesState {}
 
-class DeleteNoteSuccess extends NotesState {
-  final DeleteNoteResponse response;
-
-  DeleteNoteSuccess({required this.response});
-}
+class DeleteNoteSuccess extends NotesState {}
 
 class DeleteNoteFailure extends NotesState {
   final Failure failure;

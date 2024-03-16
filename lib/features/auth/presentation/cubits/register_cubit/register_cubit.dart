@@ -2,29 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
-// import 'package:go_router/go_router.dart';
-// import 'package:image_cropper/image_cropper.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-//import '../../../../../core/utils/styling/styles.dart';
 import '../../../data/models/register_models/register_request.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:opi_se/features/auth/data/models/register_models/language.dart';
 
-import '../../../domain/use_cases/upload_national_id_use_case.dart';
-
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit(
-    this._registerUseCase,
-    this._uploadNationalIdUseCase,
-  ) : super(RegisterInitial());
+  RegisterCubit(this._registerUseCase) : super(RegisterInitial());
 
   final RegisterUseCase _registerUseCase;
-  final UploadNationalIdUseCase _uploadNationalIdUseCase;
 
   @override
   Future<void> close() async {

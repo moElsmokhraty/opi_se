@@ -10,6 +10,7 @@ class APIConfig {
   static const String submitUserPrefers = 'submitUserPrefers';
   static const String editProfile = 'editProfile';
   static const String getChat = 'getPartnerChat';
+  static const String getChatMedia = 'getChatMedia';
   static const String getMatchRequests = 'getMatchRequest';
   static const String acceptMatchRequest = 'acceptMatchRequest';
   static const String declineMatchRequest = 'declineMatchRequest';

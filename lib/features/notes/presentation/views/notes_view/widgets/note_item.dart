@@ -31,10 +31,8 @@ class NoteItem extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () async {
-              await BlocProvider.of<NotesCubit>(context).pinNote(
-                matchId: userCache!.matchId!,
+              BlocProvider.of<NotesCubit>(context).pinNote(
                 noteId: note!.id!,
-                isPinned: note!.isPinned! ? 'false' : 'true',
               );
             },
             child: Align(
@@ -75,7 +73,8 @@ class NoteItem extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(RoutesConfig.editNote, extra: note!);
+                  GoRouter.of(context)
+                      .push(RoutesConfig.editNote, extra: note!);
                 },
                 child: Container(
                   width: 22.w,
@@ -128,11 +127,8 @@ class NoteItem extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () async {
-                  await BlocProvider.of<NotesCubit>(context).deleteNote(
-                    DeleteNoteRequest(
-                      matchId: userCache!.matchId!,
-                      noteId: note!.id!,
-                    ),
+                  BlocProvider.of<NotesCubit>(context).deleteNote(
+                    noteId: note!.id!,
                   );
                 },
                 child: Icon(

@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:hive/hive.dart';
 import 'package:opi_se/features/home/data/models/get_profile_response.dart';
 import '../utils/constants.dart';
 import '../../features/auth/data/models/login_models/login_response/user_cache.dart';
 import '../../features/auth/data/models/login_models/login_response/login_response.dart';
 
-void cacheUserData(LoginResponse response) {
+Future<void> cacheUserData(LoginResponse response) async {
   var box = Hive.box<UserCache>(boxName);
-  box.put(
+  await box.put(
     'user',
     UserCache(
       token: response.token,
