@@ -74,6 +74,27 @@ class HomeLayout extends StatelessWidget {
                   label: 'Chat',
                 ),
                 BottomNavigationBarItem(
+                  label: 'Tasks',
+                  icon: SvgPicture.asset(
+                    'assets/svgs/Checklist.svg',
+                    height: 26.h,
+                    width: 26.w,
+                    colorFilter: ColorFilter.mode(
+                      const Color(0XFF036666).withOpacity(0.5),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/svgs/Checklist.svg',
+                    height: 26.h,
+                    width: 26.w,
+                    colorFilter: const ColorFilter.mode(
+                      Color(0XFF036666),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+                BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/svgs/notes.svg',
                     height: 26.h,

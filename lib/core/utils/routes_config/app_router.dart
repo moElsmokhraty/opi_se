@@ -67,12 +67,11 @@ import '../constants.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.chatMedia,
-    // userCache == null
-    //     ? RoutesConfig.authOptions
-    //     : (userCache!.getUserPrefers == true
-    //         ? RoutesConfig.userPrefers
-    //         : RoutesConfig.homeLayout),
+    initialLocation: userCache == null
+        ? RoutesConfig.authOptions
+        : (userCache!.getUserPrefers == true
+            ? RoutesConfig.userPrefers
+            : RoutesConfig.homeLayout),
     routes: [
       GoRoute(
         path: RoutesConfig.authOptions,

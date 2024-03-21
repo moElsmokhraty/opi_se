@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
-import 'package:opi_se/features/mental_health/presentation/views/mental_health_view/mental_health_view.dart';
-import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
-import '../../features/chat/domain/use_cases/get_chat_use_case.dart';
-import '../../features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
-import '../../features/home/presentation/views/home_view/home_view.dart';
+import '../../features/tasks/presentation/views/add_task_view/add_task_view.dart';
 import '../utils/service_locator.dart';
+import '../../features/chat/domain/use_cases/get_chat_use_case.dart';
+import '../../features/home/presentation/views/home_view/home_view.dart';
+import '../../features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
+import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
+import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
+import '../../features/mental_health/presentation/views/mental_health_view/mental_health_view.dart';
 
 part 'app_state.dart';
 
@@ -27,6 +28,7 @@ class AppCubit extends Cubit<AppState> {
         ..listenOnMatchRequestApproved(),
       child: const ChatView(),
     ),
+    const AddTaskView(),
     const NotesView(),
     const MentalHealthView(),
   ];

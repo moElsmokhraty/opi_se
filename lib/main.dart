@@ -15,22 +15,22 @@ import 'package:opi_se/core/utils/notifications_services.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await FirebaseMessaging.instance.requestPermission(
-    provisional: true,
-    alert: true,
-    announcement: true,
-    badge: true,
-    carPlay: true,
-    criticalAlert: true,
-    sound: true,
-  );
-  await NotificationsServices.showNotification(
-    body: message.data['body'],
-    title: message.data['title'],
-  );
-}
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await FirebaseMessaging.instance.requestPermission(
+//     provisional: true,
+//     alert: true,
+//     announcement: true,
+//     badge: true,
+//     carPlay: true,
+//     criticalAlert: true,
+//     sound: true,
+//   );
+//   await NotificationsServices.showNotification(
+//     body: message.data['body'],
+//     title: message.data['title'],
+//   );
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +45,8 @@ Future<void> main() async {
   );
   await setupHiveDB();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await NotificationsServices.init();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //await NotificationsServices.init();
+  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupServiceLocator();
   if (userCache != null) SocketService.connect();
   runApp(

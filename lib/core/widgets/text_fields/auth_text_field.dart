@@ -5,7 +5,7 @@ class AuthTextField extends StatelessWidget {
   const AuthTextField({
     super.key,
     required this.controller,
-    required this.hintText,
+    this.hintText,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     required this.validator,
@@ -16,7 +16,7 @@ class AuthTextField extends StatelessWidget {
   });
 
   final TextEditingController controller;
-  final String hintText;
+  final String? hintText;
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?) validator;
@@ -78,8 +78,10 @@ class AuthTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(
-            color: const Color(0xFF247CFF),
-            width: (1.5).w,
+            color: readOnly
+                ? Colors.black.withOpacity(0.4)
+                : const Color(0xFF247CFF),
+            width: readOnly ? 1.w : (1.5).w,
           ),
         ),
         errorBorder: OutlineInputBorder(
