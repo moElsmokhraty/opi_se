@@ -4,9 +4,9 @@ import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../../../core/errors/server_failure.dart';
 import '../../../../../core/utils/constants.dart';
+import '../../../data/models/edit_note_models/edit_note_request.dart';
 import '../../../domain/use_cases/edit_note_use_case.dart';
 import '../../../data/models/get_all_notes_response/note.dart';
-import '../../../data/models/edit_note_models/edit_note_response.dart';
 
 part 'edit_note_state.dart';
 
@@ -39,7 +39,7 @@ class EditNoteCubit extends Cubit<EditNoteState> {
     }
   }
 
-  Future<void> editNote() async {
+  Future<void> editNoteSocket() async {
     if (formKey.currentState!.validate()) {
       emit(EditNoteLoading());
       SocketService.emit(
@@ -61,6 +61,26 @@ class EditNoteCubit extends Cubit<EditNoteState> {
             ));
           }
         },
+      );
+    }
+  }
+
+  Future<void> editNote() async {
+    if (formKey.currentState!.validate()) {
+      emit(EditNoteLoading());
+      var result = await editNoteUseCase.call(
+        EditNoteRequest(
+          noteId: noteId,
+          noteTitle: titleController.text,
+          noteContent: contentController.text,
+          noteColor: noteColors.keys.firstWhere(
+            (element) => noteColors[element] == backgroundColor,
+          ),
+        ),
+      );
+      result.fold(
+        (failure) => emit(EditNoteFailure(failure)),
+        (response) => emit(EditNoteSuccess()),
       );
     }
   }

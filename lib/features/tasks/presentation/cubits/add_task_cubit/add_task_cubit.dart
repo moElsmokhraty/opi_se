@@ -39,8 +39,16 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   Future<void> selectEndDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: startDateController.text.isEmpty
+          ? DateTime.now()
+          : DateFormat('MM/dd/yyyy')
+              .parse(startDateController.text)
+              .add(const Duration(days: 1)),
+      firstDate: startDateController.text.isEmpty
+          ? DateTime.now()
+          : DateFormat('MM/dd/yyyy')
+              .parse(startDateController.text)
+              .add(const Duration(days: 1)),
       lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
     );
     if (picked != null) {

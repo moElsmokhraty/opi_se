@@ -65,7 +65,7 @@ class TrashItem extends StatelessWidget {
                   color: Colors.white,
                   onSelected: (value) async {
                     if (value == 'restore') {
-                      cubit.restoreNote(note!);
+                      //cubit.restoreNote(note!);
                     } else if (value == 'delete') {
                       await cubit.deleteNoteFromTrash(
                         DeleteNoteFromTrashRequest(

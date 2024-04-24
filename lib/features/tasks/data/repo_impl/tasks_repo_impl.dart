@@ -1,15 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:opi_se/features/tasks/data/models/delete_task_models/delete_all_tasks_type_response.dart';
-import 'package:opi_se/features/tasks/data/models/delete_task_models/delete_task_response.dart';
 import '../../domain/repo/tasks_repo.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/errors/server_failure.dart';
-import '../../../../core/utils/api_config/api_config.dart';
-import '../../../../core/utils/api_config/api_service.dart';
 import '../models/add_task_models/add_task_request.dart';
 import '../models/add_task_models/add_task_response.dart';
+import '../models/edit_task_models/edit_task_request.dart';
+import '../../../../core/utils/api_config/api_config.dart';
+import '../../../../core/utils/api_config/api_service.dart';
+import '../models/edit_task_models/edit_task_response.dart';
+import '../models/delete_task_models/delete_task_response.dart';
+import '../models/delete_task_models/delete_all_tasks_type_response.dart';
 import '../models/get_all_tasks_models/get_all_tasks_response/get_all_tasks_response.dart';
 
 class TasksRepoImpl implements TasksRepo {
@@ -65,7 +67,7 @@ class TasksRepoImpl implements TasksRepo {
   }) async {
     try {
       var data = await _apiService.get(
-        endpoint: APIConfig.getAllTasks,
+        endpoint: APIConfig.getSpecificTasksType,
         token: userCache!.token!,
         params: {
           'matchId': userCache!.matchId,
@@ -122,8 +124,23 @@ class TasksRepoImpl implements TasksRepo {
   }
 
   @override
-  Future<Either<Failure, DeleteAllTasksTypeResponse>> editTask() {
-    // TODO: implement editTask
-    throw UnimplementedError();
+  Future<Either<Failure, EditTaskResponse>> editTask({
+    required String taskId,
+    required EditTaskRequest request,
+  }) async {
+    try {
+      var data = await _apiService.patch(
+        endpoint: APIConfig.editTask,
+        token: userCache!.token!,
+        body: request.toJson(),
+        params: {'taskId': taskId, 'matchId': userCache!.matchId},
+      );
+      return Right(EditTaskResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
   }
 }

@@ -11,7 +11,6 @@ import '../../../data/models/get_all_notes_response/note.dart';
 import '../../../domain/use_cases/delete_note_from_trash_use_case.dart';
 import '../../../data/models/get_trash_response/get_trash_response.dart';
 import '../../../data/models/restore_note_models/restore_note_request.dart';
-import '../../../data/models/restore_note_models/restore_note_response.dart';
 import '../../../data/models/delete_note_from_trash_models/delete_note_from_trash_request.dart';
 import '../../../data/models/delete_note_from_trash_models/delete_note_from_trash_response.dart';
 
@@ -72,7 +71,7 @@ class TrashCubit extends Cubit<TrashState> {
     );
   }
 
-  Future<void> restoreNote(Note note) async {
+  Future<void> restoreNoteSocket(Note note) async {
     SocketService.emit(
       eventName: 'restoreNote',
       data: note.toJson(),
@@ -85,6 +84,15 @@ class TrashCubit extends Cubit<TrashState> {
           ));
         }
       },
+    );
+  }
+
+  Future<void> restoreNote(RestoreNoteRequest request) async {
+    emit(RestoreNoteLoading());
+    var result = await _restoreNoteUseCase.call(request);
+    result.fold(
+      (failure) => emit(RestoreNoteFailure(failure: failure)),
+      (response) => emit(RestoreNoteSuccess()),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/utils/constants.dart';
-import 'package:opi_se/core/utils/notifications_services.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';

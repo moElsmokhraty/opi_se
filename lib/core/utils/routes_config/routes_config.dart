@@ -1,4 +1,5 @@
 abstract class RoutesConfig {
+  static const String getStarted = '/get-started';
   static const String authOptions = '/auth-options';
   static const String login = '/login';
   static const String firstRegister = '/first-register';
@@ -16,7 +17,7 @@ abstract class RoutesConfig {
   static const String home = '/home';
   static const String partnerRequestProfile = '/partner-request-profile';
   static const String requests = '/requests';
-  static const String progress = '/progress';
+  static const String progress = '/dashboard';
   static const String chat = '/chat';
   static const String chatMedia = '/chat-media';
   static const String call = '/call';
@@ -26,4 +27,6 @@ abstract class RoutesConfig {
   static const String trash = '/trash';
   static const String dashboard = '/dashboard';
   static const String manageProfile = '/manage-profile';
+  static const String addTask = '/add-task';
+  static const String editTask = '/edit-task';
 }

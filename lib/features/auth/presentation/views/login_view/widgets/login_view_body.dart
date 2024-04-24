@@ -33,7 +33,6 @@ class LoginViewBody extends StatelessWidget {
             showCustomSnackBar(context, state.errMessage);
           }
         } else if (state is LoginSuccess) {
-          print(state.response.data?.partner?.profileImage);
           await cacheUserData(state.response).then((value) {
             SocketService.connect();
           });

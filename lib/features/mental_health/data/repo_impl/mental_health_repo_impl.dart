@@ -18,9 +18,7 @@ class MentalHealthRepoImpl implements MentalHealthRepo {
         endpoint: 'mental_support',
         body: request.toJson(),
       );
-      print('response: $response');
       List<String> texts = response.toString().split('\\n');
-      print(response);
       return Right(texts);
     } on Exception catch (e) {
       if (e is DioException) {

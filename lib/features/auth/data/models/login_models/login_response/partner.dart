@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 part 'partner.g.dart';
 
 @HiveType(typeId: 1)
+//ignore: must_be_immutable
 class Partner extends Equatable {
   String? id;
   String? userName;

@@ -13,5 +13,4 @@ Future<void> setupHiveDB() async {
   Hive.registerAdapter(UserSkillAdapter());
   await Hive.openBox<UserCache>(boxName);
   userCache = Hive.box<UserCache>(boxName).get('user');
-  print('UserCache: ${userCache?.userName}');
 }

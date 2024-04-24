@@ -32,4 +32,6 @@ class APIConfig {
   static const String getSpecificTasksType = 'getSpecificTasksType';
   static const String deleteTask = 'deleteTask';
   static const String deleteAllTasksType = 'deleteAllTasksType';
+  static const String editTask = 'editTask';
+  static const String uploadChatMedia = 'uploadChatMedia';
 }

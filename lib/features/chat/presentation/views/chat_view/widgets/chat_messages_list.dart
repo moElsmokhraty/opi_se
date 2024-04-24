@@ -10,9 +10,9 @@ class ChatMessagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ChatCubit cubit = BlocProvider.of<ChatCubit>(context);
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
-        final ChatCubit cubit = BlocProvider.of<ChatCubit>(context);
         if (userCache?.matchId == null) {
           return Expanded(
             child: Center(
@@ -34,7 +34,7 @@ class ChatMessagesList extends StatelessWidget {
                         fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Inter',
-                        color: Color(0xff036666),
+                        color: const Color(0xff036666),
                       ),
                     ),
                   ],
@@ -88,7 +88,7 @@ class ChatMessagesList extends StatelessWidget {
                     fontSize: 28.sp,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Inter',
-                    color: Color(0xff036666),
+                    color: const Color(0xff036666),
                   ),
                 ),
               ),
@@ -101,7 +101,7 @@ class ChatMessagesList extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 4.w,
-                vertical: 4.h,
+                vertical: 6.h,
               ),
               itemBuilder: (context, index) =>
                   ChatBubble(message: cubit.messages[index], cubit: cubit),

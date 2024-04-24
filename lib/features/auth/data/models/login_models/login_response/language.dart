@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 part 'language.g.dart';
 
 @HiveType(typeId: 3)
+//ignore: must_be_immutable
 class Language extends Equatable {
   String? languageName;
   int? level;

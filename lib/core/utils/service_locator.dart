@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:opi_se/features/chat/domain/use_cases/upload_chat_images_use_case.dart';
 import 'package:opi_se/features/mental_health/data/repo_impl/mental_health_repo_impl.dart';
 import 'package:opi_se/features/mental_health/domain/repo/mental_health_repo.dart';
 import 'package:opi_se/features/notes/data/repos_impl/notes_repo_impl.dart';
@@ -7,7 +8,6 @@ import 'package:opi_se/features/notes/domain/use_cases/get_notes_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import 'package:opi_se/features/tasks/data/repo_impl/tasks_repo_impl.dart';
-import 'package:opi_se/features/tasks/domain/repo/tasks_repo.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
 import '../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
 import '../../features/home/data/repos_impl/profile_repo_impl.dart';
@@ -26,6 +26,9 @@ import '../../features/notes/domain/use_cases/flush_trash_use_case.dart';
 import '../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../features/settings/data/repos_impl/settings_repo_impl.dart';
 import '../../features/settings/domain/use_cases/edit_profile_use_case.dart';
+import '../../features/tasks/domain/use_cases/delete_task_use_case.dart';
+import '../../features/tasks/domain/use_cases/edit_task_use_case.dart';
+import '../../features/tasks/domain/use_cases/get_specific_tasks_type_use_case.dart';
 import 'api_config/api_config.dart';
 import 'api_config/api_service.dart';
 import '../../features/auth/data/repos_impl/auth_repo_impl.dart';
@@ -208,5 +211,21 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<AddTaskUseCase>(
     AddTaskUseCase(getIt.get<TasksRepoImpl>()),
+  );
+
+  getIt.registerSingleton<GetSpecificTasksTypeUseCase>(
+    GetSpecificTasksTypeUseCase(getIt.get<TasksRepoImpl>()),
+  );
+
+  getIt.registerSingleton<EditTaskUseCase>(
+    EditTaskUseCase(getIt.get<TasksRepoImpl>()),
+  );
+
+  getIt.registerSingleton<DeleteTaskUseCase>(
+    DeleteTaskUseCase(getIt.get<TasksRepoImpl>()),
+  );
+
+  getIt.registerSingleton<UploadChatImagesUseCase>(
+    UploadChatImagesUseCase(getIt.get<ChatRepoImpl>()),
   );
 }

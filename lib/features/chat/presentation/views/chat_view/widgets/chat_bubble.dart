@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -77,25 +78,37 @@ class ChatBubble extends StatelessWidget {
                         topRight: Radius.circular(isSender ? 0 : 14.r),
                       ),
                     ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12.h,
-                            horizontal: 16.w,
-                          ),
-                          child: Text(
-                            message?.messageContent ?? '',
-                            style: AppStyles.textStyle12.copyWith(
-                              fontSize: 14.sp,
-                              color: isSender ? Colors.white : Colors.black,
+                    child: Builder(
+                      builder: (context) {
+                        if (message?.messageType == 'text') {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12.h, horizontal: 16.w),
+                            child: Text(
+                              message?.messageContent ?? '',
+                              style: AppStyles.textStyle12.copyWith(
+                                fontSize: 14.sp,
+                                color: isSender ? Colors.white : Colors.black,
+                              ),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.visible,
                             ),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                        SizedBox(width: 1.w)
-                      ],
+                          );
+                        } else if (message?.messageType == 'media') {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8.h, horizontal: 4.w),
+                            child: CachedNetworkImage(
+                              alignment: Alignment.center,
+                              imageUrl: message?.mediaUrl ?? '',
+                              width: 270.w,
+                              height: 200.h,
+                            ),
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
                     ),
                   ),
                 ),

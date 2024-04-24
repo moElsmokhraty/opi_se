@@ -1,13 +1,16 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../domain/repos/chat_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
+import 'package:opi_se/core/utils/constants.dart';
+import '../models/upload_chat_media_response.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
+import '../models/get_chat_response/get_chat_response.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
-import 'package:opi_se/core/utils/constants.dart';
-import 'package:opi_se/features/chat/data/models/get_chat_media_response/get_chat_media_response.dart';
-import '../../domain/repos/chat_repo.dart';
-import '../models/get_chat_response/get_chat_response.dart';
+import '../models/get_chat_media_response/get_chat_media_response.dart';
 
 class ChatRepoImpl implements ChatRepo {
   final ApiService _apiService;
@@ -56,6 +59,38 @@ class ChatRepoImpl implements ChatRepo {
         },
       );
       return Right(GetChatMediaResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      } else {
+        return Left(ServerFailure(errMessage: e.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, UploadChatMediaResponse>> uploadChatImages({
+    required List<XFile> mediaFiles,
+  }) async {
+    try {
+      FormData formData = FormData.fromMap({});
+      for (var file in mediaFiles) {
+        formData.files.add(MapEntry(
+          'chatMedia',
+          await MultipartFile.fromFile(
+            file.path,
+            filename: file.path.split('/').last,
+            contentType: MediaType('image', file.path.split('.').last),
+          ),
+        ));
+      }
+      var data = await _apiService.sendFormData(
+        endpoint: APIConfig.uploadChatMedia,
+        token: userCache!.token!,
+        params: {'matchId': userCache!.matchId!},
+        formData: formData,
+      );
+      return Right(UploadChatMediaResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

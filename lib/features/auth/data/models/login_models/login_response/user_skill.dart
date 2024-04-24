@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 part 'user_skill.g.dart';
 
 @HiveType(typeId: 2)
+//ignore: must_be_immutable
 class UserSkill extends Equatable {
   String? skillName;
   int? skillRate;

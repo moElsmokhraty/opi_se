@@ -78,6 +78,7 @@ class SocketService {
     Function(dynamic)? handler,
   }) {
     try {
+      print('Listening to event: $eventName');
       socket.on(eventName, (data) {
         handler!(data as dynamic);
       });

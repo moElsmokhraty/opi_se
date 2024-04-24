@@ -210,7 +210,10 @@ class FirstRegisterViewBody extends StatelessWidget {
                     }
                     if (cubit.firstFormKey.currentState!.validate() &&
                         cubit.agree) {
-                      GoRouter.of(context).push(RoutesConfig.secondRegister);
+                      GoRouter.of(context).push(
+                        RoutesConfig.secondRegister,
+                        extra: cubit,
+                      );
                     }
                   },
                   backColor: const Color(0xff036666),

@@ -1,49 +1,112 @@
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//
-// class NotificationsServices {
-//   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//       FlutterLocalNotificationsPlugin();
-//
-//   static Future<void> init() async {
-//     const AndroidInitializationSettings initializationSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/ic_launcher');
-//     final DarwinInitializationSettings initializationSettingsDarwin =
-//         DarwinInitializationSettings(
-//             onDidReceiveLocalNotification: (id, title, body, payload) {});
-//     final InitializationSettings initializationSettings =
-//         InitializationSettings(
-//       android: initializationSettingsAndroid,
-//       iOS: initializationSettingsDarwin,
-//     );
-//     flutterLocalNotificationsPlugin.initialize(
-//       initializationSettings,
-//       onDidReceiveBackgroundNotificationResponse: (details) {},
-//     );
-//   }
-//
-//   static Future<void> showNotification({
-//     required String title,
-//     required String body,
-//   }) async {
-//     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-//         AndroidNotificationDetails(
-//       enableVibration: true,
-//       'Opise notifications',
-//       'Opise notifications',
-//       channelDescription: 'Opise notifications',
-//       importance: Importance.max,
-//       priority: Priority.high,
-//       showWhen: false,
-//     );
-//     const NotificationDetails platformChannelSpecifics = NotificationDetails(
-//       android: androidPlatformChannelSpecifics,
-//     );
-//     await flutterLocalNotificationsPlugin.show(
-//       0,
-//       title,
-//       body,
-//       platformChannelSpecifics,
-//       payload: 'item x',
-//     );
-//   }
-// }
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class NotificationsServices {
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  Future<void> requestPermission() async {
+    NotificationSettings settings = await firebaseMessaging.requestPermission(
+      provisional: true,
+      alert: true,
+      announcement: true,
+      badge: true,
+      carPlay: true,
+      criticalAlert: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      debugPrint('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      debugPrint('User granted provisional permission');
+    } else {
+      await AppSettings.openAppSettings(type: AppSettingsType.notification);
+      debugPrint('User declined or has not accepted permission');
+    }
+  }
+
+  void initFirebaseListeners() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      initLocalNotifications();
+      showNotification(message);
+    });
+  }
+
+  Future<void> initLocalNotifications() async {
+    var androidInitializationSettings =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    var iosInitializationSettings = const DarwinInitializationSettings();
+
+    var initializationSettings = InitializationSettings(
+      android: androidInitializationSettings,
+      iOS: iosInitializationSettings,
+    );
+
+    await notificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (payload) async {
+        debugPrint(payload.toString());
+        debugPrint('Notification clicked');
+      },
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
+    );
+  }
+
+  static void onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse payload,
+  ) {
+    debugPrint(payload.toString());
+  }
+
+  Future<void> showNotification(RemoteMessage message) async {
+    AndroidNotificationChannel channel = AndroidNotificationChannel(
+      Random.secure().nextInt(100000).toString(),
+      'High Importance Notifications',
+      importance: Importance.max,
+    );
+
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      channel.id,
+      channel.name,
+      icon: '@mipmap/ic_launcher',
+      channelDescription: 'your channel description',
+      importance: Importance.high,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+
+    DarwinNotificationDetails iOSNotificationDetails =
+        const DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: iOSNotificationDetails,
+    );
+
+    Future.delayed(
+      Duration.zero,
+      () async {
+        await notificationsPlugin.show(
+          0,
+          message.notification!.title.toString(),
+          message.notification!.body.toString(),
+          platformChannelSpecifics,
+        );
+      },
+    );
+  }
+}

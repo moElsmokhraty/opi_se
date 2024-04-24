@@ -43,11 +43,14 @@ class NotesViewBody extends StatelessWidget {
             if (state.failure.errMessage ==
                 'You do not have a student partner yet!') {
               return const NoNotesWidget(
-                  message: 'You do not have a student partner yet!');
+                message: 'You do not have a student partner yet!',
+              );
             }
             return CustomErrorWidget(
               errorMessage: state.failure.errMessage,
-              onPressed: () {},
+              onPressed: () {
+                cubit.getNotes(userCache!.matchId!, 1, 10);
+              },
             );
           } else if (state is GetNotesLoading && cubit.notes.isEmpty) {
             return const Center(
@@ -63,7 +66,7 @@ class NotesViewBody extends StatelessWidget {
               return GridView.builder(
                 itemCount: cubit.notes.length,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 12.w,
                   mainAxisSpacing: 16.h,

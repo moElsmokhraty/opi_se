@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/functions/validate_text.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
 import '../../../cubits/add_task_cubit/add_task_cubit.dart';
-import 'package:opi_se/core/widgets/buttons/auth_button.dart';
 import 'package:opi_se/core/widgets/text_fields/auth_text_field.dart';
+
+import 'add_task_button.dart';
 
 class AddTaskViewBody extends StatelessWidget {
   const AddTaskViewBody({super.key});
@@ -61,6 +61,7 @@ class AddTaskViewBody extends StatelessWidget {
               SizedBox(height: screenHeight * 0.04),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,30 +126,7 @@ class AddTaskViewBody extends StatelessWidget {
                 ],
               ),
               SizedBox(height: screenHeight * 0.075),
-              BlocConsumer<AddTaskCubit, AddTaskState>(
-                listener: (context, state) {
-                  if (state is AddTaskSuccess) {
-                    showCustomSnackBar(context, 'Task Added Successfully');
-                  } else if (state is AddTaskFailure) {
-                    showCustomSnackBar(context, state.errMessage);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is AddTaskLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return AuthButton(
-                    text: 'Add Task',
-                    onPressed: () async {
-                      await cubit.addTask();
-                    },
-                    backColor: const Color(0xFF036666),
-                    textColor: Colors.white,
-                  );
-                },
-              ),
+              const AddTaskButton(),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ class Message extends Equatable {
   final String? messageSender;
   final String? messageType;
   final String? messageContent;
+  final String? mediaUrl;
   final String? id;
   final DateTime? sentAt;
 
@@ -12,6 +13,7 @@ class Message extends Equatable {
     this.messageType,
     this.messageContent,
     this.id,
+    this.mediaUrl,
     this.sentAt,
   });
 
@@ -19,6 +21,7 @@ class Message extends Equatable {
         messageSender: json['messageSender'] as String?,
         messageType: json['messageType'] as String?,
         messageContent: json['messageContent'] as String?,
+        mediaUrl: json['mediaUrl'] as String?,
         id: json['_id'] as String?,
         sentAt: json['sentAt'] == null
             ? null
@@ -29,6 +32,7 @@ class Message extends Equatable {
         'messageSender': messageSender,
         'messageType': messageType,
         'messageContent': messageContent,
+        'mediaUrl': mediaUrl,
         '_id': id,
         'sentAt': sentAt?.toIso8601String(),
       };
@@ -39,6 +43,7 @@ class Message extends Equatable {
       messageSender,
       messageType,
       messageContent,
+      mediaUrl,
       id,
       sentAt,
     ];

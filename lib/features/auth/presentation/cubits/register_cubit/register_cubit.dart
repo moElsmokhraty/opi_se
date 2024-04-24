@@ -198,7 +198,6 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       handleGeoCodingApiResponse(response);
     } catch (e) {
-      print(e.toString());
       updateLocationAndEmitFailure('Error, try again');
     }
   }
@@ -216,7 +215,6 @@ class RegisterCubit extends Cubit<RegisterState> {
   void handleGeoCodingApiResponse(Response response) {
     if (response.statusCode == 200) {
       var result = response.data;
-      print(result.toString());
       String location = result['results'][0]['formatted_address'];
       locationController.text =
           location.substring(location.indexOf(' ') + 1).trim();

@@ -91,7 +91,7 @@ class _MapViewBodyState extends State<MapViewBody> {
   @override
   Widget build(BuildContext context) {
     //RegisterCubit cubit = BlocProvider.of<RegisterCubit>(context);
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
     // FutureBuilder<Position?>(
     //   future: latlongFuture,
     //   builder: (context, snapshot) {

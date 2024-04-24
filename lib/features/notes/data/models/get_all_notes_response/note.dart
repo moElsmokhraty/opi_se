@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+//ignore: must_be_immutable
 class Note extends Equatable {
   final String? id;
   final String? userId;
@@ -33,7 +34,7 @@ class Note extends Equatable {
         noteColor: json['noteColor'] as String?,
         createdAt: json['createdAt'] == null
             ? null
-            : DateTime.parse(json['createdAt'] as String),
+            : DateTime.parse(json['createdAt'] as String).toLocal(),
         v: json['__v'] as int?,
       );
 

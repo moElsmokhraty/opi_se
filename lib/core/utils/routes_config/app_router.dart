@@ -31,11 +31,17 @@ import 'package:opi_se/features/notes/presentation/views/edit_note_view/edit_not
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
 import 'package:opi_se/features/settings/presentation/cubits/edit_profile_cubit.dart';
 import 'package:opi_se/features/settings/presentation/views/edit_profile_view/edit_profile_view.dart';
+import 'package:opi_se/features/tasks/data/models/task.dart';
+import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
+import 'package:opi_se/features/tasks/presentation/cubits/add_task_cubit/add_task_cubit.dart';
+import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
+import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import '../../../features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
@@ -62,17 +68,25 @@ import '../../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
 import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
+import '../../../features/onboarding/presentation/views/get_started_view/get_started_view.dart';
 import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
-import '../constants.dart';
+import '../../../features/tasks/domain/use_cases/edit_task_use_case.dart';
+import '../../../features/tasks/presentation/cubits/edit_task_cubit/edit_task_cubit.dart';
+import '../../../features/tasks/presentation/views/edit_task_view/edit_task_view.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: userCache == null
-        ? RoutesConfig.authOptions
-        : (userCache!.getUserPrefers == true
-            ? RoutesConfig.userPrefers
-            : RoutesConfig.homeLayout),
+    initialLocation: RoutesConfig.firstRegister,
+    // userCache == null
+    //     ? RoutesConfig.authOptions
+    //     : (userCache!.getUserPrefers == true
+    //         ? RoutesConfig.userPrefers
+    //         : RoutesConfig.homeLayout),
     routes: [
+      GoRoute(
+        path: RoutesConfig.getStarted,
+        builder: (context, state) => const GetStartedView(),
+      ),
       GoRoute(
         path: RoutesConfig.authOptions,
         builder: (context, state) => const AuthOptionsView(),
@@ -87,13 +101,19 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.firstRegister,
         builder: (context, state) {
-          return const FirstRegisterView();
+          return BlocProvider(
+            create: (context) => RegisterCubit(getIt.get<RegisterUseCase>()),
+            child: const FirstRegisterView(),
+          );
         },
       ),
       GoRoute(
         path: RoutesConfig.secondRegister,
         builder: (context, state) {
-          return const SecondRegisterView();
+          return BlocProvider.value(
+            value: state.extra as RegisterCubit,
+            child: const SecondRegisterView(),
+          );
         },
       ),
       GoRoute(
@@ -263,6 +283,26 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.manageProfile,
         builder: (context, state) => const ManageProfileView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.addTask,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => AddTaskCubit(getIt.get<AddTaskUseCase>()),
+            child: const AddTaskView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutesConfig.editTask,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => EditTaskCubit(
+              getIt.get<EditTaskUseCase>(),
+            )..setValues(state.extra as Task),
+            child: const EditTaskView(),
+          );
+        },
       ),
     ],
   );

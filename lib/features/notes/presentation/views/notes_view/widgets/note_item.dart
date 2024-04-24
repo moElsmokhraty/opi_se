@@ -9,7 +9,6 @@ import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
 import '../../../cubits/notes_cubit/notes_cubit.dart';
-import '../../../../data/models/delete_note_models/delete_note_request.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key, this.note});
@@ -33,6 +32,7 @@ class NoteItem extends StatelessWidget {
             onTap: () async {
               BlocProvider.of<NotesCubit>(context).pinNote(
                 noteId: note!.id!,
+                isPinned: note!.isPinned!,
               );
             },
             child: Align(
@@ -107,6 +107,7 @@ class NoteItem extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 Icons.alarm_outlined,
@@ -115,7 +116,7 @@ class NoteItem extends StatelessWidget {
               ),
               SizedBox(width: 4.w),
               Text(
-                '${DateFormat('EEEE').format(note?.createdAt ?? DateTime.now())} ${DateFormat('HH:mm').format(note?.createdAt ?? DateTime.now())}',
+                '${DateFormat('EE').format(note?.createdAt ?? DateTime.now())} ${DateFormat('HH:mm').format(note?.createdAt ?? DateTime.now())}',
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.5),
                   fontSize: 12.sp,
@@ -127,9 +128,7 @@ class NoteItem extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () async {
-                  BlocProvider.of<NotesCubit>(context).deleteNote(
-                    noteId: note!.id!,
-                  );
+                  BlocProvider.of<NotesCubit>(context).deleteNote(note!.id!);
                 },
                 child: Icon(
                   Icons.delete_outline_rounded,
