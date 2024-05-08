@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:opi_se/features/tasks/data/models/task.dart';
+import '../../../../../core/utils/socket_service.dart';
 import '../../../domain/use_cases/edit_task_use_case.dart';
 import '../../../data/models/edit_task_models/edit_task_request.dart';
 import '../../../data/models/edit_task_models/edit_task_response.dart';
@@ -68,16 +69,29 @@ class EditTaskCubit extends Cubit<EditTaskState> {
     var result = await _editTaskUseCase.call({
       'taskId': taskId,
       'request': EditTaskRequest(
-        title: titleController.text,
-        content: contentController.text,
-        startDate: startDateController.text,
-        endDate: endDateController.text,
-        taskStatus: taskStatus,
+        title: titleController.text.trim(),
+        content: contentController.text.trim(),
+        startDate: startDateController.text.trim(),
+        endDate: endDateController.text.trim(),
+        taskStatus: taskStatus.trim(),
       ),
     });
     result.fold(
       (failure) => emit(EditTaskFailure(failure.errMessage)),
-      (response) => emit(EditTaskSuccess(response)),
+      (response) {
+        editTaskSocket(response.task!);
+        emit(EditTaskSuccess(response));
+      },
+    );
+  }
+
+  void editTaskSocket(Task task) {
+    SocketService.emit(
+      eventName: 'updateTask',
+      data: task.toJson(),
+      ack: (data) {
+        print(data);
+      },
     );
   }
 }

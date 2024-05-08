@@ -15,44 +15,63 @@ class TodoTasksList extends StatelessWidget {
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
           if (state is GetTasksFailure &&
-              cubit.todoTasks.isEmpty &&
-              cubit.selectedIndex == 0) {
+              cubit.todoTasks.isNotEmpty &&
+              cubit.selectedIndex == 0 &&
+              state.errMessage != 'No tasks yet !') {
             showCustomSnackBar(context, state.errMessage);
           }
         },
         builder: (context, state) {
           if (state is GetTasksLoading && cubit.todoTasks.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Color(0XFF036666),
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(
+                  color: Color(0XFF036666),
+                ),
               ),
             );
           } else if (state is GetTasksFailure && cubit.todoTasks.isEmpty) {
-            return Center(
-              child: Text(
-                state.errMessage,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 16.sp,
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: Text(
+                  state.errMessage,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             );
           } else if (cubit.todoTasks.isEmpty) {
-            return Center(
-              child: Text(
-                'No tasks found',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16.sp,
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: Text(
+                  'No tasks found',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             );
           } else {
             return ListView.separated(
               itemCount: cubit.todoTasks.length,
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return TaskItem(task: cubit.todoTasks[index]);
+                return TaskItem(
+                  key: UniqueKey(),
+                  task: cubit.todoTasks[index],
+                );
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 12.h);

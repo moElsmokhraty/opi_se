@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddTaskAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AddTaskAppBar({super.key});
@@ -34,7 +33,7 @@ class AddTaskAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 24.sp,
             ),
             onPressed: () {
-              GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
+              GoRouter.of(context).pop();
             },
           ),
         ],

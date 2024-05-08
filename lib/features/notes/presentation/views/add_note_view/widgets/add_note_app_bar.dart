@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/utils/constants.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import '../../../cubits/add_note_cubit/add_note_cubit.dart';
 import '../../../../../../core/widgets/custom_color_selector.dart';
 
@@ -26,7 +25,7 @@ class AddNoteAppBar extends StatelessWidget implements PreferredSizeWidget {
           size: 24.sp,
         ),
         onTap: () {
-          GoRouter.of(context).pushReplacement(RoutesConfig.notes);
+          GoRouter.of(context).pop();
         },
       ),
       title: Text(

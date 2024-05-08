@@ -6,6 +6,7 @@ abstract class RoutesConfig {
   static const String secondRegister = '/second-register';
   static const String map = '/map';
   static const String userPrefers = '/user-prefers';
+  static const String editUserPrefers = '/edit-user-prefers';
   static const String changePassword = '/change-password';
   static const String successfulChange = '/successful-change';
   static const String forgotPassword = '/forgot-password';
@@ -29,4 +30,5 @@ abstract class RoutesConfig {
   static const String manageProfile = '/manage-profile';
   static const String addTask = '/add-task';
   static const String editTask = '/edit-task';
+  static const String notifications = '/notifications';
 }

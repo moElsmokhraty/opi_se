@@ -30,8 +30,7 @@ class SocketService {
         }
       });
       socket.onDisconnect((_) {
-        disconnect();
-        print('Disconnected from socket');
+        socket.connect();
       });
     } catch (e) {
       print('Error connecting to socket: $e');
@@ -66,6 +65,7 @@ class SocketService {
     Map<String, dynamic>? data,
     Function? ack,
   }) {
+    if (socket.connected == false) connect();
     try {
       socket.emitWithAck(eventName, data, ack: ack);
     } catch (e) {
@@ -78,7 +78,6 @@ class SocketService {
     Function(dynamic)? handler,
   }) {
     try {
-      print('Listening to event: $eventName');
       socket.on(eventName, (data) {
         handler!(data as dynamic);
       });

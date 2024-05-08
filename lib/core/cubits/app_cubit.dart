@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../features/chat/domain/use_cases/upload_chat_images_use_case.dart';
+import '../../features/dashboard/presentation/views/progress_view/progress_view.dart';
 import '../utils/service_locator.dart';
-import '../../features/chat/domain/use_cases/get_chat_use_case.dart';
 import '../../features/home/presentation/views/home_view/home_view.dart';
 import '../../features/tasks/presentation/views/tasks_view/tasks_view.dart';
-import '../../features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
-import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/delete_task_use_case.dart';
 import 'package:opi_se/features/notes/presentation/views/notes_view/notes_view.dart';
 import '../../features/tasks/domain/use_cases/get_specific_tasks_type_use_case.dart';
@@ -23,19 +20,7 @@ class AppCubit extends Cubit<AppState> {
   List<Widget> screens = [
     const HomeView(),
     //const DashboardView(),
-    BlocProvider(
-      create: (context) => ChatCubit(
-        getIt.get<GetChatUseCase>(),
-        getIt.get<UploadChatImagesUseCase>(),
-      )
-        ..getChat(page: 1, limit: 20)
-        ..listenOnNewMessage()
-        ..listenOnMessageDeleted()
-        ..listenOnChatSessionRequest(context)
-        ..listenOnReplyToSessionRequest(context)
-        ..listenOnMatchRequestApproved(),
-      child: const ChatView(),
-    ),
+    const ProgressView(),
     BlocProvider(
       create: (context) => TasksCubit(
         getIt.get<GetSpecificTasksTypeUseCase>(),
@@ -43,7 +28,10 @@ class AppCubit extends Cubit<AppState> {
       )
         ..getTodoTasks()
         ..getInProgressTasks()
-        ..getDoneTasks(),
+        ..getDoneTasks()
+        ..listenOnGetTaskFromSocket()
+        ..listenOnTaskDeletedFromSocket()
+        ..listenOnTaskUpdatedFromSocket(),
       child: const TasksView(),
     ),
     const NotesView(),

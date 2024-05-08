@@ -79,18 +79,26 @@ class HomeLayout extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       backgroundColor: Colors.white,
-                      icon: Icon(
-                        CupertinoIcons.chat_bubble_text_fill,
-                        color: Colors.black.withOpacity(0.5),
-                        size: 24.sp,
+                      icon: SvgPicture.asset(
+                        'assets/svgs/progress.svg',
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.8),
+                          BlendMode.srcIn,
+                        ),
+                        height: 24.sp,
+                        width: 24.sp,
                       ),
-                      activeIcon: Icon(
-                        CupertinoIcons.chat_bubble_text_fill,
-                        color: const Color(0XFF036666),
-                        size: 24.sp,
+                      activeIcon: SvgPicture.asset(
+                        'assets/svgs/progress.svg',
+                        colorFilter: const ColorFilter.mode(
+                          Colors.black,
+                          BlendMode.srcIn,
+                        ),
+                        height: 24.sp,
+                        width: 24.sp,
                       ),
-                      tooltip: 'Chat',
-                      label: 'Chat',
+                      tooltip: 'Progress',
+                      label: 'Progress',
                     ),
                     BottomNavigationBarItem(
                       label: 'Tasks',

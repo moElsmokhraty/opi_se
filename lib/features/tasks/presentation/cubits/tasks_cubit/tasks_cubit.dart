@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../data/models/task.dart';
 import '../../../domain/use_cases/delete_task_use_case.dart';
 import '../../../domain/use_cases/get_specific_tasks_type_use_case.dart';
@@ -35,8 +36,9 @@ class TasksCubit extends Cubit<TasksState> {
     result.fold(
       (failure) => emit(GetTasksFailure(failure.errMessage)),
       (response) {
+        todoTasks.clear();
         todoTasks.addAll(response.tasks ?? []);
-        emit(GetTasksSuccess(response));
+        emit(GetTasksSuccess(response.tasks ?? []));
       },
     );
   }
@@ -49,8 +51,9 @@ class TasksCubit extends Cubit<TasksState> {
     result.fold(
       (failure) => emit(GetTasksFailure(failure.errMessage)),
       (response) {
+        inProgressTasks.clear();
         inProgressTasks.addAll(response.tasks ?? []);
-        emit(GetTasksSuccess(response));
+        emit(GetTasksSuccess(response.tasks ?? []));
       },
     );
   }
@@ -61,8 +64,9 @@ class TasksCubit extends Cubit<TasksState> {
     result.fold(
       (failure) => emit(GetTasksFailure(failure.errMessage)),
       (response) {
+        doneTasks.clear();
         doneTasks.addAll(response.tasks ?? []);
-        emit(GetTasksSuccess(response));
+        emit(GetTasksSuccess(response.tasks ?? []));
       },
     );
   }
@@ -80,13 +84,105 @@ class TasksCubit extends Cubit<TasksState> {
         } else {
           doneTasks.removeWhere((element) => element.id == id);
         }
+        deleteTaskSocket(id);
         emit(DeleteTaskSuccess());
       },
+    );
+  }
+
+  void deleteTaskSocket(String id) {
+    SocketService.emit(
+      eventName: 'deleteTask',
+      data: {'taskId': id},
     );
   }
 
   void changeFocusDate(DateTime selectedDate) {
     focusDate = selectedDate;
     emit(TasksChangeFocusDate());
+  }
+
+  void listenOnGetTaskFromSocket() {
+    SocketService.on(
+      eventName: 'getTask',
+      handler: (data) {
+        final task = Task.fromJson(data['data']);
+        todoTasks.add(task);
+        emit(GetTasksSuccess(todoTasks));
+      },
+    );
+  }
+
+  void listenOnTaskDeletedFromSocket() {
+    SocketService.on(
+      eventName: 'taskDeleted',
+      handler: (data) {
+        if (data['data']['taskStatus'] == 'toDo') {
+          todoTasks.removeWhere(
+            (element) => element.id == data['data']['taskId'],
+          );
+        } else if (data['data']['taskStatus'] == 'inProgress') {
+          inProgressTasks.removeWhere(
+            (element) => element.id == data['data']['taskId'],
+          );
+        } else {
+          doneTasks.removeWhere(
+            (element) => element.id == data['data']['taskId'],
+          );
+        }
+        emit(DeleteTaskSuccess());
+      },
+    );
+  }
+
+  void listenOnTaskUpdatedFromSocket() {
+    SocketService.on(
+      eventName: 'getUpdatedTask',
+      handler: (data) {
+        final Task task = Task.fromJson(data['data']);
+        if (data['data']['taskStatus'] == 'toDo') {
+          final index = todoTasks.indexWhere(
+            (element) => element.id == data['data']['_id'],
+          );
+          todoTasks[index] = task;
+          emit(GetTasksSuccess(todoTasks));
+        } else if (data['data']['taskStatus'] == 'inProgress') {
+          final index = inProgressTasks.indexWhere(
+            (element) => element.id == data['data']['_id'],
+          );
+          inProgressTasks[index] = task;
+          emit(GetTasksSuccess(inProgressTasks));
+        } else {
+          final index = doneTasks.indexWhere(
+            (element) => element.id == data['data']['_id'],
+          );
+          doneTasks[index] = task;
+          emit(GetTasksSuccess(doneTasks));
+        }
+      },
+    );
+  }
+
+  void deleteAllTasksSocket() {
+    SocketService.emit(
+      eventName: 'deleteAllTasks',
+      data: {"deleteAllTasks": true},
+    );
+    todoTasks.clear();
+    inProgressTasks.clear();
+    doneTasks.clear();
+    emit(GetTasksSuccess(const []));
+  }
+
+  void listenOnAllTasksDeletedSocket() {
+    SocketService.on(
+      eventName: 'allTasksDeleted',
+      handler: (data) {
+        todoTasks.clear();
+        inProgressTasks.clear();
+        doneTasks.clear();
+        emit(GetTasksSuccess(const []));
+      },
+    );
   }
 }

@@ -34,3 +34,5 @@ class UploadChatImagesFailure extends ChatState {
 
   UploadChatImagesFailure(this.message);
 }
+
+class ChangeOptionsCount extends ChatState {}

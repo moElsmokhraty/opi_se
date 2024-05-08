@@ -14,25 +14,36 @@ class TasksViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.sizeOf(context).height;
     final TasksCubit cubit = BlocProvider.of<TasksCubit>(context);
-    return Column(
-      children: [
-        SizedBox(height: screenHeight * 0.03),
-        const TasksCalendar(),
-        SizedBox(height: screenHeight * 0.05),
-        const TaskTypeTabsWidget(),
-        SizedBox(height: screenHeight * 0.03),
-        BlocBuilder<TasksCubit, TasksState>(
-          builder: (context, state) {
-            if (cubit.selectedIndex == 0) {
-              return const TodoTasksList();
-            } else if (cubit.selectedIndex == 1) {
-              return const InProgressTasksList();
-            } else {
-              return const DoneTasksList();
-            }
-          },
-        ),
-      ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        if (cubit.selectedIndex == 0) {
+          await cubit.getTodoTasks();
+        } else if (cubit.selectedIndex == 1) {
+          await cubit.getInProgressTasks();
+        } else {
+          await cubit.getDoneTasks();
+        }
+      },
+      child: Column(
+        children: [
+          SizedBox(height: screenHeight * 0.03),
+          const TasksCalendar(),
+          SizedBox(height: screenHeight * 0.05),
+          const TaskTypeTabsWidget(),
+          SizedBox(height: screenHeight * 0.03),
+          BlocBuilder<TasksCubit, TasksState>(
+            builder: (context, state) {
+              if (cubit.selectedIndex == 0) {
+                return const TodoTasksList();
+              } else if (cubit.selectedIndex == 1) {
+                return const InProgressTasksList();
+              } else {
+                return const DoneTasksList();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

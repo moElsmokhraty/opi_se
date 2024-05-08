@@ -11,11 +11,7 @@ final class AddTaskEndDateChanged extends AddTaskState {}
 
 final class AddTaskLoading extends AddTaskState {}
 
-final class AddTaskSuccess extends AddTaskState {
-  final AddTaskResponse response;
-
-  AddTaskSuccess(this.response);
-}
+final class AddTaskSuccess extends AddTaskState {}
 
 final class AddTaskFailure extends AddTaskState {
   final String errMessage;

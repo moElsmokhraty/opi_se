@@ -1,65 +1,101 @@
-import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:opi_se/core/utils/constants.dart';
-import '../../../../../../core/functions/show_snack_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/styling/styles.dart';
+import '../../../../../../core/functions/validate_text.dart';
 import '../../../cubits/user_prefers_cubit/user_prefers_cubit.dart';
-import '../../../../../../core/utils/routes_config/routes_config.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/user_cache.dart';
-import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/question_page.dart';
-import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/user_prefers_page.dart';
+import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
+import 'finish_button.dart';
+import 'level_slider.dart';
+import 'skills_widget.dart';
 
 class UserPrefersViewBody extends StatelessWidget {
-  const UserPrefersViewBody({super.key, this.onTap});
-
-  final void Function()? onTap;
+  const UserPrefersViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     UserPrefersCubit cubit = BlocProvider.of<UserPrefersCubit>(context);
-    return BlocConsumer<UserPrefersCubit, UserPrefersState>(
-      listener: (context, state) {
-        if (state is SubmitUserPrefersSuccess) {
-          userCache!.getUserPrefers = false;
-          Hive.box<UserCache>(boxName).put('user', userCache!);
-          userCache = Hive.box<UserCache>(boxName).get('user');
-          GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
-          showCustomSnackBar(context, 'User Prefers submitted successfully!');
-        } else if (state is SubmitUserPrefersFailure) {
-          showCustomSnackBar(context, state.errMessage);
-        }
-      },
-      builder: (context, state) {
-        return PageView(
-          controller: cubit.pageController,
-          physics: const BouncingScrollPhysics(),
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+      child: Form(
+        key: cubit.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserPrefersPage(cubit: cubit),
-            QuestionPage(
-              index: 0,
-              question: cubit.questions[0],
-              cubit: cubit,
+            Text(
+              'Complete your academic and skills details to enhance your Study Partner experience !',
+              maxLines: 5,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            QuestionPage(
-              index: 1,
-              question: cubit.questions[1],
-              cubit: cubit,
+            SizedBox(height: screenHeight * 0.05),
+            Text(
+              'Field of Study',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
             ),
-            QuestionPage(
-              index: 2,
-              question: cubit.questions[2],
-              cubit: cubit,
+            SizedBox(height: screenHeight * 0.005),
+            AuthTextField(
+              controller: cubit.fieldOfStudyController,
+              hintText: 'Enter Your Field of Study',
+              prefixIcon: Icon(
+                CupertinoIcons.book_circle,
+                size: 21.sp,
+                color: const Color(0xff036666),
+              ),
+              validator: (value) {
+                return validateText('Field of Study', value!);
+              },
             ),
-            QuestionPage(
-              index: 3,
-              question: cubit.questions[3],
-              cubit: cubit,
+            SizedBox(height: screenHeight * 0.015),
+            Text(
+              'Specialization',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
             ),
+            SizedBox(height: screenHeight * 0.005),
+            AuthTextField(
+              controller: cubit.specializationController,
+              hintText: 'Enter Your Specialization',
+              prefixIcon: Icon(
+                Icons.computer_outlined,
+                size: 21.sp,
+                color: const Color(0xff036666),
+              ),
+              validator: (value) {
+                return validateText('Specialization', value!);
+              },
+            ),
+            SizedBox(height: screenHeight * 0.015),
+            Text(
+              'Skills',
+              style: AppStyles.textStyle16.copyWith(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.005),
+            const SkillsWidget(),
+            SizedBox(height: screenHeight * 0.01),
+            const LevelSlider(),
+            SizedBox(height: screenHeight * 0.025),
+            const FinishButton(),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

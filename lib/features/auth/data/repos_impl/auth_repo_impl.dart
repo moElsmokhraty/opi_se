@@ -165,4 +165,23 @@ class AuthRepoImpl implements AuthRepo {
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, UserPrefersResponse>> editUserPrefers(
+    UserPrefersRequest request,
+  ) async {
+    try {
+      var data = await _apiService.patch(
+        endpoint: APIConfig.editUserPrefers,
+        token: userCache!.token!,
+        body: request.toJson(),
+      );
+      return Right(UserPrefersResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
 }

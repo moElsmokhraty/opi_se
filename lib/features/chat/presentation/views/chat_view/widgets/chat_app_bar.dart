@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/utils/constants.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
@@ -11,7 +12,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ChatAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60.h);
+  Size get preferredSize => Size.fromHeight(65.h);
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +25,40 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           return AppBar(
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 60.h,
-            leadingWidth: 0,
-            title: Row(
-              children: [
-                SizedBox(width: 8.w),
-                CircleAvatar(
-                  radius: 20.r,
-                  backgroundImage: CachedNetworkImageProvider(
-                    userCache!.partner!.profileImage == 'default.png'
-                        ? 'https://i.stack.imgur.com/l60Hf.png'
-                        : userCache!.partner!.profileImage!,
-                  ),
-                ),
-                SizedBox(width: 10.w),
-                SizedBox(
-                  width: 115.w,
-                  child: Text(
-                    userCache!.partner?.userName ?? 'Partner Chat',
-                    style: AppStyles.textStyle24.copyWith(
-                      color: const Color(0xFF203140),
-                      fontSize: 16.sp,
+            toolbarHeight: 65.h,
+            flexibleSpace: Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 48.w),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 20.r,
+                    backgroundImage: CachedNetworkImageProvider(
+                      userCache!.partner!.profileImage == 'default.png'
+                          ? 'https://i.stack.imgur.com/l60Hf.png'
+                          : userCache!.partner!.profileImage!,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(width: 10.w),
+                  SizedBox(
+                    width: 115.w,
+                    child: Text(
+                      userCache!.partner?.userName ?? 'Partner Chat',
+                      maxLines: 2,
+                      style: AppStyles.textStyle24.copyWith(
+                        color: const Color(0xFF203140),
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            leading: GestureDetector(
+              child: const Icon(Icons.arrow_back_ios_outlined),
+              onTap: () {
+                GoRouter.of(context).pop();
+              },
             ),
             actions: [
               IconButton(

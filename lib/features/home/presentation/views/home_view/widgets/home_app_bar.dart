@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(100.h);
 
   @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
+  Widget notificationIcon = Icon(
+    CupertinoIcons.bell_fill,
+    color: const Color(0xFF036666),
+    size: 24.sp,
+  );
+
+  @override
   Widget build(BuildContext context) {
-    Widget notificationIcon = Icon(
-      CupertinoIcons.bell_fill,
-      color: const Color(0xFF036666),
-      size: 24.sp,
-    );
     return AppBar(
       toolbarHeight: 100.h,
       elevation: 0,
@@ -33,12 +40,15 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Row(
             children: [
-              userCache!.profileImage != 'default.png'
-                  ? CircleAvatar(
+              Builder(
+                builder: (context) {
+                  if (userCache!.profileImage != 'default.png') {
+                    return CircleAvatar(
                       radius: 24.r,
                       backgroundImage: NetworkImage(userCache!.profileImage!),
-                    )
-                  : Container(
+                    );
+                  } else {
+                    return Container(
                       width: 50.w,
                       height: 50.h,
                       alignment: Alignment.center,
@@ -54,7 +64,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           color: Colors.white,
                         ),
                       ),
-                    ),
+                    );
+                  }
+                },
+              ),
               SizedBox(width: 10.w),
               SizedBox(
                 width: 200.w,
@@ -97,45 +110,61 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            GoRouter.of(context).push(RoutesConfig.notifications);
+          },
           tooltip: 'Notifications',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: userCache?.matchId != null
-              ? StatefulBuilder(
-                  builder: (context, setState) {
-                    SocketService.on(
-                        eventName: 'showNotificationMark',
-                        handler: (eventData) {
-                          setState(() {
-                            notificationIcon = Stack(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.bell_fill,
-                                  color: const Color(0xFF036666),
-                                  size: 24.sp,
-                                ),
-                                Positioned(
-                                  top: 8.0,
-                                  right: 4.0,
-                                  child: Container(
-                                    width: 8.w,
-                                    height: 8.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(4.r),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
-                        });
-                    return notificationIcon;
-                  },
-                )
-              : notificationIcon,
+          icon: Builder(
+            builder: (context) {
+              changeNotificationMark();
+              return notificationIcon;
+            },
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            GoRouter.of(context).push(RoutesConfig.chat);
+          },
+          tooltip: 'Chat',
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          icon: SvgPicture.asset(
+            'assets/svgs/chat.svg'
+          ),
         ),
       ],
     );
+  }
+
+  changeNotificationMark() {
+    if (userCache?.matchId != null) {
+      SocketService.on(
+          eventName: 'showNotificationMark',
+          handler: (eventData) {
+            setState(() {
+              notificationIcon = Stack(
+                children: [
+                  Icon(
+                    CupertinoIcons.bell_fill,
+                    color: const Color(0xFF036666),
+                    size: 24.sp,
+                  ),
+                  Positioned(
+                    top: 8.0,
+                    right: 4.0,
+                    child: Container(
+                      width: 8.w,
+                      height: 8.h,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            });
+          });
+    }
   }
 }

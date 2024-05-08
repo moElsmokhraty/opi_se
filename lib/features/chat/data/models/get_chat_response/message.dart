@@ -1,10 +1,14 @@
 import 'package:equatable/equatable.dart';
 
+import 'poll_answer.dart';
+
 class Message extends Equatable {
   final String? messageSender;
   final String? messageType;
   final String? messageContent;
   final String? mediaUrl;
+  final String? pollQuestion;
+  final List<PollAnswer>? pollAnswers;
   final String? id;
   final DateTime? sentAt;
 
@@ -15,6 +19,8 @@ class Message extends Equatable {
     this.id,
     this.mediaUrl,
     this.sentAt,
+    this.pollQuestion,
+    this.pollAnswers,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -23,9 +29,14 @@ class Message extends Equatable {
         messageContent: json['messageContent'] as String?,
         mediaUrl: json['mediaUrl'] as String?,
         id: json['_id'] as String?,
+        pollQuestion: json['pollQuestion'] as String?,
         sentAt: json['sentAt'] == null
             ? null
             : DateTime.parse(json['sentAt'] as String).toLocal(),
+        pollAnswers: json['pollAnswers'] == null
+            ? null
+            : List<PollAnswer>.from(
+                json['pollAnswers'].map((x) => PollAnswer.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +46,8 @@ class Message extends Equatable {
         'mediaUrl': mediaUrl,
         '_id': id,
         'sentAt': sentAt?.toIso8601String(),
+        'pollQuestion': pollQuestion,
+        'pollAnswers': pollAnswers?.map((x) => x.toJson()).toList(),
       };
 
   @override
@@ -46,6 +59,8 @@ class Message extends Equatable {
       mediaUrl,
       id,
       sentAt,
+      pollQuestion,
+      pollAnswers,
     ];
   }
 }

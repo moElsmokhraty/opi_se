@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:opi_se/features/tasks/data/models/add_task_models/add_task_request.dart';
+import '../../../data/models/task.dart';
+import 'package:opi_se/core/utils/socket_service.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
-
-import '../../../data/models/add_task_models/add_task_response.dart';
+import 'package:opi_se/features/tasks/data/models/add_task_models/add_task_request.dart';
 
 part 'add_task_state.dart';
 
@@ -70,7 +70,21 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     );
     result.fold(
       (failure) => emit(AddTaskFailure(failure.errMessage)),
-      (response) => emit(AddTaskSuccess(response)),
+      (response) => addTaskSocket(response.data!),
+    );
+  }
+
+  void addTaskSocket(Task task) {
+    SocketService.emit(
+      eventName: 'addTask',
+      data: task.toJson(),
+      ack: (data) {
+        if (data['success']) {
+          emit(AddTaskSuccess());
+        } else {
+          emit(AddTaskFailure('Failed To Add Task'));
+        }
+      },
     );
   }
 }

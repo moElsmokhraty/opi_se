@@ -1,3 +1,4 @@
+import 'package:better_polls/better_polls.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +9,10 @@ import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/features/chat/data/models/get_chat_response/message.dart';
 
 class ChatBubble extends StatelessWidget {
+  const ChatBubble({super.key, required this.message, required this.cubit});
+
   final Message? message;
   final ChatCubit cubit;
-
-  const ChatBubble({super.key, required this.message, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,9 @@ class ChatBubble extends StatelessWidget {
                         if (message?.messageType == 'text') {
                           return Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 12.h, horizontal: 16.w),
+                              vertical: 12.h,
+                              horizontal: 16.w,
+                            ),
                             child: Text(
                               message?.messageContent ?? '',
                               style: AppStyles.textStyle12.copyWith(
@@ -103,6 +106,56 @@ class ChatBubble extends StatelessWidget {
                               imageUrl: message?.mediaUrl ?? '',
                               width: 270.w,
                               height: 200.h,
+                            ),
+                          );
+                        } else if (message?.messageType == 'poll') {
+                          List<PollOption> options = [];
+                          for (var answer in message!.pollAnswers!) {
+                            options.add(Polls.options(
+                              title: answer.optionContent!,
+                              value: answer.optionNumber!.toDouble(),
+                            ));
+                          }
+                          Map<String, int>? voteData = {};
+                          for (var answer in message!.pollAnswers!) {
+                            voteData[answer.optionContent!] =
+                                answer.optionVotes ?? 0;
+                          }
+                          return Container(
+                            width: 270.w,
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Polls(
+                              children: options,
+                              optionBarRadius: 10.r,
+                              borderWidth: 2.w,
+                              optionHeight: 40.h,
+                              allowCreatorVote: true,
+                              iconColor: Colors.black,
+                              optionSpacing: 10.h,
+                              question: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12.h,
+                                  horizontal: 16.w,
+                                ),
+                                child: Text(
+                                  message!.pollQuestion!,
+                                  style: AppStyles.textStyle16.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color:
+                                        isSender ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              currentUser: userCache!.id!,
+                              creatorID: message?.messageSender!,
+                              voteData: voteData,
+                              userChoice: 2,
+                              onVoteBorderColor: Colors.deepPurple,
+                              voteCastedBorderColor: Colors.transparent,
+                              onVoteBackgroundColor: Colors.blue,
+                              leadingBackgroundColor: Colors.lightGreen,
+                              backgroundColor: Colors.white,
+                              onVote: (choice) {},
                             ),
                           );
                         } else {

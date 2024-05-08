@@ -20,6 +20,7 @@ import 'package:opi_se/features/chat/presentation/views/chat_media_view/chat_med
 import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/dashboard/presentation/views/dashboard_view/dashboard_view.dart';
 import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
+import 'package:opi_se/features/home/domain/use_cases/get_notifications_use_case.dart';
 import 'package:opi_se/features/home/presentation/cubits/match_requests_cubit/match_requests_cubit.dart';
 import 'package:opi_se/features/home/presentation/cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
 import 'package:opi_se/features/home/presentation/views/home_view/home_view.dart';
@@ -35,18 +36,24 @@ import 'package:opi_se/features/tasks/data/models/task.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
 import 'package:opi_se/features/tasks/presentation/cubits/add_task_cubit/add_task_cubit.dart';
 import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_view.dart';
+import '../../../features/auth/domain/use_cases/edit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
+import '../../../features/auth/presentation/cubits/edit_user_prefers_cubit/edit_user_prefers_cubit.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../../features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
+import '../../../features/auth/presentation/views/edit_user_prefers_view/edit_user_prefers_view.dart';
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
+import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
+import '../../../features/chat/domain/use_cases/upload_chat_images_use_case.dart';
+import '../../../features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
 import '../../../features/chat/presentation/cubits/chat_media_cubit/chat_media_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/change_profile_image_use_case.dart';
@@ -56,7 +63,9 @@ import '../../../features/home/domain/use_cases/get_match_requests_use_case.dart
 import '../../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../../features/home/domain/use_cases/send_partner_request_use_case.dart';
+import '../../../features/home/presentation/cubits/notifications_cubit/notifications_cubit.dart';
 import '../../../features/home/presentation/cubits/profile_cubit/profile_cubit.dart';
+import '../../../features/home/presentation/views/notifications_view/notifications_view.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -73,15 +82,23 @@ import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import '../../../features/tasks/domain/use_cases/edit_task_use_case.dart';
 import '../../../features/tasks/presentation/cubits/edit_task_cubit/edit_task_cubit.dart';
 import '../../../features/tasks/presentation/views/edit_task_view/edit_task_view.dart';
+import '../constants.dart';
 
 abstract class AppRouter {
+  static String getInitialRoute() {
+    if (userCache == null) {
+      return RoutesConfig.authOptions;
+    } else {
+      if (userCache!.getUserPrefers == true) {
+        return RoutesConfig.userPrefers;
+      } else {
+        return RoutesConfig.homeLayout;
+      }
+    }
+  }
+
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.firstRegister,
-    // userCache == null
-    //     ? RoutesConfig.authOptions
-    //     : (userCache!.getUserPrefers == true
-    //         ? RoutesConfig.userPrefers
-    //         : RoutesConfig.homeLayout),
+    initialLocation: RoutesConfig.homeLayout,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -129,6 +146,15 @@ abstract class AppRouter {
             getIt.get<SubmitUserPrefersUseCase>(),
           ),
           child: const UserPrefersView(),
+        ),
+      ),
+      GoRoute(
+        path: RoutesConfig.editUserPrefers,
+        builder: (context, state) => BlocProvider(
+          create: (context) => EditUserPrefersCubit(
+            getIt.get<EditUserPrefersUseCase>(),
+          ),
+          child: const EditUserPrefersView(),
         ),
       ),
       GoRoute(
@@ -201,7 +227,19 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: RoutesConfig.chat,
-        builder: (context, state) => const ChatView(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => ChatCubit(
+            getIt.get<GetChatUseCase>(),
+            getIt.get<UploadChatImagesUseCase>(),
+          )
+            ..getChat(page: 1, limit: 20)
+            ..listenOnNewMessage()
+            ..listenOnMessageDeleted()
+            ..listenOnChatSessionRequest(context)
+            ..listenOnReplyToSessionRequest(context)
+            ..listenOnMatchRequestApproved(),
+          child: const ChatView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.chatMedia,
@@ -301,6 +339,17 @@ abstract class AppRouter {
               getIt.get<EditTaskUseCase>(),
             )..setValues(state.extra as Task),
             child: const EditTaskView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutesConfig.notifications,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => NotificationsCubit(
+              getIt.get<GetNotificationsUseCase>(),
+            )..getNotifications(),
+            child: const NotificationsView(),
           );
         },
       ),

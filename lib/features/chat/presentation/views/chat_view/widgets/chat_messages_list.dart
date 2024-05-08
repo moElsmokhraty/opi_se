@@ -98,7 +98,9 @@ class ChatMessagesList extends StatelessWidget {
             child: ListView.builder(
               itemCount: cubit.messages.length,
               reverse: true,
-              physics: const BouncingScrollPhysics(),
+              physics: cubit.showPollOptions
+                  ? const NeverScrollableScrollPhysics()
+                  : const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 4.w,
                 vertical: 6.h,

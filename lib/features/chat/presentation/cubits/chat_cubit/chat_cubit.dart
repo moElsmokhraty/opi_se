@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../core/utils/constants.dart';
 import '../../../../../core/utils/socket_service.dart';
+import '../../../data/models/get_chat_response/poll_answer.dart';
 import '../../../domain/use_cases/get_chat_use_case.dart';
 import '../../../../../core/functions/show_snack_bar.dart';
 import '../../../data/models/get_chat_response/message.dart';
@@ -18,11 +19,10 @@ class ChatCubit extends Cubit<ChatState> {
   ) : super(ChatInitial());
 
   final GetChatUseCase _getChatUseCase;
+
   final UploadChatImagesUseCase _uploadChatImageUseCase;
 
   TextEditingController messageController = TextEditingController();
-
-  TextEditingController pollQuestionController = TextEditingController();
 
   final ImagePicker picker = ImagePicker();
 
@@ -33,6 +33,28 @@ class ChatCubit extends Cubit<ChatState> {
   bool showMediaOptions = false;
 
   bool showPollOptions = false;
+
+  final TextEditingController pollQuestionController = TextEditingController();
+
+  final TextEditingController pollFirstOptionController =
+      TextEditingController();
+
+  List<TextEditingController> listOptionsController = [TextEditingController()];
+
+  final ScrollController scrollController = ScrollController();
+
+  final GlobalKey<FormState> pollFormKey = GlobalKey<FormState>();
+
+  void addOption() {
+    listOptionsController.add(TextEditingController());
+    scrollController.jumpTo(1000);
+    emit(ChangeOptionsCount());
+  }
+
+  void removeOption(int index) {
+    listOptionsController.removeAt(index);
+    emit(ChangeOptionsCount());
+  }
 
   void toggleMediaOptions() {
     if (userCache?.matchId == null) return;
@@ -49,7 +71,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> getChat({
     int page = 1,
-    int limit = 10,
+    int limit = 20,
   }) async {
     messages.clear();
     if (userCache?.matchId == null) {
@@ -247,35 +269,90 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
-  void sendImages(List<dynamic> imageUrls) {
+  Future<void> takeImage() async {
+    final XFile? file = await picker.pickImage(source: ImageSource.camera);
+    if (file != null) {
+      emit(UploadChatImagesLoading());
+      var result = await _uploadChatImageUseCase.call([file]);
+      result.fold(
+        (failure) => emit(UploadChatImagesFailure(failure.errMessage)),
+        (response) {
+          sendImages(response.links ?? []);
+        },
+      );
+    }
+  }
+
+  void sendImages(List<String> imageUrls) {
+    if (imageUrls.isEmpty) return;
     SocketService.emit(
-      eventName: 'sendMessage',
+      eventName: 'uploadChatMedia',
       data: {
-        "messageType": 'media',
         "media": imageUrls,
       },
-      ack: (data) {},
+      ack: (data) {
+        if (data['success']) {
+          for (var link in data['data']['media']) {
+            messages.insert(
+              0,
+              Message(
+                id: data['data']['_id'],
+                mediaUrl: link,
+                messageSender: userCache?.id,
+                messageType: 'media',
+                sentAt: DateTime.now().toLocal(),
+              ),
+            );
+            emit(GetChatSuccess(messages));
+          }
+        }
+      },
     );
   }
 
   void sendPoll() {
+    if (!pollFormKey.currentState!.validate()) return;
+    showPollOptions = false;
+    emit(ChatInitial());
+    print(showPollOptions);
+    List<Map<String, dynamic>> answers = [
+      {
+        "optionNumber": 1,
+        "optionContent": pollFirstOptionController.text,
+      },
+    ];
+    for (int i = 0; i < listOptionsController.length; i++) {
+      if (listOptionsController[i].text.isNotEmpty) {
+        answers.add({
+          "optionNumber": i + 2,
+          "optionContent": listOptionsController[i].text,
+        });
+      }
+    }
     SocketService.emit(
       eventName: 'sendMessage',
       data: {
         "messageType": 'poll',
         "pollQuestion": pollQuestionController.text,
+        "pollAnswers": answers,
       },
       ack: (data) {
         if (data['success'] == true) {
-          messageController.clear();
+          pollQuestionController.clear();
+          pollFirstOptionController.clear();
+          listOptionsController.clear();
+          listOptionsController.add(TextEditingController());
           messages.insert(
             0,
             Message(
               id: data['data']['_id'],
-              messageContent: data['data']['messageContent'],
-              messageSender: data['data']['messageSender'],
-              messageType: data['data']['messageType'],
-              sentAt: DateTime.now(),
+              pollQuestion: data['data']['pollQuestion'],
+              pollAnswers: List<PollAnswer>.from(
+                data['data']['pollAnswers'].map((x) => PollAnswer.fromJson(x)),
+              ),
+              messageSender: userCache?.id,
+              messageType: 'poll',
+              sentAt: DateTime.now().toLocal(),
             ),
           );
           emit(GetChatSuccess(messages));

@@ -4,7 +4,7 @@ class UploadChatMediaResponse extends Equatable {
   final bool? success;
   final int? statusCode;
   final String? message;
-  final List? links;
+  final List<String>? links;
 
   const UploadChatMediaResponse({
     this.success,
@@ -18,7 +18,9 @@ class UploadChatMediaResponse extends Equatable {
       success: json['success'] as bool?,
       statusCode: json['statusCode'] as int?,
       message: json['message'] as String?,
-      links: json['data'] as List<dynamic>,
+      links: json['data'] != null
+          ? List<String>.from(json['data'].map((x) => x as String))
+          : null,
     );
   }
 

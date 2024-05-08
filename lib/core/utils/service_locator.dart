@@ -9,10 +9,12 @@ import 'package:opi_se/features/notes/domain/use_cases/get_trash_use_case.dart';
 import 'package:opi_se/features/notes/domain/use_cases/pin_note_use_case.dart';
 import 'package:opi_se/features/tasks/data/repo_impl/tasks_repo_impl.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
+import '../../features/auth/domain/use_cases/edit_user_prefers_use_case.dart';
 import '../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
 import '../../features/home/data/repos_impl/profile_repo_impl.dart';
 import '../../features/home/domain/use_cases/change_profile_image_use_case.dart';
 import '../../features/home/domain/use_cases/delete_profile_image_use_case.dart';
+import '../../features/home/domain/use_cases/get_notifications_use_case.dart';
 import '../../features/home/domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../features/home/domain/use_cases/get_profile_use_case.dart';
 import '../../features/home/domain/use_cases/send_partner_request_use_case.dart';
@@ -93,6 +95,10 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<SubmitUserPrefersUseCase>(
     SubmitUserPrefersUseCase(getIt.get<AuthRepoImpl>()),
+  );
+
+  getIt.registerSingleton<EditUserPrefersUseCase>(
+    EditUserPrefersUseCase(getIt.get<AuthRepoImpl>()),
   );
 
   getIt.registerSingleton<ChatRepoImpl>(ChatRepoImpl(getIt.get<ApiService>()));
@@ -227,5 +233,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<UploadChatImagesUseCase>(
     UploadChatImagesUseCase(getIt.get<ChatRepoImpl>()),
+  );
+
+  getIt.registerSingleton<GetNotificationsUseCase>(
+    GetNotificationsUseCase(getIt.get<ProfileRepoImpl>()),
   );
 }

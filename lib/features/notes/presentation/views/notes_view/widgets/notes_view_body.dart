@@ -65,7 +65,7 @@ class NotesViewBody extends StatelessWidget {
             } else {
               return GridView.builder(
                 itemCount: cubit.notes.length,
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 12.w,

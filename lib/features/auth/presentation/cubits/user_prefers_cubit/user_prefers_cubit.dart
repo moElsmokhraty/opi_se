@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:opi_se/features/auth/data/models/user_prefers_models/user_question.dart';
 import '../../../data/models/login_models/login_response/user_skill.dart';
 import '../../../data/models/user_prefers_models/user_prefers_request.dart';
 import 'package:opi_se/features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
@@ -24,30 +23,9 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
 
   int skillLevel = 1;
 
-  List<bool?> answers = [null, null, null, null];
-
-  List<String> convertAnswers(List<bool?> answers) {
-    List<String> convertedAnswers = [];
-    for (bool? answer in answers) {
-      if (answer == true) {
-        convertedAnswers.add('yes');
-      } else {
-        convertedAnswers.add('no');
-      }
-    }
-    return convertedAnswers;
-  }
-
   final List<UserSkill> skills = [];
 
   bool sliderVisible = false;
-
-  List<String> questions = [
-    'Do you have Depression ?',
-    'Do you have Anxiety ?',
-    'Do you have Panic attack ?',
-    'Did you seek any specialist for a treatment ?',
-  ];
 
   void toggleSlider() {
     if (skillController.text.trim().isNotEmpty) {
@@ -57,25 +35,6 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
       sliderVisible = false;
       emit(SliderVisibilityChanged());
     }
-  }
-
-  void nextPage() {
-    pageController.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-  }
-
-  void previousPage() {
-    pageController.previousPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-  }
-
-  void setAnswer(int index, bool value) {
-    answers[index] = value;
-    emit(QuestionsAnswered());
   }
 
   void addSkill() {
@@ -115,31 +74,11 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
 
   Future<void> submitUserPrefers() async {
     emit(SubmitUserPrefersLoading());
-    List<String> finalAnswers = convertAnswers(answers);
-    List<UserQuestion> finalQuestions = [
-      UserQuestion(
-        question: questions[0],
-        answer: finalAnswers[0],
-      ),
-      UserQuestion(
-        question: questions[1],
-        answer: finalAnswers[1],
-      ),
-      UserQuestion(
-        question: questions[2],
-        answer: finalAnswers[2],
-      ),
-      UserQuestion(
-        question: questions[3],
-        answer: finalAnswers[3],
-      ),
-    ];
     var result = await _submitUserPrefersUseCase.call(
       UserPrefersRequest(
         fieldOfStudy: fieldOfStudyController.text.trim(),
         specialization: specializationController.text.trim(),
         userSkills: skills,
-        userQuestions: finalQuestions,
       ),
     );
     result.fold(

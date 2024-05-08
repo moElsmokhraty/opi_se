@@ -15,16 +15,11 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.0,
       centerTitle: false,
       titleSpacing: 20.w,
-      title: Text(
-        'OpiSe',
-        style: TextStyle(
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.bold,
-          fontSize: 35.sp,
-          color: const Color(0XFF036666),
-        ),
+      title: Image.asset(
+        'assets/images/opi_se_logo.png',
+        width: 150.w,
+        height: 100.h,
       ),
-      leadingWidth: 60.w,
       toolbarHeight: 60.h,
       scrolledUnderElevation: 0.0,
       backgroundColor: Colors.white,

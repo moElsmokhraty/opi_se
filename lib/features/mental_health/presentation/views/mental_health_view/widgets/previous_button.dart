@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/utils/styling/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../../../core/utils/styling/styles.dart';
 
 class PreviousButton extends StatelessWidget {
   const PreviousButton({super.key, required this.onTap});

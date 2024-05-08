@@ -30,16 +30,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     nationalIdController.dispose();
     firstFormKey.currentState?.reset();
     secondFormKey.currentState?.reset();
-    emailController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    ageController.clear();
-    locationController.clear();
-    nativeLanguageController.clear();
-    nativeLevelController.clear();
-    secondLanguageController.clear();
-    secondLevelController.clear();
-    nationalIdController.clear();
     super.close();
   }
 
@@ -173,13 +163,13 @@ class RegisterCubit extends Cubit<RegisterState> {
 
     if (permissionStatus == LocationPermission.denied) {
       updateLocationAndEmitFailure('Location Permission is Denied');
+      await Geolocator.requestPermission();
       return;
     } else if (permissionStatus == LocationPermission.deniedForever) {
       updateLocationAndEmitFailure('Location Permission is Denied Forever');
+      await Geolocator.requestPermission();
       return;
     }
-
-    await Geolocator.requestPermission();
 
     if (!await Geolocator.isLocationServiceEnabled()) {
       updateLocationAndEmitFailure('Location Service is Disabled');

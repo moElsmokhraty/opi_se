@@ -31,7 +31,7 @@ class UserPrefersRequest extends Equatable {
   Map<String, dynamic> toJson() => {
         'fieldOfStudy': fieldOfStudy,
         'specialization': specialization,
-        'userQuestions': userQuestions?.map((e) => e.toJson()).toList(),
+        'userQuestions': [],
         'userSkills': userSkills?.map((e) => e.toJson()).toList(),
       };
 

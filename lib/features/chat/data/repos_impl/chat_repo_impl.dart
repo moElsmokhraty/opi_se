@@ -72,6 +72,9 @@ class ChatRepoImpl implements ChatRepo {
   Future<Either<Failure, UploadChatMediaResponse>> uploadChatImages({
     required List<XFile> mediaFiles,
   }) async {
+    if (mediaFiles.isEmpty) {
+      return Left(ServerFailure(errMessage: 'No media selected!'));
+    }
     try {
       FormData formData = FormData.fromMap({});
       for (var file in mediaFiles) {

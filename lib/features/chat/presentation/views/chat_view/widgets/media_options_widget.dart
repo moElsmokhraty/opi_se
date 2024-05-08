@@ -37,7 +37,10 @@ class MediaOptionsWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    cubit.toggleMediaOptions();
+                    await cubit.takeImage();
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -15,7 +15,7 @@ import 'first_page_widgets/lets_start_widget.dart';
 import 'first_page_widgets/live_with_parents_widget.dart';
 import 'mental_health_text_field.dart';
 import 'first_page_widgets/read_out_widget.dart';
-import '../../../../../auth/presentation/views/user_prefers_view/widgets/next_button.dart';
+import 'next_button.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});

@@ -33,12 +33,16 @@ class LoginViewBody extends StatelessWidget {
             showCustomSnackBar(context, state.errMessage);
           }
         } else if (state is LoginSuccess) {
-          await cacheUserData(state.response).then((value) {
-            SocketService.connect();
-          });
-          if (context.mounted) {
-            showCustomSnackBar(context, 'Logged in successfully!');
-            GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
+          if (state.response.data!.getUserPrefers!) {
+            GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
+          } else {
+            await cacheUserData(state.response).then((value) {
+              SocketService.connect();
+            });
+            if (context.mounted) {
+              showCustomSnackBar(context, 'Logged in successfully!');
+              GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
+            }
           }
         }
       },

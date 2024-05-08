@@ -32,4 +32,7 @@ abstract class AuthRepo {
 
   Future<Either<Failure, UserPrefersResponse>> submitUserPrefers(
       UserPrefersRequest request);
+
+  Future<Either<Failure, UserPrefersResponse>> editUserPrefers(
+      UserPrefersRequest request);
 }

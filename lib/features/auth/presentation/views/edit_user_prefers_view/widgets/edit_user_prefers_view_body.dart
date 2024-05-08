@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
-import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/level_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'next_button.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import '../../../../../../core/functions/validate_text.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
-import 'package:opi_se/features/auth/presentation/cubits/user_prefers_cubit/user_prefers_cubit.dart';
-import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/skills_widget.dart';
+import '../../../cubits/edit_user_prefers_cubit/edit_user_prefers_cubit.dart';
+import 'finish_button.dart';
+import 'level_slider.dart';
+import 'skills_widget.dart';
 
-class UserPrefersPage extends StatelessWidget {
-  const UserPrefersPage({super.key, required this.cubit});
-
-  final UserPrefersCubit cubit;
+class EditUserPrefersViewBody extends StatelessWidget {
+  const EditUserPrefersViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    EditUserPrefersCubit cubit = BlocProvider.of<EditUserPrefersCubit>(context);
     final screenHeight = MediaQuery.sizeOf(context).height;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -27,7 +26,7 @@ class UserPrefersPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Complete your academic and skills details to enhance your Study Partner experience !',
+              'Edit your academic and skills details to enhance your Study Partner experience !',
               maxLines: 5,
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
@@ -89,25 +88,11 @@ class UserPrefersPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.005),
-            SkillsWidget(cubit: cubit),
+            const SkillsWidget(),
             SizedBox(height: screenHeight * 0.01),
-            LevelSlider(cubit: cubit),
+            const LevelSlider(),
             SizedBox(height: screenHeight * 0.025),
-            Align(
-              alignment: Alignment.centerRight,
-              child: NextButton(
-                onTap: () {
-                  if (cubit.skills.isEmpty) {
-                    showCustomSnackBar(
-                        context, 'Please add at least one skill');
-                  }
-                  if (cubit.formKey.currentState!.validate() &&
-                      cubit.skills.isNotEmpty) {
-                    cubit.nextPage();
-                  }
-                },
-              ),
-            ),
+            const FinishButton(),
           ],
         ),
       ),

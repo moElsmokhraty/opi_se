@@ -56,7 +56,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           onPressed: () {
             if (userCache!.matchId != null) {
-              GoRouter.of(context).pushReplacement(RoutesConfig.trash);
+              GoRouter.of(context).push(RoutesConfig.trash);
             }
           },
           tooltip: 'Trash',

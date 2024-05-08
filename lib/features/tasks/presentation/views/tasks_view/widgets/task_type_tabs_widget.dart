@@ -99,7 +99,7 @@ class TaskTypeTabsWidget extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w),
                           Text(
-                            'In dashboard',
+                            'In Progress',
                             style: TextStyle(
                               color: index == 1
                                   ? const Color(0XFFFF7A00)

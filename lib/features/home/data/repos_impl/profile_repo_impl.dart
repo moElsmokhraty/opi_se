@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:opi_se/features/home/data/models/get_notifications_response/get_notifications_response.dart';
 import '../../domain/repos/profile_repo.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/utils/constants.dart';
@@ -55,6 +56,25 @@ class ProfileRepoImpl implements ProfileRepo {
       } else {
         return Left(ServerFailure(errMessage: e.toString()));
       }
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetNotificationsResponse>> getUserNotifications({
+    required int page,
+    required int limit,
+  }) async {
+    try {
+      var response = await _apiService.get(
+        endpoint: APIConfig.getUserNotifications,
+        token: userCache!.token!,
+      );
+      return Right(GetNotificationsResponse.fromJson(response));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
     }
   }
 }

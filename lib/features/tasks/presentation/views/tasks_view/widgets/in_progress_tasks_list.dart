@@ -15,45 +15,64 @@ class InProgressTasksList extends StatelessWidget {
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
           if (state is GetTasksFailure &&
-              cubit.inProgressTasks.isEmpty &&
-              cubit.selectedIndex == 1) {
+              cubit.todoTasks.isNotEmpty &&
+              cubit.selectedIndex == 0 &&
+              state.errMessage != 'No tasks yet !') {
             showCustomSnackBar(context, state.errMessage);
           }
         },
         builder: (context, state) {
           if (state is GetTasksLoading && cubit.inProgressTasks.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Color(0XFF036666),
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(
+                  color: Color(0XFF036666),
+                ),
               ),
             );
           } else if (state is GetTasksFailure &&
               cubit.inProgressTasks.isEmpty) {
-            return Center(
-              child: Text(
-                state.errMessage,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 16.sp,
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: Text(
+                  state.errMessage,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             );
           } else if (cubit.inProgressTasks.isEmpty) {
-            return Center(
-              child: Text(
-                'No tasks found',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16.sp,
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                height: 0.5.sh,
+                alignment: Alignment.center,
+                child: Text(
+                  'No tasks found',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             );
           } else {
             return ListView.separated(
               itemCount: cubit.inProgressTasks.length,
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return TaskItem(task: cubit.inProgressTasks[index]);
+                return TaskItem(
+                  key: UniqueKey(),
+                  task: cubit.inProgressTasks[index],
+                );
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 12.h);

@@ -1,65 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:opi_se/core/functions/modify_user_prefers_cache.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import '../../../cubits/user_prefers_cubit/user_prefers_cubit.dart';
+import 'package:opi_se/core/functions/modify_user_prefers_cache.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 
 class FinishButton extends StatelessWidget {
-  const FinishButton({
-    super.key,
-    required this.onTap,
-  });
-
-  final void Function() onTap;
+  const FinishButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     UserPrefersCubit cubit = BlocProvider.of<UserPrefersCubit>(context);
-    return Align(
-      alignment: Alignment.centerRight,
-      child: BlocConsumer<UserPrefersCubit, UserPrefersState>(
-        listener: (context, state) {
-          if (state is SubmitUserPrefersSuccess) {
-            modifyUserPrefersCache(cubit);
-            showCustomSnackBar(context, 'User Prefers Submitted Successfully');
-          } else if (state is SubmitUserPrefersFailure) {
-            showCustomSnackBar(context, state.errMessage);
-          }
-        },
-        builder: (context, state) {
-          if (state is SubmitUserPrefersLoading) {
-            return SizedBox(
-              width: 150.w,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF036666),
-                ),
-              ),
+    return BlocConsumer<UserPrefersCubit, UserPrefersState>(
+      listener: (context, state) async {
+        if (state is SubmitUserPrefersSuccess) {
+          await modifyUserPrefersCache(
+            skills: cubit.skills,
+            fieldOfStudy: cubit.fieldOfStudyController.text.trim(),
+            specialization: cubit.specializationController.text.trim(),
+          ).then((value) {
+            GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
+            showCustomSnackBar(
+              context,
+              'User Prefers submitted successfully!',
             );
-          } else {
-            return ElevatedButton(
-              onPressed: onTap,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF036666),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                fixedSize: Size(150.w, 50.h),
+          });
+        } else if (state is SubmitUserPrefersFailure) {
+          showCustomSnackBar(context, state.errMessage);
+        }
+      },
+      builder: (context, state) {
+        if (state is SubmitUserPrefersLoading) {
+          return SizedBox(
+            width: 1.sw,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF036666),
               ),
-              child: Text(
-                'Finish',
-                textAlign: TextAlign.center,
-                style: AppStyles.textStyle16.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+            ),
+          );
+        } else {
+          return ElevatedButton(
+            onPressed: () async {
+              if (cubit.skills.isEmpty) {
+                showCustomSnackBar(
+                  context,
+                  'Please add at least one skill',
+                );
+                return;
+              }
+              if (cubit.formKey.currentState!.validate()) {
+                await cubit.submitUserPrefers();
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF036666),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r),
               ),
-            );
-          }
-        },
-      ),
+              fixedSize: Size(360.w, 54.h),
+            ),
+            child: Text(
+              'Finish',
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyle16.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

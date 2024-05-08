@@ -16,9 +16,9 @@ final class GetTasksFailure extends TasksState {
 }
 
 final class GetTasksSuccess extends TasksState {
-  final dynamic response;
+  final List<Task> tasks;
 
-  GetTasksSuccess(this.response);
+  GetTasksSuccess(this.tasks);
 }
 
 final class DeleteTaskLoading extends TasksState {}

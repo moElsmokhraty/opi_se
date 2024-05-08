@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'previous_button.dart';
 import 'second_page_widgets/certain_actions_widget.dart';
 import 'second_page_widgets/challenging_to_focus_widget.dart';
 import 'second_page_widgets/control_emotions_widget.dart';
@@ -19,8 +20,7 @@ import 'second_page_widgets/sleeping_patterns_widget.dart';
 import 'second_page_widgets/sudden_discomfort_widget.dart';
 import '../../../cubits/mental_health_cubit.dart';
 import 'second_page_widgets/concentrating_difficulty_widget.dart';
-import '../../../../../auth/presentation/views/user_prefers_view/widgets/next_button.dart';
-import 'package:opi_se/features/auth/presentation/views/user_prefers_view/widgets/previous_button.dart';
+import 'next_button.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({super.key});
