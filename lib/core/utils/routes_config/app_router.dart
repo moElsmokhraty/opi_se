@@ -7,7 +7,7 @@ import 'package:opi_se/features/auth/domain/use_cases/change_password_use_case.d
 import 'package:opi_se/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:opi_se/features/auth/presentation/cubits/change_password_cubit/change_password_cubit.dart';
 import 'package:opi_se/features/auth/presentation/cubits/user_prefers_cubit/user_prefers_cubit.dart';
-import 'package:opi_se/features/auth/presentation/views/auth_options_view/auth_options_view.dart';
+import 'package:opi_se/features/onboarding/presentation/views/auth_options_view/auth_options_view.dart';
 import 'package:opi_se/features/auth/presentation/views/change_password_views/change_password_view.dart';
 import 'package:opi_se/features/auth/presentation/views/forgot_password_view/forget_password_view.dart';
 import 'package:opi_se/features/auth/presentation/views/login_view/login_view.dart';
@@ -77,7 +77,9 @@ import '../../../features/notes/domain/use_cases/restore_note_use_case.dart';
 import '../../../features/notes/presentation/cubits/edit_note_cubit/edit_note_cubit.dart';
 import '../../../features/notes/presentation/cubits/trash_cubit/trash_cubit.dart';
 import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
+import '../../../features/onboarding/presentation/cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../../features/onboarding/presentation/views/get_started_view/get_started_view.dart';
+import '../../../features/onboarding/presentation/views/on_boarding_view/on_boarding_view.dart';
 import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import '../../../features/tasks/domain/use_cases/edit_task_use_case.dart';
 import '../../../features/tasks/presentation/cubits/edit_task_cubit/edit_task_cubit.dart';
@@ -98,11 +100,18 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.homeLayout,
+    initialLocation: RoutesConfig.onBoarding,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
         builder: (context, state) => const GetStartedView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.onBoarding,
+        builder: (context, state) => BlocProvider(
+          create: (context) => OnboardingCubit(),
+          child: const OnBoardingView(),
+        ),
       ),
       GoRoute(
         path: RoutesConfig.authOptions,

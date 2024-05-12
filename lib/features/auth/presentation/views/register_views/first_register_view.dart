@@ -8,7 +8,6 @@ class FirstRegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PopScope(
-      canPop: false,
       child: SafeArea(
         child: Scaffold(
           appBar: AuthAppBar(),

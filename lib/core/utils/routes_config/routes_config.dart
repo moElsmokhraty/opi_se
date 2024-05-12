@@ -1,5 +1,6 @@
 abstract class RoutesConfig {
   static const String getStarted = '/get-started';
+  static const String onBoarding = '/on-boarding';
   static const String authOptions = '/auth-options';
   static const String login = '/login';
   static const String firstRegister = '/first-register';
