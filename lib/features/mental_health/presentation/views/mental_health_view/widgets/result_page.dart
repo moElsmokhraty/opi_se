@@ -16,6 +16,7 @@ class ResultPage extends StatelessWidget {
         toolbarHeight: 60.h,
         elevation: 0.0,
         scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
         title: Text(
           'Mental Health',
           style: TextStyle(

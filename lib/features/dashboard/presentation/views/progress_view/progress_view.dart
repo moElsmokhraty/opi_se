@@ -9,8 +9,9 @@ class ProgressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.white,
       appBar: ProgressAppBar(),
-      body: ProgressViewBody(),
+      body: SafeArea(child: ProgressViewBody()),
     );
   }
 }

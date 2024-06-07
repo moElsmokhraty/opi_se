@@ -27,6 +27,7 @@ class FirstPage extends StatelessWidget {
     return Form(
       key: cubit.firstPageFormKey,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
@@ -74,7 +75,8 @@ class FirstPage extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.02),
               MentalHealthTextField(
-                  controller: cubit.timesHospitalizedController),
+                controller: cubit.timesHospitalizedController,
+              ),
               SizedBox(height: screenHeight * 0.075),
               Text(
                 '14. How many days were you hospitalized for the mental illness?',

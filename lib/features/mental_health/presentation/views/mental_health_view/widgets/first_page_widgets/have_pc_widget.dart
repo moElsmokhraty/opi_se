@@ -18,8 +18,9 @@ class HavePcWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '7. Do you have your own computer/laptop separate from a smartphone?',
+              '7. Do you have your own computer / laptop separate from a smartphone?',
               style: AppStyles.textStyle22,
+              maxLines: 4,
             ),
             SizedBox(height: screenHeight * 0.02),
             YesOrNoSelection(

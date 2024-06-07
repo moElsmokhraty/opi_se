@@ -15,6 +15,7 @@ class ThirdPage extends StatelessWidget {
     final double screenHeight = MediaQuery.sizeOf(context).height;
     final MentalHealthCubit cubit = BlocProvider.of<MentalHealthCubit>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Form(
         key: cubit.thirdPageFormKey,
         child: SingleChildScrollView(

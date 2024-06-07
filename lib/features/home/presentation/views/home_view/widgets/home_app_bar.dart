@@ -31,6 +31,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
       toolbarHeight: 100.h,
       elevation: 0,
       scrolledUnderElevation: 0,
+      backgroundColor: Colors.white,
       leadingWidth: double.infinity,
       leading: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 18.h),

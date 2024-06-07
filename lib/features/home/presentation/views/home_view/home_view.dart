@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/home_app_bar.dart';
 import 'widgets/home_view_body.dart';
 import '../../../../../core/utils/service_locator.dart';
-import '../../../domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../../domain/use_cases/send_partner_request_use_case.dart';
+import '../../../domain/use_cases/get_partner_recommendations_use_case.dart';
 import '../../cubits/partner_recommendations_cubit/partner_recommendations_cubit.dart';
 
 class HomeView extends StatelessWidget {
@@ -19,6 +19,7 @@ class HomeView extends StatelessWidget {
       )..getPartnerRecommendations(),
       child: const SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: HomeAppBar(),
           body: HomeViewBody(),
         ),

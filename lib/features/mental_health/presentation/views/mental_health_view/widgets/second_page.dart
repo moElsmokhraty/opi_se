@@ -30,6 +30,7 @@ class SecondPage extends StatelessWidget {
     final double screenHeight = MediaQuery.sizeOf(context).height;
     final MentalHealthCubit cubit = BlocProvider.of<MentalHealthCubit>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: Column(

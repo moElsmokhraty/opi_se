@@ -12,8 +12,10 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 70.h,
+        backgroundColor: Colors.white,
         title: Text(
           'Mental Health',
           style: TextStyle(

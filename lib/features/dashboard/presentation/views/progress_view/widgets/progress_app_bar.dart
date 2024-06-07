@@ -23,6 +23,7 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: 100.h,
       elevation: 0,
+      backgroundColor: Colors.white,
       scrolledUnderElevation: 0,
       leadingWidth: double.infinity,
       leading: Padding(

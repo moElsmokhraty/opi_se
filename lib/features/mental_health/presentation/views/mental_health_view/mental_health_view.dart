@@ -26,10 +26,10 @@ class MentalHealthView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               controller: cubit.pageController,
               children: const [
+                IntroPage(),
                 FirstPage(),
                 SecondPage(),
                 ThirdPage(),
-                IntroPage(),
                 ResultPage(),
               ],
             );
