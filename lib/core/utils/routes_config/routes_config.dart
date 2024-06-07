@@ -33,6 +33,7 @@ abstract class RoutesConfig {
   static const String editTask = '/edit-task';
   static const String notifications = '/notifications';
   static const String mentorLogin = '/mentor-login';
+  static const String mentorLoginOtp = '/mentor-login-otp';
   static const String mentorFirstRegister = '/mentor-first-register';
   static const String mentorSecondRegister = '/mentor-second-register';
 }

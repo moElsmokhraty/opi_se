@@ -42,11 +42,13 @@ import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dar
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import '../../../features/auth/presentation/cubits/mentor_login_otp_cubit/mentor_login_otp_cubit.dart';
 import '../../../features/auth/presentation/cubits/mentor_login_cubit/mentor_login_cubit.dart';
 import '../../../features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
+import '../../../features/auth/presentation/views/mentor_login_otp_view/mentor_login_otp_view.dart';
 import '../../../features/auth/presentation/views/mentor_login_view/mentor_login_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
@@ -99,7 +101,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.mentorLogin,
+    initialLocation: RoutesConfig.mentorLoginOtp,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -357,6 +359,13 @@ abstract class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => MentorLoginCubit(),
           child: const MentorLoginView(),
+        ),
+      ),
+      GoRoute(
+        path: RoutesConfig.mentorLoginOtp,
+        builder: (context, state) => BlocProvider(
+          create: (context) => MentorLoginOtpCubit(),
+          child: const MentorLoginOtpView(),
         ),
       ),
     ],
