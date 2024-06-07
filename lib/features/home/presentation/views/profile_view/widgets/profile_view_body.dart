@@ -42,11 +42,15 @@ class ProfileViewBody extends StatelessWidget {
             clipBehavior: Clip.none,
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.only(
-                top: 10.h, left: 20.w, right: 20.w, bottom: 20.h),
+              top: 10.h,
+              left: 20.w,
+              right: 20.w,
+              bottom: 20.h,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProfileHeaderWidget(state: state),
+                const ProfileHeaderWidget(),
                 SizedBox(height: screenHeight * 0.01),
                 Text(
                   userCache!.userName!,

@@ -22,4 +22,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       curve: Curves.easeIn,
     );
   }
+
+  Future<void> handleBackButton() async {
+    if (pageController.page != 0) {
+      await pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    }
+  }
 }

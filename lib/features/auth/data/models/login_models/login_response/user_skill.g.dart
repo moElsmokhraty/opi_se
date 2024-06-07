@@ -16,23 +16,12 @@ class UserSkillAdapter extends TypeAdapter<UserSkill> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserSkill(
-      skillName: fields[0] as String?,
-      skillRate: fields[1] as int?,
-      id: fields[2] as String?,
-    );
+    return UserSkill();
   }
 
   @override
   void write(BinaryWriter writer, UserSkill obj) {
-    writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.skillName)
-      ..writeByte(1)
-      ..write(obj.skillRate)
-      ..writeByte(2)
-      ..write(obj.id);
+    writer.writeByte(0);
   }
 
   @override

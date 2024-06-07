@@ -16,23 +16,12 @@ class PartnerAdapter extends TypeAdapter<Partner> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Partner(
-      id: fields[0] as String?,
-      userName: fields[1] as String?,
-      profileImage: fields[2] as String?,
-    );
+    return Partner();
   }
 
   @override
   void write(BinaryWriter writer, Partner obj) {
-    writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.userName)
-      ..writeByte(2)
-      ..write(obj.profileImage);
+    writer.writeByte(0);
   }
 
   @override

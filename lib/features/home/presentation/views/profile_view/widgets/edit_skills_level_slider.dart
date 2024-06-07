@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../cubits/edit_user_prefers_cubit/edit_user_prefers_cubit.dart';
+import '../../../../../../core/utils/styling/styles.dart';
+import '../../../cubits/profile_cubit/profile_cubit.dart';
 
-class LevelSlider extends StatelessWidget {
-  const LevelSlider({super.key});
+class EditSkillsLevelSlider extends StatelessWidget {
+  const EditSkillsLevelSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final EditUserPrefersCubit cubit =
-        BlocProvider.of<EditUserPrefersCubit>(context);
-    return BlocBuilder<EditUserPrefersCubit, EditUserPrefersState>(
+    final ProfileCubit cubit = BlocProvider.of<ProfileCubit>(context);
+    return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         return Visibility(
           visible: cubit.sliderVisible,

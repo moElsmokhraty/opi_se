@@ -8,32 +8,34 @@ class SocketService {
   static late io.Socket socket;
 
   static void connect() {
-    try {
-      configureSocket();
-      socket.connect();
-      socket.onConnect((_) {
-        print('Connected to socket');
-        emit(
-          eventName: 'joinUserRoom',
-          data: {},
-          ack: (data) {
-            print('joinUserRoom ack: $data');
-          },
-        );
-        if (userCache!.matchId != null) {
-          emit(
-              eventName: 'joinMatchRoom',
-              data: {},
-              ack: (data) {
-                print('joinMatchRoom ack: $data');
-              });
-        }
-      });
-      socket.onDisconnect((_) {
+    if (userCache != null) {
+      try {
+        configureSocket();
         socket.connect();
-      });
-    } catch (e) {
-      print('Error connecting to socket: $e');
+        socket.onConnect((_) {
+          print('Connected to socket');
+          emit(
+            eventName: 'joinUserRoom',
+            data: {},
+            ack: (data) {
+              print('joinUserRoom ack: $data');
+            },
+          );
+          if (userCache!.matchId != null) {
+            emit(
+                eventName: 'joinMatchRoom',
+                data: {},
+                ack: (data) {
+                  print('joinMatchRoom ack: $data');
+                });
+          }
+        });
+        socket.onDisconnect((_) {
+          socket.connect();
+        });
+      } catch (e) {
+        print('Error connecting to socket: $e');
+      }
     }
   }
 

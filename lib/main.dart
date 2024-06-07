@@ -2,11 +2,10 @@ import 'opi_se.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'core/utils/constants.dart';
 import 'core/utils/socket_service.dart';
 import 'core/utils/service_locator.dart';
 import 'core/functions/setup_hive_db.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,7 +22,7 @@ Future<void> main() async {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
-  if (userCache != null) SocketService.connect();
+  SocketService.connect();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupServiceLocator();
   runApp(const OpiSe());

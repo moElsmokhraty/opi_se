@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/widgets/buttons/auth_button.dart';
 
 class GetStartedViewBody extends StatelessWidget {
@@ -20,7 +22,7 @@ class GetStartedViewBody extends StatelessWidget {
             backColor: const Color(0XFF036666),
             textColor: Colors.white,
             onPressed: () {
-              // Navigator.pushNamed(context, '/sign_in');
+              GoRouter.of(context).push(RoutesConfig.onBoarding);
             },
           ),
         ],

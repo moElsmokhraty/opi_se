@@ -46,7 +46,7 @@ class ThirdOnBoarding extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).pushReplacement(
+                  GoRouter.of(context).push(
                     RoutesConfig.authOptions,
                   );
                 },

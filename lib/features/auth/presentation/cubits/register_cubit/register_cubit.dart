@@ -3,6 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/functions/show_snack_bar.dart';
+import '../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../data/models/register_models/register_request.dart';
 import 'package:opi_se/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:opi_se/features/auth/data/models/register_models/language.dart';
@@ -99,6 +102,21 @@ class RegisterCubit extends Cubit<RegisterState> {
           level: int.parse(nativeLevelController.text),
         ),
       ];
+    }
+  }
+
+  void firstRegisterContinue(BuildContext context) {
+    if (!agree) {
+      showCustomSnackBar(
+        context,
+        'Please agree to the Terms of Use and Privacy Policy',
+      );
+    }
+    if (firstFormKey.currentState!.validate() && agree) {
+      GoRouter.of(context).push(
+        RoutesConfig.secondRegister,
+        extra: this,
+      );
     }
   }
 

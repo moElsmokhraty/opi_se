@@ -33,7 +33,7 @@ class ProgressAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Row(
             children: [
-              userCache!.profileImage != 'default.png'
+              userCache?.profileImage != 'default.png'
                   ? CircleAvatar(
                       radius: 24.r,
                       backgroundImage: NetworkImage(userCache!.profileImage!),

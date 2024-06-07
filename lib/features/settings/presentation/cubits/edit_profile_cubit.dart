@@ -27,44 +27,55 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController(
+    text: userCache?.userName ?? '',
+  );
 
-  TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+    text: userCache?.email ?? '',
+  );
 
-  TextEditingController nativeLanguageController = TextEditingController();
+  TextEditingController nativeLanguageController = TextEditingController(
+    text: userCache!.languages!.isEmpty ||
+            userCache?.languages?[0].languageName == null
+        ? ''
+        : userCache?.languages?[0].languageName ?? '',
+  );
 
-  TextEditingController nativeLevelController = TextEditingController();
+  TextEditingController nativeLevelController = TextEditingController(
+    text:
+        userCache!.languages!.isEmpty || userCache?.languages?[0].level == null
+            ? '1'
+            : userCache?.languages?[0].languageName ?? '1',
+  );
 
-  TextEditingController secondLanguageController = TextEditingController();
+  TextEditingController secondLanguageController = TextEditingController(
+    text: userCache!.languages!.length < 2 ||
+            userCache?.languages?[1].languageName == null
+        ? ''
+        : userCache?.languages?[1].languageName ?? '',
+  );
 
-  TextEditingController secondLevelController = TextEditingController();
+  TextEditingController secondLevelController = TextEditingController(
+    text: userCache!.languages!.length < 2 ||
+            userCache?.languages?[1].level == null
+        ? '1'
+        : userCache?.languages?[1].languageName ?? '1',
+  );
 
-  TextEditingController thirdLanguageController = TextEditingController();
+  TextEditingController thirdLanguageController = TextEditingController(
+    text: userCache!.languages!.length < 3 ||
+            userCache?.languages?[2].languageName == null
+        ? ''
+        : userCache?.languages?[2].languageName ?? '',
+  );
 
-  TextEditingController thirdLevelController = TextEditingController();
-
-  void setInitialValues() {
-    userNameController.text = userCache?.userName ?? '';
-    emailController.text = userCache?.email ?? '';
-    if (userCache?.languages?.isNotEmpty ?? false) {
-      nativeLanguageController.text =
-          userCache?.languages?[0].languageName ?? '';
-      nativeLevelController.text =
-          userCache?.languages?[0].level.toString() ?? '1';
-      if (userCache?.languages?.length == 2) {
-        secondLanguageController.text =
-            userCache?.languages?[1].languageName ?? '';
-        secondLevelController.text =
-            userCache?.languages?[1].level.toString() ?? '1';
-      }
-      if (userCache?.languages?.length == 3) {
-        thirdLanguageController.text =
-            userCache?.languages?[2].languageName ?? '';
-        thirdLevelController.text =
-            userCache?.languages?[2].level.toString() ?? '1';
-      }
-    }
-  }
+  TextEditingController thirdLevelController = TextEditingController(
+    text: userCache!.languages!.length < 3 ||
+            userCache?.languages?[2].languageName == null
+        ? '1'
+        : userCache?.languages?[2].languageName ?? '1',
+  );
 
   List<Language> getLanguages() {
     return [

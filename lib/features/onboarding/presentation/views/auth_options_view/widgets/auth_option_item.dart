@@ -66,7 +66,7 @@ class AuthOptionItem extends StatelessWidget {
             Image.asset(
               image,
               height: 240.h,
-              width: 212.w,
+              width: 208.w,
             ),
           ],
         ),

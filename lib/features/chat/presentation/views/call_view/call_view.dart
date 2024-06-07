@@ -9,6 +9,7 @@ class CallView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: CallAppBar(),
         body: CallViewBody(),
       ),

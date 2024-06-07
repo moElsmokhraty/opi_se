@@ -10,7 +10,7 @@ class LoginText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).pushReplacement(RoutesConfig.login);
+        GoRouter.of(context).push(RoutesConfig.login);
       },
       child: Align(
         alignment: Alignment.center,

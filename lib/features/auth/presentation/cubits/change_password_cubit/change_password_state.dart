@@ -19,4 +19,8 @@ class ChangePasswordFailure extends ChangePasswordState {
   ChangePasswordFailure(this.errMessage);
 }
 
-class ChangePasswordVisibility extends ChangePasswordState {}
+class ChangeCurrentPasswordVisibility extends ChangePasswordState {}
+
+class ChangeNewPasswordVisibility extends ChangePasswordState {}
+
+class ChangeConfirmNewPasswordVisibility extends ChangePasswordState {}

@@ -36,18 +36,15 @@ import 'package:opi_se/features/tasks/data/models/task.dart';
 import 'package:opi_se/features/tasks/domain/use_cases/add_task_use_case.dart';
 import 'package:opi_se/features/tasks/presentation/cubits/add_task_cubit/add_task_cubit.dart';
 import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_view.dart';
-import '../../../features/auth/domain/use_cases/edit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
-import '../../../features/auth/presentation/cubits/edit_user_prefers_cubit/edit_user_prefers_cubit.dart';
 import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../../features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
 import '../../../features/auth/presentation/views/change_password_views/successful_change_view.dart';
-import '../../../features/auth/presentation/views/edit_user_prefers_view/edit_user_prefers_view.dart';
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
@@ -89,7 +86,7 @@ import '../constants.dart';
 abstract class AppRouter {
   static String getInitialRoute() {
     if (userCache == null) {
-      return RoutesConfig.authOptions;
+      return RoutesConfig.getStarted;
     } else {
       if (userCache!.getUserPrefers == true) {
         return RoutesConfig.userPrefers;
@@ -100,7 +97,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.onBoarding,
+    initialLocation: RoutesConfig.call,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -121,7 +118,7 @@ abstract class AppRouter {
         path: RoutesConfig.login,
         builder: (context, state) => BlocProvider(
           create: (context) => LoginCubit(getIt.get<LoginUseCase>()),
-          child: const LoginView(),
+          child: LoginView(hasBackButton: state.extra as bool? ?? true),
         ),
       ),
       GoRoute(
@@ -155,15 +152,6 @@ abstract class AppRouter {
             getIt.get<SubmitUserPrefersUseCase>(),
           ),
           child: const UserPrefersView(),
-        ),
-      ),
-      GoRoute(
-        path: RoutesConfig.editUserPrefers,
-        builder: (context, state) => BlocProvider(
-          create: (context) => EditUserPrefersCubit(
-            getIt.get<EditUserPrefersUseCase>(),
-          ),
-          child: const EditUserPrefersView(),
         ),
       ),
       GoRoute(
@@ -206,7 +194,7 @@ abstract class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => EditProfileCubit(
             getIt.get<EditProfileUseCase>(),
-          )..setInitialValues(),
+          ),
           child: const EditProfileView(),
         ),
       ),

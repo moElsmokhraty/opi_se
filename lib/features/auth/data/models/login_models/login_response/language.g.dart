@@ -16,23 +16,12 @@ class LanguageAdapter extends TypeAdapter<Language> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Language(
-      languageName: fields[0] as String?,
-      level: fields[1] as int?,
-      id: fields[2] as String?,
-    );
+    return Language();
   }
 
   @override
   void write(BinaryWriter writer, Language obj) {
-    writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.languageName)
-      ..writeByte(1)
-      ..write(obj.level)
-      ..writeByte(2)
-      ..write(obj.id);
+    writer.writeByte(0);
   }
 
   @override

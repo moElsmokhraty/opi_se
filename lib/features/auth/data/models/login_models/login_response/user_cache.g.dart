@@ -34,13 +34,14 @@ class UserCacheAdapter extends TypeAdapter<UserCache> {
       languages: (fields[8] as List?)?.cast<Language>(),
       token: fields[15] as String?,
       fcmToken: fields[16] as String?,
+      bio: fields[17] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserCache obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(18)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -74,7 +75,9 @@ class UserCacheAdapter extends TypeAdapter<UserCache> {
       ..writeByte(15)
       ..write(obj.token)
       ..writeByte(16)
-      ..write(obj.fcmToken);
+      ..write(obj.fcmToken)
+      ..writeByte(17)
+      ..write(obj.bio);
   }
 
   @override

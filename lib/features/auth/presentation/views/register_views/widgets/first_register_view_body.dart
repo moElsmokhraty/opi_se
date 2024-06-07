@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../core/utils/styling/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:opi_se/core/functions/show_snack_bar.dart';
 import 'package:opi_se/core/functions/validate_email.dart';
-import 'package:opi_se/core/utils/routes_config/routes_config.dart';
+import '../../../../../../core/functions/validate_text.dart';
+import '../../../../../../core/widgets/buttons/auth_button.dart';
+import '../../../../../../core/functions/validate_password.dart';
+import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
 import 'package:opi_se/features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/login_text.dart';
-import '../../../../../../core/functions/validate_password.dart';
-import '../../../../../../core/functions/validate_text.dart';
-import '../../../../../../core/utils/styling/styles.dart';
-import '../../../../../../core/widgets/buttons/auth_button.dart';
-import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
 import 'package:opi_se/features/auth/presentation/views/register_views/widgets/register_label.dart';
 
 class FirstRegisterViewBody extends StatelessWidget {
@@ -20,7 +17,7 @@ class FirstRegisterViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.sizeOf(context).height;
-    RegisterCubit cubit = BlocProvider.of<RegisterCubit>(context);
+    final RegisterCubit cubit = BlocProvider.of<RegisterCubit>(context);
     return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
         return Form(
@@ -129,8 +126,10 @@ class FirstRegisterViewBody extends StatelessWidget {
                     color: const Color(0xff036666),
                   ),
                   validator: (value) {
-                    return validatePassword(value!)
-                        ?.replaceAll('Password', 'Confirm Password');
+                    return validatePassword(value!)?.replaceAll(
+                      'Password',
+                      'Confirm Password',
+                    );
                   },
                 ),
                 SizedBox(height: screenHeight * 0.01),
@@ -152,69 +151,56 @@ class FirstRegisterViewBody extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
-                    Expanded(
-                      child: Wrap(
+                    Text.rich(
+                      TextSpan(
                         children: [
-                          Text(
-                            'Agree to the ',
+                          TextSpan(
+                            text: 'Agree to the ',
                             style: AppStyles.textStyle16.copyWith(
                               fontSize: 12.sp,
                               color: Colors.black,
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
-                          Text(
-                            'Terms of Use ',
+                          TextSpan(
+                            text: 'Terms of Use ',
                             style: AppStyles.textStyle16.copyWith(
                               fontSize: 12.sp,
                               color: const Color(0xff036666),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Text(
-                            'and ',
+                          TextSpan(
+                            text: 'and ',
                             style: AppStyles.textStyle16.copyWith(
                               fontSize: 12.sp,
                               color: Colors.black,
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Text(
-                            'Privacy ',
+                          TextSpan(
+                            text: 'Privacy ',
                             style: AppStyles.textStyle16.copyWith(
                               fontSize: 12.sp,
                               color: const Color(0xff036666),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Text(
-                            'Policy',
+                          TextSpan(
+                            text: 'Policy',
                             style: AppStyles.textStyle16.copyWith(
                               fontSize: 12.sp,
                               color: const Color(0xff036666),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
                       ),
-                    )
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.035),
                 AuthButton(
                   text: 'Continue',
                   onPressed: () {
-                    if (!cubit.agree) {
-                      showCustomSnackBar(context,
-                          'Please agree to the Terms of Use and Privacy Policy');
-                    }
-                    if (cubit.firstFormKey.currentState!.validate() &&
-                        cubit.agree) {
-                      GoRouter.of(context).push(
-                        RoutesConfig.secondRegister,
-                        extra: cubit,
-                      );
-                    }
+                    cubit.firstRegisterContinue(context);
                   },
                   backColor: const Color(0xff036666),
                   textColor: Colors.white,

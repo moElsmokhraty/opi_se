@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AuthAppBar({super.key, this.actions});
+  const AuthAppBar({
+    super.key,
+    this.actions,
+    this.hasBackButton = true,
+  });
 
+  final bool hasBackButton;
   final List<Widget>? actions;
 
   @override
@@ -14,16 +20,31 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0.0,
       centerTitle: false,
-      titleSpacing: 20.w,
+      titleSpacing: 0.0,
       title: Image.asset(
         'assets/images/opi_se_logo.png',
         width: 150.w,
         height: 100.h,
       ),
       toolbarHeight: 60.h,
+      leadingWidth: hasBackButton ? 50.w : 0.0,
       scrolledUnderElevation: 0.0,
       backgroundColor: Colors.white,
       actions: actions,
+      leading: hasBackButton
+          ? Padding(
+              padding: EdgeInsets.only(left: 20.w),
+              child: GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

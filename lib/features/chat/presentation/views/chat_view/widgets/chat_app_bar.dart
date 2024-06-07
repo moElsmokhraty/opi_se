@@ -36,7 +36,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                     backgroundImage: CachedNetworkImageProvider(
                       userCache!.partner!.profileImage == 'default.png'
                           ? 'https://i.stack.imgur.com/l60Hf.png'
-                          : userCache!.partner!.profileImage!,
+                          : userCache!.partner!.profileImage ?? 'https://i.stack.imgur.com/l60Hf.png',
                     ),
                   ),
                   SizedBox(width: 10.w),

@@ -28,7 +28,7 @@ class APIConfig {
   static const String restoreNote = 'note/restoreNote';
   static const String getPartnerRecommendations =
       'recommendation/getPartnerRecommendation';
-  static const changeProfileImage = 'changeProfileImage';
+  static const changeProfileImage = 'user/changeProfileImage';
   static const String addTask = 'task/addTask';
   static const String getAllTasks = 'task/getAllTasks';
   static const String getSpecificTasksType = 'task/getSpecificTasksType';

@@ -2,10 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/profile_details.dart';
+import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../core/errors/failure.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:opi_se/core/functions/cache_user_data.dart';
+import '../../../../auth/data/models/login_models/login_response/user_skill.dart';
 import '../../../domain/use_cases/change_profile_image_use_case.dart';
 import '../../../domain/use_cases/delete_profile_image_use_case.dart';
 import 'package:opi_se/features/home/data/models/get_profile_response.dart';
@@ -23,6 +26,14 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileUseCase _getProfileUseCase;
   final DeleteProfileImageUseCase _deleteProfileImageUseCase;
   final ChangeProfileImageUseCase _uploadNationalIdUseCase;
+
+  final TextEditingController skillController = TextEditingController();
+
+  int skillLevel = 1;
+
+  final List<UserSkill> skills = userCache!.skills ?? [];
+
+  bool sliderVisible = false;
 
   Future<void> getProfile() async {
     emit(GetProfileLoading());
@@ -42,9 +53,29 @@ class ProfileCubit extends Cubit<ProfileState> {
     result.fold(
       (failure) => emit(DeleteProfileImageFailure(failure)),
       (response) async {
-        await getProfile().then((value) {
-          emit(DeleteProfileImageSuccess(response));
-        });
+        userCache!.profileImage = 'default.png';
+        updateUserCache(GetProfileResponse(
+          data: UserData(
+            id: userCache!.id,
+            email: userCache!.email,
+            userName: userCache!.userName,
+            nationalId: userCache!.nationalId,
+            matchId: userCache!.matchId,
+            age: userCache!.age,
+            gender: userCache!.gender,
+            getUserPrefers: userCache!.getUserPrefers,
+            languages: userCache!.languages,
+            location: userCache!.location,
+            partner: userCache!.partner,
+            profileImage: userCache!.profileImage,
+          ),
+          profileDetails: ProfileDetails(
+            specialization: userCache!.specialization,
+            fieldOfStudy: userCache!.fieldOfStudy,
+            userSkills: userCache!.skills,
+          ),
+        ));
+        emit(DeleteProfileImageSuccess());
       },
     );
   }
@@ -154,9 +185,74 @@ class ProfileCubit extends Cubit<ProfileState> {
     var result = await _uploadNationalIdUseCase.call(image!);
     result.fold((failure) => emit(UploadProfileImageFailure(failure)),
         (response) async {
-      await getProfile().then((value) {
-        emit(UploadProfileImageSuccess(response));
-      });
+      userCache!.profileImage = response;
+      updateUserCache(GetProfileResponse(
+        data: UserData(
+          id: userCache!.id,
+          email: userCache!.email,
+          userName: userCache!.userName,
+          nationalId: userCache!.nationalId,
+          matchId: userCache!.matchId,
+          age: userCache!.age,
+          gender: userCache!.gender,
+          getUserPrefers: userCache!.getUserPrefers,
+          languages: userCache!.languages,
+          location: userCache!.location,
+          partner: userCache!.partner,
+          profileImage: userCache!.profileImage,
+        ),
+        profileDetails: ProfileDetails(
+          specialization: userCache!.specialization,
+          fieldOfStudy: userCache!.fieldOfStudy,
+          userSkills: userCache!.skills,
+        ),
+      ));
+      emit(UploadProfileImageSuccess());
     });
+  }
+
+  void addSkill() {
+    UserSkill newSkill = UserSkill(
+      skillName: skillController.text.trim(),
+      skillRate: skillLevel,
+    );
+
+    bool containsSkill() {
+      for (UserSkill s in skills) {
+        if (s.skillName == newSkill.skillName) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (newSkill.skillName!.isNotEmpty && !containsSkill()) {
+      skills.add(newSkill);
+      skillController.clear();
+      skillLevel = 1;
+      sliderVisible = false;
+      emit(EditSkillsChanged());
+    }
+  }
+
+  void toggleSlider() {
+    if (skillController.text.trim().isNotEmpty) {
+      sliderVisible = true;
+      emit(EditSliderVisibilityChanged());
+    } else {
+      sliderVisible = false;
+      emit(EditSliderVisibilityChanged());
+    }
+  }
+
+  void setSkillLevel(int value) {
+    skillLevel = value;
+    emit(EditSkillsChanged());
+  }
+
+  void removeSkill(UserSkill skill) {
+    skills.remove(skill);
+    sliderVisible = false;
+    emit(EditSkillsChanged());
   }
 }

@@ -16,6 +16,7 @@ class VerifyAccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AuthAppBar(
           actions: [
             GestureDetector(

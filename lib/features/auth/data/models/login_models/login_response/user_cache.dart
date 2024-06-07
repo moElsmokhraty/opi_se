@@ -41,6 +41,8 @@ class UserCache extends HiveObject {
   String? token;
   @HiveField(16)
   String? fcmToken;
+  @HiveField(17)
+  String? bio;
 
   UserCache({
     this.id,
@@ -60,5 +62,6 @@ class UserCache extends HiveObject {
     this.languages,
     this.token,
     this.fcmToken,
+    this.bio,
   });
 }

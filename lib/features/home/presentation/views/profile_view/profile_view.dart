@@ -11,21 +11,21 @@ class ProfileView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-            child: Padding(
-              padding: EdgeInsets.only(left: 16.w),
+          leading: Padding(
+            padding: EdgeInsets.only(left: 16.w),
+            child: GestureDetector(
+              onTap: () {
+                GoRouter.of(context).pop();
+              },
               child: Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
-                size: 24.sp,
+                size: 30.sp,
               ),
             ),
-            onTap: () {
-              GoRouter.of(context).pop();
-            },
           ),
-          toolbarHeight: 50.h,
-          leadingWidth: 75.w,
+          toolbarHeight: 65.h,
+          leadingWidth: 65.w,
           elevation: 0,
           scrolledUnderElevation: 0,
         ),

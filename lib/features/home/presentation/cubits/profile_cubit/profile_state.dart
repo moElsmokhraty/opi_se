@@ -22,9 +22,7 @@ class GetProfileFailure extends ProfileState {
 class DeleteProfileImageLoading extends ProfileState {}
 
 class DeleteProfileImageSuccess extends ProfileState {
-  final String message;
-
-  DeleteProfileImageSuccess(this.message);
+  DeleteProfileImageSuccess();
 }
 
 class DeleteProfileImageFailure extends ProfileState {
@@ -36,9 +34,7 @@ class DeleteProfileImageFailure extends ProfileState {
 class UploadProfileImageLoading extends ProfileState {}
 
 class UploadProfileImageSuccess extends ProfileState {
-  final String message;
-
-  UploadProfileImageSuccess(this.message);
+  UploadProfileImageSuccess();
 }
 
 class UploadProfileImageFailure extends ProfileState {
@@ -46,3 +42,7 @@ class UploadProfileImageFailure extends ProfileState {
 
   UploadProfileImageFailure(this.failure);
 }
+
+class EditSkillsChanged extends ProfileState {}
+
+class EditSliderVisibilityChanged extends ProfileState {}

@@ -7,10 +7,14 @@ class UserPrefersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return const PopScope(
+      canPop: false,
       child: Scaffold(
-        appBar: AuthAppBar(),
-        body: UserPrefersViewBody(),
+        backgroundColor: Colors.white,
+        appBar: AuthAppBar(hasBackButton: false),
+        body: SafeArea(
+          child: UserPrefersViewBody(),
+        ),
       ),
     );
   }

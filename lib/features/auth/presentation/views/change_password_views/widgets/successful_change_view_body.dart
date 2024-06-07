@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opi_se/core/utils/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/core/utils/styling/styles.dart';
 import 'package:opi_se/core/widgets/buttons/auth_button.dart';
-
 import '../../../../../../core/utils/routes_config/routes_config.dart';
 
 class SuccessfulChangeViewBody extends StatelessWidget {
@@ -21,7 +19,7 @@ class SuccessfulChangeViewBody extends StatelessWidget {
           Image.asset(
             'assets/images/successful_change.png',
             height: 200.h,
-            width: width,
+            width: 1.sw,
             alignment: Alignment.center,
           ),
           Text(
@@ -45,7 +43,10 @@ class SuccessfulChangeViewBody extends StatelessWidget {
           AuthButton(
             text: 'Login',
             onPressed: () {
-              GoRouter.of(context).pushReplacement(RoutesConfig.login);
+              GoRouter.of(context).pushReplacement(
+                RoutesConfig.login,
+                extra: false,
+              );
             },
             backColor: const Color(0xff036666),
             textColor: Colors.white,

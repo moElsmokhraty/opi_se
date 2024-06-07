@@ -15,7 +15,7 @@ class EditProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    final EditProfileCubit cubit = BlocProvider.of(context);
+    final EditProfileCubit cubit = BlocProvider.of<EditProfileCubit>(context);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),

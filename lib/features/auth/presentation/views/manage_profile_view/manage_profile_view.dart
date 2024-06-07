@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'widgets/manage_profile_app_bar.dart';
 import 'widgets/mange_profile_view_body.dart';
 
@@ -7,10 +8,16 @@ class ManageProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
+    return PopScope(
+      onPopInvoked: (canPop) {
+        GoRouter.of(context).pop();
+      },
+      child: const Scaffold(
+        backgroundColor: Colors.white,
         appBar: ManageProfileAppBar(),
-        body: ManageProfileViewBody(),
+        body: SafeArea(
+          child: ManageProfileViewBody(),
+        ),
       ),
     );
   }

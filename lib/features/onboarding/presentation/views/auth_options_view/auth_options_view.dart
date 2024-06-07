@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'widgets/auth_options_app_bar.dart';
 import 'widgets/auth_options_view_view_body.dart';
 
 class AuthOptionsView extends StatelessWidget {
@@ -8,13 +9,14 @@ class AuthOptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
       onPopInvoked: (canPop) {
-        SystemNavigator.pop();
+        GoRouter.of(context).pop();
       },
-      child: const SafeArea(
-        child: Scaffold(
-          body: AuthOptionsViewBody(),
+      child: const Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AuthOptionsAppBar(),
+        body: SafeArea(
+          child: AuthOptionsViewBody(),
         ),
       ),
     );

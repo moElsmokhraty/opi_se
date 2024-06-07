@@ -24,13 +24,13 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   final formKey = GlobalKey<FormState>();
 
-  bool oldObscureText = true;
+  bool currentObscureText = true;
 
   bool newObscureText = true;
 
   bool confirmNewObscureText = true;
 
-  Icon oldIcon = Icon(
+  Icon currentIcon = Icon(
     Icons.visibility_outlined,
     size: 21.sp,
     color: const Color(0xff036666),
@@ -73,9 +73,9 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     });
   }
 
-  void changeOldPasswordVisibility() {
-    oldObscureText = !oldObscureText;
-    oldIcon = oldObscureText
+  void changeCurrentPasswordVisibility() {
+    currentObscureText = !currentObscureText;
+    currentIcon = currentObscureText
         ? Icon(
             Icons.visibility_outlined,
             size: 21.sp,
@@ -86,7 +86,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             size: 21.sp,
             color: const Color(0xff036666),
           );
-    emit(ChangePasswordVisibility());
+    emit(ChangeCurrentPasswordVisibility());
   }
 
   void changeNewPasswordVisibility() {
@@ -102,7 +102,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             size: 21.sp,
             color: const Color(0xff036666),
           );
-    emit(ChangePasswordVisibility());
+    emit(ChangeNewPasswordVisibility());
   }
 
   void changeConfirmNewPasswordVisibility() {
@@ -118,6 +118,6 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             size: 21.sp,
             color: const Color(0xff036666),
           );
-    emit(ChangePasswordVisibility());
+    emit(ChangeConfirmNewPasswordVisibility());
   }
 }

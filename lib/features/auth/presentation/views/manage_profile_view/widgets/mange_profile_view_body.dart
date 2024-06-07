@@ -25,7 +25,7 @@ class ManageProfileViewBody extends StatelessWidget {
             },
             child: Container(
               height: 150.h,
-              width: double.infinity,
+              width: 150.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
@@ -35,12 +35,12 @@ class ManageProfileViewBody extends StatelessWidget {
                 color: const Color(0XFF9AC2C2),
               ),
               child: CircleAvatar(
-                radius: 65.r,
+                radius: 75.r,
                 backgroundColor: const Color(0XFF9AC2C2),
-                child: userCache!.profileImage! == 'default.png'
+                child: userCache?.profileImage == 'default.png'
                     ? Text(
-                        userCache!.userName![0].toUpperCase() +
-                            userCache!.userName![1].toUpperCase(),
+                        (userCache?.userName?[0].toUpperCase() ?? '') +
+                            (userCache?.userName?[1].toUpperCase() ?? ''),
                         style: AppStyles.textStyle16.copyWith(
                           fontSize: 30.sp,
                         ),
@@ -49,7 +49,7 @@ class ManageProfileViewBody extends StatelessWidget {
                         borderRadius: BorderRadius.circular(150.r),
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: CachedNetworkImage(
-                          imageUrl: userCache!.profileImage!,
+                          imageUrl: userCache?.profileImage ?? '',
                           placeholder: (context, url) => const Center(
                             child: CircularProgressIndicator(
                               color: Color(0XFF036666),
@@ -66,7 +66,7 @@ class ManageProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text(
-            userCache!.userName!,
+            userCache?.userName ?? 'User Name',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.sp,
@@ -76,7 +76,7 @@ class ManageProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            userCache!.specialization!,
+            userCache?.specialization ?? 'Specialization',
             style: TextStyle(
               color: Colors.black.withOpacity(0.8),
               fontSize: 18.sp,

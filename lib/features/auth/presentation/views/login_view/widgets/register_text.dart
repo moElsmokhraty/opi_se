@@ -10,7 +10,7 @@ class RegisterText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).pushReplacement(RoutesConfig.firstRegister);
+        GoRouter.of(context).push(RoutesConfig.firstRegister);
       },
       child: Align(
         alignment: Alignment.center,

@@ -14,33 +14,29 @@ class ManageProfileAppBar extends StatelessWidget
     return AppBar(
       elevation: 0,
       toolbarHeight: 75.h,
+      titleSpacing: 0,
       scrolledUnderElevation: 0,
-      leadingWidth: double.infinity,
+      centerTitle: false,
+      backgroundColor: Colors.white,
       leading: Padding(
-        padding: EdgeInsets.only(left: 24.w),
-        child: Row(
-          children: [
-            GestureDetector(
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 24.sp,
-              ),
-              onTap: () {
-                GoRouter.of(context).pop();
-              },
-            ),
-            SizedBox(width: 10.w),
-            Text(
-              'Profile',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 28.sp,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
+        padding: EdgeInsets.only(left: 20.w),
+        child: GestureDetector(
+          onTap: () {
+            GoRouter.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      title: Text(
+        'Profile',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 28.sp,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

@@ -49,7 +49,7 @@ class ProfileRepoImpl implements ProfileRepo {
         formData: formData,
         token: userCache!.token!,
       );
-      return Right(response['message']);
+      return Right(response['imageUrl']);
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

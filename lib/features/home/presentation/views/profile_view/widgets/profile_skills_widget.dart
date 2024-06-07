@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import '../../../../../auth/data/models/login_models/login_response/user_skill.dart';
+import '../../../cubits/profile_cubit/profile_cubit.dart';
+import 'edit_skills_dialog.dart';
 
 class ProfileSkillsWidget extends StatelessWidget {
   const ProfileSkillsWidget({super.key, required this.skills});
@@ -11,6 +14,7 @@ class ProfileSkillsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
+    final ProfileCubit cubit = BlocProvider.of<ProfileCubit>(context);
     return Container(
       width: double.infinity,
       decoration: ShapeDecoration(
@@ -23,11 +27,43 @@ class ProfileSkillsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Skills',
-            style: AppStyles.textStyle24.copyWith(
-              fontSize: 18.sp,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Skills',
+                style: AppStyles.textStyle24.copyWith(
+                  fontSize: 18.sp,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => EditSkillsDialog(cubit: cubit),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(6.r),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    color: const Color(0xff036666),
+                    Icons.edit_outlined,
+                    size: 26.sp,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: screenHeight * 0.015),
           Wrap(
@@ -46,12 +82,12 @@ class ProfileSkillsWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        skill.skillName!,
+                        skill.skillName ?? '',
                         style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                       ),
                       SizedBox(width: 12.w),
                       Text(
-                        '${skill.skillRate!}',
+                        '${skill.skillRate ?? 0}',
                         style: AppStyles.textStyle24.copyWith(fontSize: 14.sp),
                       ),
                     ],

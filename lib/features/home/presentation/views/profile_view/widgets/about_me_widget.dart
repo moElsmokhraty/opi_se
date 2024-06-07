@@ -1,6 +1,7 @@
+import 'edit_bio_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 
 class AboutMeWidget extends StatelessWidget {
@@ -24,6 +25,7 @@ class AboutMeWidget extends StatelessWidget {
         top: 10.h,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,33 +36,40 @@ class AboutMeWidget extends StatelessWidget {
                   fontSize: 18.sp,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: IconButton(
-                  icon: Icon(
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const EditBioDialog(),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(6.r),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    color: const Color(0xff036666),
                     Icons.edit_outlined,
                     size: 26.sp,
                   ),
-                  color: const Color(0xff036666),
-                  onPressed: () {},
                 ),
               ),
             ],
           ),
           SizedBox(height: screenHeight * 0.015),
           Text(
-            'Lorem Ipsum is simply dummy text of the printing typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, Lorem Ipsum has been the  industry\'s standard dummy text ever.',
-            style: AppStyles.textStyle12.copyWith(
+            userCache?.bio ?? 'No bio available',
+            textAlign: TextAlign.start,
+            style: TextStyle(
               fontSize: 14.sp,
               color: Colors.black,
               overflow: TextOverflow.visible,
