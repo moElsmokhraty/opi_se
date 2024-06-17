@@ -36,7 +36,7 @@ class ProfileViewBody extends StatelessWidget {
       builder: (context, state) {
         return RefreshIndicator(
           onRefresh: () async {
-            await profileCubit.getProfile();
+            await profileCubit.getUserProfile();
           },
           child: SingleChildScrollView(
             clipBehavior: Clip.none,

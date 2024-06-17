@@ -1,11 +1,11 @@
-import '../../features/auth/data/models/login_models/login_response/login_response.dart';
-import '../../features/home/data/models/get_profile_response.dart';
 import '../utils/constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../features/auth/data/models/login_models/login_response/partner.dart';
 import '../../features/auth/data/models/login_models/login_response/language.dart';
 import '../../features/auth/data/models/login_models/login_response/user_cache.dart';
 import '../../features/auth/data/models/login_models/login_response/user_skill.dart';
+import '../../features/auth/data/models/login_models/login_response/login_response.dart';
+import 'package:opi_se/features/auth/data/models/user_profile_models/get_user_profile_response.dart';
 
 class HiveHelper {
   static Future<void> setupHiveDB() async {
@@ -44,7 +44,7 @@ class HiveHelper {
     userCache = box.get('user');
   }
 
-  static Future<void> refreshUserCache(GetProfileResponse response) async {
+  static Future<void> refreshUserCache(GetUserProfileResponse response) async {
     var box = Hive.box<UserCache>(boxName);
     await box.put(
       'user',
@@ -53,7 +53,7 @@ class HiveHelper {
         email: response.data?.email,
         userName: response.data?.userName,
         nationalId: response.data?.nationalId,
-        matchId: response.data?.matchId,
+        matchId: response.data?.matchId?.id,
         age: response.data?.age,
         gender: response.data?.gender,
         bio: response.data?.bio,
@@ -62,9 +62,9 @@ class HiveHelper {
         partner: response.data?.partner,
         languages: response.data?.languages,
         getUserPrefers: response.data?.getUserPrefers,
-        fieldOfStudy: response.profileDetails?.fieldOfStudy,
-        specialization: response.profileDetails?.specialization,
-        skills: response.profileDetails?.userSkills,
+        fieldOfStudy: response.data?.profileDetails?.fieldOfStudy,
+        specialization: response.data?.profileDetails?.specialization,
+        skills: response.data?.profileDetails?.userSkills,
       ),
     );
     userCache = box.get('user');
@@ -92,24 +92,3 @@ class HiveHelper {
     await updateUserCache(userCache);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

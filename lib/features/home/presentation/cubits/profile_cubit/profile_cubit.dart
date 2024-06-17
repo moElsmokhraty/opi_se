@@ -8,20 +8,20 @@ import 'package:image_cropper/image_cropper.dart';
 import '../../../../../core/cache/hive_helper.dart';
 import '../../../domain/use_cases/change_profile_image_use_case.dart';
 import '../../../domain/use_cases/delete_profile_image_use_case.dart';
-import 'package:opi_se/features/home/data/models/get_profile_response.dart';
-import 'package:opi_se/features/home/domain/use_cases/get_profile_use_case.dart';
+import '../../../../auth/domain/use_cases/get_user_profile_use_case.dart';
 import '../../../../auth/data/models/login_models/login_response/user_skill.dart';
+import '../../../../auth/data/models/user_profile_models/get_user_profile_response.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(
-    this._getProfileUseCase,
+    this._getUserProfileUseCase,
     this._deleteProfileImageUseCase,
     this._uploadNationalIdUseCase,
   ) : super(ProfileInitial());
 
-  final GetProfileUseCase _getProfileUseCase;
+  final GetUserProfileUseCase _getUserProfileUseCase;
   final DeleteProfileImageUseCase _deleteProfileImageUseCase;
   final ChangeProfileImageUseCase _uploadNationalIdUseCase;
 
@@ -33,9 +33,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   bool sliderVisible = false;
 
-  Future<void> getProfile() async {
+  Future<void> getUserProfile() async {
     emit(GetProfileLoading());
-    final result = await _getProfileUseCase.call(userCache!.id!);
+    final result = await _getUserProfileUseCase.call();
     result.fold(
       (failure) => emit(GetProfileFailure(failure)),
       (response) async {

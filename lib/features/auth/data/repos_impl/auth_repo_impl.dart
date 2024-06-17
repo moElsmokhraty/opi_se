@@ -4,6 +4,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_request.dart';
 import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_response.dart';
+import 'package:opi_se/features/auth/data/models/user_profile_models/get_user_profile_response.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
@@ -173,6 +174,19 @@ class AuthRepoImpl implements AuthRepo {
         body: request.toJson(),
       );
       return Right(UserPrefersResponse.fromJson(data));
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetUserProfileResponse>> getUserProfile() async {
+    try {
+      var data = await _apiService.get(endpoint: APIConfig.getUserProfile);
+      return Right(GetUserProfileResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioException(e));

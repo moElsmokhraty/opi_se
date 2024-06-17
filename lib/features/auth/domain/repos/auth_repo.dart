@@ -14,6 +14,8 @@ import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefer
 import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_response.dart';
 import 'package:opi_se/features/auth/data/models/verify_account_models/verify_account_response.dart';
 
+import '../../data/models/user_profile_models/get_user_profile_response.dart';
+
 abstract class AuthRepo {
   Future<Either<Failure, LoginResponse>> login(LoginRequest request);
 
@@ -35,4 +37,6 @@ abstract class AuthRepo {
 
   Future<Either<Failure, UserPrefersResponse>> editUserPrefers(
       UserPrefersRequest request);
+
+  Future<Either<Failure, GetUserProfileResponse>> getUserProfile();
 }

@@ -5,6 +5,7 @@ class APIConfig {
   static const String changePassword = 'user/changePassword';
   static const String forgotPassword = 'user/forgetPassword';
   static const String verifyAccount = 'user/resendVerificationEmail';
+  static const getUserProfile = 'user/getUserProfile';
   static const String uploadNationalId =
       'https://ocr-api-ysqv.onrender.com/extract_nationalId';
   static const String submitUserPrefers = 'recommendation/submitUserPrefers';

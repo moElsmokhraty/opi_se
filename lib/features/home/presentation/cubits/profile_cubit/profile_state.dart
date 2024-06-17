@@ -8,7 +8,7 @@ class ProfileInitial extends ProfileState {}
 class GetProfileLoading extends ProfileState {}
 
 class GetProfileSuccess extends ProfileState {
-  final GetProfileResponse response;
+  final GetUserProfileResponse response;
 
   GetProfileSuccess(this.response);
 }
