@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:opi_se/core/utils/constants.dart';
@@ -20,7 +21,7 @@ class CallCubit extends Cubit<CallState> {
       });
       emit(state.copyWith(localStream: localStream));
     } catch (error) {
-      print("Error: $error");
+      debugPrint('Error: $error');
     }
   }
 

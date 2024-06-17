@@ -6,8 +6,6 @@ double height = 812.h;
 
 double width = 375.w;
 
-String? fcmToken;
-
 const Map<String, Color> noteColors = {
   '--note1': Color(0xFFFFF6C8),
   '--note2': Color(0xFFC8F2FF),

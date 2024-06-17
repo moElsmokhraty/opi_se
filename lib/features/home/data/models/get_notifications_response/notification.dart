@@ -7,7 +7,8 @@ class NotificationModel extends Equatable {
 
   const NotificationModel({this.message, this.date, this.id});
 
-  factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
+  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
+      NotificationModel(
         message: json['message'] as String?,
         date: json['date'] == null
             ? null

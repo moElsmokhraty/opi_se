@@ -28,20 +28,18 @@ class UserCacheAdapter extends TypeAdapter<UserCache> {
       getUserPrefers: fields[9] as bool?,
       fieldOfStudy: fields[10] as String?,
       specialization: fields[11] as String?,
-      skills: (fields[12] as List?)?.cast<UserSkill>(),
+      skills: (fields[12] as List?)?.cast<Skill>(),
       matchId: fields[13] as String?,
       partner: fields[14] as Partner?,
       languages: (fields[8] as List?)?.cast<Language>(),
-      token: fields[15] as String?,
-      fcmToken: fields[16] as String?,
-      bio: fields[17] as String?,
+      bio: fields[15] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserCache obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -73,10 +71,6 @@ class UserCacheAdapter extends TypeAdapter<UserCache> {
       ..writeByte(14)
       ..write(obj.partner)
       ..writeByte(15)
-      ..write(obj.token)
-      ..writeByte(16)
-      ..write(obj.fcmToken)
-      ..writeByte(17)
       ..write(obj.bio);
   }
 

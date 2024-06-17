@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'custom_chip.dart';
-import 'tag_editor.dart';
+import '../../../../../../core/widgets/custom_chip.dart';
+import '../../../../../../core/widgets/tag_editor.dart';
 import '../../../cubits/user_prefers_cubit/user_prefers_cubit.dart';
 
 class SkillsWidget extends StatelessWidget {

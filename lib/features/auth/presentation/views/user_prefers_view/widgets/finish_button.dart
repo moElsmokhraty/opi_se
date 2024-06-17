@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../../core/cache/hive_helper.dart';
 import '../../../../../../core/utils/styling/styles.dart';
 import 'package:opi_se/core/functions/show_snack_bar.dart';
 import '../../../cubits/user_prefers_cubit/user_prefers_cubit.dart';
-import 'package:opi_se/core/functions/modify_user_prefers_cache.dart';
 import '../../../../../../core/utils/routes_config/routes_config.dart';
 
 class FinishButton extends StatelessWidget {
@@ -17,7 +17,7 @@ class FinishButton extends StatelessWidget {
     return BlocConsumer<UserPrefersCubit, UserPrefersState>(
       listener: (context, state) async {
         if (state is SubmitUserPrefersSuccess) {
-          await modifyUserPrefersCache(
+          await HiveHelper.modifyUserPrefersCache(
             skills: cubit.skills,
             fieldOfStudy: cubit.fieldOfStudyController.text.trim(),
             specialization: cubit.specializationController.text.trim(),

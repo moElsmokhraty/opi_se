@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failure.dart';
-import '../../../../core/utils/constants.dart';
 import '../../domain/repos/settings_repo.dart';
 import '../../../../core/errors/server_failure.dart';
 import '../../../../core/utils/api_config/api_config.dart';
@@ -21,7 +20,6 @@ class SettingsRepoImpl implements SettingsRepo {
     try {
       var data = await _apiService.patch(
         endpoint: APIConfig.editProfile,
-        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(data['message']);

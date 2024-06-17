@@ -90,7 +90,7 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       eventName: 'updateTask',
       data: task.toJson(),
       ack: (data) {
-        print(data);
+        debugPrint(data);
       },
     );
   }

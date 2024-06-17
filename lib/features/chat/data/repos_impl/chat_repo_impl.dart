@@ -26,7 +26,6 @@ class ChatRepoImpl implements ChatRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getChat,
-        token: userCache!.token!,
         params: {
           'page': page,
           'limit': limit,
@@ -51,7 +50,6 @@ class ChatRepoImpl implements ChatRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getChatMedia,
-        token: userCache!.token!,
         params: {
           'page': page,
           'limit': limit,
@@ -89,7 +87,6 @@ class ChatRepoImpl implements ChatRepo {
       }
       var data = await _apiService.sendFormData(
         endpoint: APIConfig.uploadChatMedia,
-        token: userCache!.token!,
         params: {'matchId': userCache!.matchId!},
         formData: formData,
       );

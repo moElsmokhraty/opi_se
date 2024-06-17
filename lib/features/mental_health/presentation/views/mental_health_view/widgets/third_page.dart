@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opi_se/features/mental_health/presentation/cubits/mental_health_cubit.dart';
 import '../../../../../../core/utils/styling/styles.dart';
-import 'previous_button.dart';
+import '../../../../../../core/widgets/buttons/previous_button.dart';
 import 'mental_health_text_field.dart';
 
 class ThirdPage extends StatelessWidget {

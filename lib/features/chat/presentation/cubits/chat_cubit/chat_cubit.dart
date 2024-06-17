@@ -314,7 +314,6 @@ class ChatCubit extends Cubit<ChatState> {
     if (!pollFormKey.currentState!.validate()) return;
     showPollOptions = false;
     emit(ChatInitial());
-    print(showPollOptions);
     List<Map<String, dynamic>> answers = [
       {
         "optionNumber": 1,

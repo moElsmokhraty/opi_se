@@ -36,4 +36,5 @@ abstract class RoutesConfig {
   static const String mentorLoginOtp = '/mentor-login-otp';
   static const String mentorFirstRegister = '/mentor-first-register';
   static const String mentorSecondRegister = '/mentor-second-register';
+  static const String mentorPrefers = '/mentor-prefers';
 }

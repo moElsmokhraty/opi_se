@@ -1,8 +1,6 @@
-import 'partner.dart';
-import 'language.dart';
-import 'notification.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../home/data/models/requests_models/get_match_requests_response/partner_request.dart';
+import 'language.dart';
+import 'partner.dart';
 
 class UserData extends Equatable {
   final String? id;
@@ -12,7 +10,6 @@ class UserData extends Equatable {
   final String? gender;
   final String? location;
   final String? nationalId;
-  final String? bio;
   final String? profileImage;
   final bool? isVerified;
   final int? numOfReports;
@@ -20,10 +17,10 @@ class UserData extends Equatable {
   final String? matchId;
   final bool? isAvailable;
   final DateTime? joinedAt;
-  final List<Language>? languages;
   final bool? getUserPrefers;
-  final List<PartnerRequest>? partnerRequests;
-  final List<Notification>? notifications;
+  final int? points;
+  final String? bio;
+  final List<Language>? languages;
   final int? v;
 
   const UserData({
@@ -34,7 +31,6 @@ class UserData extends Equatable {
     this.gender,
     this.location,
     this.nationalId,
-    this.bio,
     this.profileImage,
     this.isVerified,
     this.numOfReports,
@@ -42,47 +38,40 @@ class UserData extends Equatable {
     this.matchId,
     this.isAvailable,
     this.joinedAt,
-    this.languages,
     this.getUserPrefers,
-    this.partnerRequests,
+    this.points,
+    this.bio,
+    this.languages,
     this.v,
-    this.notifications,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(
-      id: json['_id'] as String?,
-      userName: json['userName'] as String?,
-      email: json['email'] as String?,
-      age: json['age'] as int?,
-      gender: json['gender'] as String?,
-      location: json['location'] as String?,
-      nationalId: json['nationalId'] as String?,
-      bio: json['bio'] as String?,
-      profileImage: json['profileImage'] as String?,
-      isVerified: json['isVerified'] as bool?,
-      numOfReports: json['numOfReports'] as int?,
-      partner: json['partnerId'] == null
-          ? null
-          : Partner.fromJson(json['partnerId'] as Map<String, dynamic>),
-      matchId: json['matchId'] as String?,
-      isAvailable: json['isAvailable'] as bool?,
-      joinedAt: json['joinedAt'] == null
-          ? null
-          : DateTime.parse(json['joinedAt'] as String),
-      languages: (json['languages'] as List<dynamic>?)
-          ?.map((e) => Language.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      notifications: (json['notifications'] as List<dynamic>?)
-          ?.map((e) => Notification.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      getUserPrefers: json['getUserPrefers'] as bool?,
-      partnerRequests: (json['partnerRequests'] as List<dynamic>?)
-          ?.map((e) => PartnerRequest.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      v: json['__v'] as int?,
-    );
-  }
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+        id: json['_id'] as String?,
+        userName: json['userName'] as String?,
+        email: json['email'] as String?,
+        age: json['age'] as int?,
+        gender: json['gender'] as String?,
+        location: json['location'] as String?,
+        nationalId: json['nationalId'] as String?,
+        profileImage: json['profileImage'] as String?,
+        isVerified: json['isVerified'] as bool?,
+        numOfReports: json['numOfReports'] as int?,
+        partner: json['partnerId'] == null
+            ? null
+            : Partner.fromJson(json['partnerId'] as Map<String, dynamic>),
+        matchId: json['matchId'] as String?,
+        isAvailable: json['isAvailable'] as bool?,
+        joinedAt: json['joinedAt'] == null
+            ? null
+            : DateTime.parse(json['joinedAt'] as String),
+        getUserPrefers: json['getUserPrefers'] as bool?,
+        points: json['points'] as int?,
+        bio: json['bio'] as String?,
+        languages: (json['languages'] as List<dynamic>?)
+            ?.map((e) => Language.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        v: json['__v'] as int?,
+      );
 
   Map<String, dynamic> toJson() => {
         '_id': id,
@@ -92,17 +81,17 @@ class UserData extends Equatable {
         'gender': gender,
         'location': location,
         'nationalId': nationalId,
-        'bio': bio,
         'profileImage': profileImage,
         'isVerified': isVerified,
         'numOfReports': numOfReports,
-        'partnerId': partner?.toJson(),
+        'partnerId': partner,
         'matchId': matchId,
         'isAvailable': isAvailable,
         'joinedAt': joinedAt?.toIso8601String(),
         'getUserPrefers': getUserPrefers,
+        'points': points,
+        'bio': bio,
         'languages': languages?.map((e) => e.toJson()).toList(),
-        'partnerRequests': partnerRequests,
         '__v': v,
       };
 
@@ -124,8 +113,9 @@ class UserData extends Equatable {
       isAvailable,
       joinedAt,
       getUserPrefers,
+      points,
+      bio,
       languages,
-      partnerRequests,
       v,
     ];
   }

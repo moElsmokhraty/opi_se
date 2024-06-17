@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
@@ -34,8 +35,12 @@ class NotificationsServices {
 
   void initFirebaseListeners() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      initLocalNotifications();
-      showNotification(message);
+      if (Platform.isAndroid) {
+        initLocalNotifications();
+        await showNotification(message);
+      } else if (Platform.isIOS) {
+        await foregroundMessage();
+      }
     });
   }
 
@@ -97,16 +102,19 @@ class NotificationsServices {
       iOS: iOSNotificationDetails,
     );
 
-    Future.delayed(
-      Duration.zero,
-      () async {
-        await notificationsPlugin.show(
-          0,
-          message.notification!.title.toString(),
-          message.notification!.body.toString(),
-          platformChannelSpecifics,
-        );
-      },
+    await notificationsPlugin.show(
+      0,
+      message.notification?.title.toString(),
+      message.notification?.body.toString(),
+      platformChannelSpecifics,
+    );
+  }
+
+  Future<void> foregroundMessage() async {
+    await firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
     );
   }
 }

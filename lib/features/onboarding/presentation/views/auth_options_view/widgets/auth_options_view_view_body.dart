@@ -30,16 +30,14 @@ class AuthOptionsViewBody extends StatelessWidget {
             text: 'Mentor',
             image: AppAssets.mentor,
             onTap: () {
-              GoRouter.of(context).push(RoutesConfig.firstRegister);
+              GoRouter.of(context).push(RoutesConfig.mentorFirstRegister);
             },
           ),
           SizedBox(height: screenHeight * 0.0425),
           AuthOptionItem(
             text: 'Parents',
             image: AppAssets.parents,
-            onTap: () {
-              GoRouter.of(context).push(RoutesConfig.firstRegister);
-            },
+            onTap: () {},
           ),
         ],
       ),

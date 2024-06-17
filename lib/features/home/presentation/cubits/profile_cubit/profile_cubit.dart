@@ -2,17 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/profile_details.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
 import '../../../../../core/errors/failure.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:opi_se/core/functions/cache_user_data.dart';
-import '../../../../auth/data/models/login_models/login_response/user_skill.dart';
+import '../../../../../core/cache/hive_helper.dart';
 import '../../../domain/use_cases/change_profile_image_use_case.dart';
 import '../../../domain/use_cases/delete_profile_image_use_case.dart';
 import 'package:opi_se/features/home/data/models/get_profile_response.dart';
 import 'package:opi_se/features/home/domain/use_cases/get_profile_use_case.dart';
+import '../../../../auth/data/models/login_models/login_response/user_skill.dart';
 
 part 'profile_state.dart';
 
@@ -31,7 +29,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   int skillLevel = 1;
 
-  final List<UserSkill> skills = userCache!.skills ?? [];
+  final List<Skill> skills = userCache!.skills ?? [];
 
   bool sliderVisible = false;
 
@@ -40,8 +38,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     final result = await _getProfileUseCase.call(userCache!.id!);
     result.fold(
       (failure) => emit(GetProfileFailure(failure)),
-      (response) {
-        updateUserCache(response);
+      (response) async {
+        await HiveHelper.refreshUserCache(response);
         emit(GetProfileSuccess(response));
       },
     );
@@ -54,27 +52,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       (failure) => emit(DeleteProfileImageFailure(failure)),
       (response) async {
         userCache!.profileImage = 'default.png';
-        updateUserCache(GetProfileResponse(
-          data: UserData(
-            id: userCache!.id,
-            email: userCache!.email,
-            userName: userCache!.userName,
-            nationalId: userCache!.nationalId,
-            matchId: userCache!.matchId,
-            age: userCache!.age,
-            gender: userCache!.gender,
-            getUserPrefers: userCache!.getUserPrefers,
-            languages: userCache!.languages,
-            location: userCache!.location,
-            partner: userCache!.partner,
-            profileImage: userCache!.profileImage,
-          ),
-          profileDetails: ProfileDetails(
-            specialization: userCache!.specialization,
-            fieldOfStudy: userCache!.fieldOfStudy,
-            userSkills: userCache!.skills,
-          ),
-        ));
+        await HiveHelper.updateUserCache(userCache!);
         emit(DeleteProfileImageSuccess());
       },
     );
@@ -84,18 +62,12 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<XFile?> cropImage(XFile imageFile) async {
     final CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
-      cropStyle: CropStyle.rectangle,
       sourcePath: imageFile.path,
       maxWidth: 1080,
       maxHeight: 1920,
       compressQuality: 100,
       compressFormat: ImageCompressFormat.png,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-      ],
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'OpiSe Cropper',
@@ -186,39 +158,19 @@ class ProfileCubit extends Cubit<ProfileState> {
     result.fold((failure) => emit(UploadProfileImageFailure(failure)),
         (response) async {
       userCache!.profileImage = response;
-      updateUserCache(GetProfileResponse(
-        data: UserData(
-          id: userCache!.id,
-          email: userCache!.email,
-          userName: userCache!.userName,
-          nationalId: userCache!.nationalId,
-          matchId: userCache!.matchId,
-          age: userCache!.age,
-          gender: userCache!.gender,
-          getUserPrefers: userCache!.getUserPrefers,
-          languages: userCache!.languages,
-          location: userCache!.location,
-          partner: userCache!.partner,
-          profileImage: userCache!.profileImage,
-        ),
-        profileDetails: ProfileDetails(
-          specialization: userCache!.specialization,
-          fieldOfStudy: userCache!.fieldOfStudy,
-          userSkills: userCache!.skills,
-        ),
-      ));
+      HiveHelper.updateUserCache(userCache!);
       emit(UploadProfileImageSuccess());
     });
   }
 
   void addSkill() {
-    UserSkill newSkill = UserSkill(
+    Skill newSkill = Skill(
       skillName: skillController.text.trim(),
       skillRate: skillLevel,
     );
 
     bool containsSkill() {
-      for (UserSkill s in skills) {
+      for (Skill s in skills) {
         if (s.skillName == newSkill.skillName) {
           return true;
         }
@@ -250,7 +202,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(EditSkillsChanged());
   }
 
-  void removeSkill(UserSkill skill) {
+  void removeSkill(Skill skill) {
     skills.remove(skill);
     sliderVisible = false;
     emit(EditSkillsChanged());

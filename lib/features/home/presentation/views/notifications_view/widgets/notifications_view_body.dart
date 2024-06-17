@@ -13,14 +13,12 @@ class NotificationsViewBody extends StatelessWidget {
       builder: (context, state) {
         final NotificationsCubit cubit =
             BlocProvider.of<NotificationsCubit>(context);
-        if (state is GetNotificationsLoading &&
-            cubit.notifications.isEmpty) {
+        if (state is GetNotificationsLoading && cubit.notifications.isEmpty) {
           return const Center(
             child: CircularProgressIndicator(color: Color(0xff036666)),
           );
         }
-        if (state is GetNotificationsFailure &&
-            cubit.notifications.isEmpty) {
+        if (state is GetNotificationsFailure && cubit.notifications.isEmpty) {
           return Center(
             child: Text(
               state.failure.errMessage,

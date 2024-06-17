@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../cache/secure_storage_helper.dart';
 
 class ApiService {
   final Dio _dio;
@@ -9,9 +10,9 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? body,
     Map<String, dynamic>? params,
-    String? token,
     String? deviceToken,
   }) async {
+    String? token = await SecureStorage.getData(key: 'token');
     _dio.options.headers = {
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
@@ -29,9 +30,11 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
-    String? token,
   }) async {
-    _dio.options.headers = {'Authorization': 'Bearer $token'};
+    String? token = await SecureStorage.getData(key: 'token');
+    _dio.options.headers = {
+      if (token != null) 'Authorization': 'Bearer $token'
+    };
     var response = await _dio.get(
       endpoint,
       data: body,
@@ -44,11 +47,11 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? body,
     Map<String, dynamic>? params,
-    String? token,
   }) async {
+    String? token = await SecureStorage.getData(key: 'token');
     _dio.options.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      if (token != null) 'Authorization': 'Bearer $token'
     };
     var response = await _dio.delete(
       endpoint,
@@ -62,11 +65,11 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? body,
     Map<String, dynamic>? params,
-    String? token,
   }) async {
+    String? token = await SecureStorage.getData(key: 'token');
     _dio.options.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      if (token != null) 'Authorization': 'Bearer $token'
     };
     var response = await _dio.put(
       endpoint,
@@ -80,11 +83,11 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? body,
     Map<String, dynamic>? params,
-    String? token,
   }) async {
+    String? token = await SecureStorage.getData(key: 'token');
     _dio.options.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      if (token != null) 'Authorization': 'Bearer $token'
     };
     var response = await _dio.patch(
       endpoint,
@@ -98,11 +101,11 @@ class ApiService {
     required String endpoint,
     required FormData formData,
     Map<String, dynamic>? params,
-    String? token,
   }) async {
+    String? token = await SecureStorage.getData(key: 'token');
     final headers = {
       'Content-Type': 'multipart/form-data',
-      'Authorization': 'Bearer $token',
+      if (token != null) 'Authorization': 'Bearer $token',
     };
     var response = await _dio.post(
       endpoint,

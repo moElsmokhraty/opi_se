@@ -32,16 +32,12 @@ class UserCache extends HiveObject {
   @HiveField(11)
   String? specialization;
   @HiveField(12)
-  List<UserSkill>? skills;
+  List<Skill>? skills;
   @HiveField(13)
   String? matchId;
   @HiveField(14)
   Partner? partner;
   @HiveField(15)
-  String? token;
-  @HiveField(16)
-  String? fcmToken;
-  @HiveField(17)
   String? bio;
 
   UserCache({
@@ -60,8 +56,6 @@ class UserCache extends HiveObject {
     this.matchId,
     this.partner,
     this.languages,
-    this.token,
-    this.fcmToken,
     this.bio,
   });
 }

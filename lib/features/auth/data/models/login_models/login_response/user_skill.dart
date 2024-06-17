@@ -1,18 +1,20 @@
-import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'user_skill.g.dart';
 
 @HiveType(typeId: 2)
 //ignore: must_be_immutable
-class UserSkill extends Equatable {
+class Skill extends HiveObject {
+  @HiveField(0)
   String? skillName;
+  @HiveField(1)
   int? skillRate;
+  @HiveField(2)
   String? id;
 
-  UserSkill({this.skillName, this.skillRate, this.id});
+  Skill({this.skillName, this.skillRate, this.id});
 
-  factory UserSkill.fromJson(Map<String, dynamic> json) => UserSkill(
+  factory Skill.fromJson(Map<String, dynamic> json) => Skill(
         skillName: json['skillName'] as String?,
         skillRate: json['skillRate'] as int?,
         id: json['_id'] as String?,
@@ -21,8 +23,6 @@ class UserSkill extends Equatable {
   Map<String, dynamic> toJson() => {
         'skillName': skillName,
         'skillRate': skillRate,
+        '_id': id,
       };
-
-  @override
-  List<Object?> get props => [skillName, skillRate, id];
 }

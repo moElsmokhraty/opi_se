@@ -22,7 +22,8 @@ class ForgotPasswordButton extends StatelessWidget {
         }
       },
       listenWhen: (previous, current) {
-        return current is ForgotPasswordSuccess || current is ForgotPasswordFailure;
+        return current is ForgotPasswordSuccess ||
+            current is ForgotPasswordFailure;
       },
       builder: (context, state) {
         if (state is ForgotPasswordLoading) {

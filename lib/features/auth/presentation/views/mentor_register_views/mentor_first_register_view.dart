@@ -14,7 +14,7 @@ class MentorFirstRegisterView extends StatelessWidget {
       },
       child: const Scaffold(
         backgroundColor: Colors.white,
-        appBar: AuthAppBar(hasBackButton: false),
+        appBar: AuthAppBar(),
         body: SafeArea(
           child: MentorFirstRegisterViewBody(),
         ),

@@ -1,40 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:opi_se/core/cache/secure_storage_helper.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'constants.dart';
 
-// ignore_for_file: avoid_print
-
 class SocketService {
   static late io.Socket socket;
 
-  static void connect() {
+  static Future<void> connect() async {
     if (userCache != null) {
       try {
-        configureSocket();
+        await configureSocket();
         socket.connect();
         socket.onConnect((_) {
-          print('Connected to socket');
+          debugPrint('Connected to socket');
           emit(
             eventName: 'joinUserRoom',
             data: {},
             ack: (data) {
-              print('joinUserRoom ack: $data');
+              debugPrint('joinUserRoom ack: $data');
             },
           );
           if (userCache!.matchId != null) {
             emit(
-                eventName: 'joinMatchRoom',
-                data: {},
-                ack: (data) {
-                  print('joinMatchRoom ack: $data');
-                });
+              eventName: 'joinMatchRoom',
+              data: {},
+              ack: (data) {
+                debugPrint('joinMatchRoom ack: $data');
+              },
+            );
           }
         });
         socket.onDisconnect((_) {
           socket.connect();
         });
       } catch (e) {
-        print('Error connecting to socket: $e');
+        debugPrint('Error connecting to socket: $e');
       }
     }
   }
@@ -45,7 +46,8 @@ class SocketService {
     socket.destroy();
   }
 
-  static void configureSocket() {
+  static Future<void> configureSocket() async {
+    String? token = await SecureStorage.getData(key: 'token');
     socket = io.io(
       APIConfig.baseUrl,
       <String, dynamic>{
@@ -54,7 +56,7 @@ class SocketService {
         'autoReconnect': true,
         'query': {
           'userId': userCache?.id,
-          'token': userCache?.token,
+          'token': token,
           'roomId': userCache?.id,
           if (userCache?.matchId != null) 'matchId': userCache?.matchId,
         },
@@ -71,7 +73,7 @@ class SocketService {
     try {
       socket.emitWithAck(eventName, data, ack: ack);
     } catch (e) {
-      print('Error emitting event: $e');
+      debugPrint('Error emitting event: $e');
     }
   }
 
@@ -84,7 +86,7 @@ class SocketService {
         handler!(data as dynamic);
       });
     } catch (e) {
-      print('Error listening to event: $eventName  ----- $e');
+      debugPrint('Error listening to event: $eventName  ----- $e');
     }
   }
 }

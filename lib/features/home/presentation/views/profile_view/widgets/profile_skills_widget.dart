@@ -9,7 +9,7 @@ import 'edit_skills_dialog.dart';
 class ProfileSkillsWidget extends StatelessWidget {
   const ProfileSkillsWidget({super.key, required this.skills});
 
-  final List<UserSkill> skills;
+  final List<Skill> skills;
 
   @override
   Widget build(BuildContext context) {

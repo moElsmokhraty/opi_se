@@ -1,13 +1,16 @@
-import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'partner.g.dart';
 
 @HiveType(typeId: 1)
 //ignore: must_be_immutable
-class Partner extends Equatable {
+
+class Partner extends HiveObject {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? userName;
+  @HiveField(2)
   String? profileImage;
 
   Partner({this.id, this.userName, this.profileImage});
@@ -23,7 +26,4 @@ class Partner extends Equatable {
         'userName': userName,
         'profileImage': profileImage,
       };
-
-  @override
-  List<Object?> get props => [id, userName, profileImage];
 }

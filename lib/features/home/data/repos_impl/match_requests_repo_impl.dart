@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../models/get_profile_response.dart';
-import '../../../../core/utils/constants.dart';
 import 'package:opi_se/core/errors/failure.dart';
 import '../../../../core/errors/server_failure.dart';
 import '../../domain/repos/match_requests_repo.dart';
@@ -23,10 +22,7 @@ class RequestsRepoImpl implements RequestsRepo {
   @override
   Future<Either<Failure, GetMatchRequestsResponse>> getMatchRequests() async {
     try {
-      var data = await _apiService.get(
-        endpoint: APIConfig.getMatchRequests,
-        token: userCache!.token!,
-      );
+      var data = await _apiService.get(endpoint: APIConfig.getMatchRequests);
       return Right(GetMatchRequestsResponse.fromJson(data));
     } on Exception catch (e) {
       if (e is DioException) {
@@ -42,9 +38,9 @@ class RequestsRepoImpl implements RequestsRepo {
     DeclineMatchRequest request,
   ) async {
     try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
       var data = await _apiService.post(
         endpoint: APIConfig.declineMatchRequest,
-        token: userCache!.token!,
         deviceToken: fcmToken,
         body: request.toJson(),
       );
@@ -64,10 +60,9 @@ class RequestsRepoImpl implements RequestsRepo {
     String nationalId,
   ) async {
     try {
-      fcmToken = await FirebaseMessaging.instance.getToken();
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
       var data = await _apiService.post(
         endpoint: APIConfig.acceptMatchRequest,
-        token: userCache!.token!,
         deviceToken: fcmToken,
         params: {
           'partner2Id': partner2Id,
@@ -89,7 +84,6 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getProfile,
-        token: userCache!.token!,
         params: {'userId': userId},
       );
       return Right(GetProfileResponse.fromJson(data));
@@ -108,8 +102,6 @@ class RequestsRepoImpl implements RequestsRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getPartnerRecommendations,
-        token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzQyYjRkYzRlMmUxMmFlNzI1MzYzZiIsInVzZXJOYW1lIjoibW9oYW1lZDI5IiwiZW1haWwiOiJjb2dhcmFmODgwQGxheW1yby5jb20iLCJuYXRpb25hbElkIjoiMTI0MzM0MjM0MzE0NiIsImlhdCI6MTcwNzM1NDk5Nn0.PdL-YkatFty6mnrG1AIl45zjw0nGKzKNf0KVVw4bJMo',
         params: {'page': page},
       );
       return Right(GetPartnerRecommendationsResponse.fromJson(data));
@@ -124,12 +116,12 @@ class RequestsRepoImpl implements RequestsRepo {
 
   @override
   Future<Either<Failure, SendPartnerRequestResponse>> sendPartnerRequest(
-      String userId) async {
+    String userId,
+  ) async {
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.sendPartnerRequest,
-        token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzQyYjRkYzRlMmUxMmFlNzI1MzYzZiIsInVzZXJOYW1lIjoibW9oYW1lZDI5IiwiZW1haWwiOiJjb2dhcmFmODgwQGxheW1yby5jb20iLCJuYXRpb25hbElkIjoiMTI0MzM0MjM0MzE0NiIsImlhdCI6MTcwNzM1NDk5Nn0.PdL-YkatFty6mnrG1AIl45zjw0nGKzKNf0KVVw4bJMo',
         deviceToken: fcmToken,
         params: {'userId': userId},
       );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../core/utils/styling/styles.dart';
+import '../../utils/styling/styles.dart';
 
-class PreviousButton extends StatelessWidget {
-  const PreviousButton({super.key, required this.onTap});
+class NextButton extends StatelessWidget {
+  const NextButton({super.key, required this.onTap});
 
   final void Function() onTap;
 
@@ -14,9 +14,8 @@ class PreviousButton extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF036666),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: (1.5).w, color: const Color(0xFF036666)),
           borderRadius: BorderRadius.circular(20.r),
         ),
         fixedSize: Size(150.w, 50.h),
@@ -24,19 +23,17 @@ class PreviousButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text('Next',
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyle16.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              )),
           Icon(
-            Icons.arrow_back_ios_rounded,
-            color: const Color(0xFF036666),
+            Icons.arrow_forward_ios_rounded,
+            color: Colors.white,
             size: 20.sp,
-          ),
-          Text(
-            'Back',
-            textAlign: TextAlign.center,
-            style: AppStyles.textStyle16.copyWith(
-              color: const Color(0xFF036666),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          )
         ],
       ),
     );

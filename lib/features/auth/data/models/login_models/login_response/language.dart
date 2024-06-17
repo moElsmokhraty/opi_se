@@ -1,13 +1,16 @@
-import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'language.g.dart';
 
 @HiveType(typeId: 3)
 //ignore: must_be_immutable
-class Language extends Equatable {
+
+class Language extends HiveObject {
+  @HiveField(0)
   String? languageName;
+  @HiveField(1)
   int? level;
+  @HiveField(2)
   String? id;
 
   Language({this.languageName, this.level, this.id});
@@ -21,8 +24,6 @@ class Language extends Equatable {
   Map<String, dynamic> toJson() => {
         'languageName': languageName,
         'level': level,
+        '_id': id,
       };
-
-  @override
-  List<Object?> get props => [languageName, level, id];
 }

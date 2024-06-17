@@ -6,7 +6,7 @@ class ProfileDetails extends Equatable {
   final String? id;
   final String? fieldOfStudy;
   final String? specialization;
-  final List<UserSkill>? userSkills;
+  final List<Skill>? userSkills;
 
   const ProfileDetails({
     this.id,
@@ -21,7 +21,7 @@ class ProfileDetails extends Equatable {
       fieldOfStudy: json['fieldOfStudy'] as String?,
       specialization: json['specialization'] as String?,
       userSkills: (json['userSkills'] as List<dynamic>?)
-          ?.map((e) => UserSkill.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Skill.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

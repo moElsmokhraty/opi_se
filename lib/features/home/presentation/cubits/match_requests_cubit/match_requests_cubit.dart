@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/user_cache.dart';
 import 'package:opi_se/features/auth/data/models/login_models/login_response/user_data.dart';
+import '../../../../../core/cache/hive_helper.dart';
 import '../../../../../core/errors/failure.dart';
 import '../../../data/models/get_profile_response.dart';
 import '../../../domain/use_cases/get_profile_use_case.dart';
@@ -108,8 +107,8 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
           matchId: eventData['matchId'],
           partnerUserName: eventData['partnerUserName'],
           partnerImage: eventData['partnerImage'],
-        ).then((value) {
-          SocketService.connect();
+        ).then((value) async {
+          await SocketService.connect();
         });
         await getMatchRequests();
       },
@@ -126,8 +125,8 @@ class MatchRequestsCubit extends Cubit<MatchRequestsState> {
     userCache!.partner?.id = notifiedPartner;
     userCache!.partner?.userName = partnerUserName;
     userCache!.partner?.profileImage = partnerImage;
-    await Hive.box<UserCache>(boxName).put('user', userCache!).then((value) {
-      SocketService.connect();
+    await HiveHelper.updateUserCache(userCache!).then((value) async {
+      await SocketService.connect();
     });
   }
 }

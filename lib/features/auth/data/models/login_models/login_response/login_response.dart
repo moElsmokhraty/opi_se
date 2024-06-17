@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:opi_se/features/auth/data/models/login_models/login_response/profile_details.dart';
 
 import 'user_data.dart';
+import 'profile_details.dart';
 
 class LoginResponse extends Equatable {
   final String? message;
@@ -36,10 +36,5 @@ class LoginResponse extends Equatable {
       };
 
   @override
-  List<Object?> get props => [
-        message,
-        token,
-        data,
-        profileDetails,
-      ];
+  List<Object?> get props => [message, token, data, profileDetails];
 }

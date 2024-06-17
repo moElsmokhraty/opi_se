@@ -34,9 +34,10 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   CircleAvatar(
                     radius: 20.r,
                     backgroundImage: CachedNetworkImageProvider(
-                      userCache!.partner!.profileImage == 'default.png'
+                      userCache!.partner?.profileImage == 'default.png'
                           ? 'https://i.stack.imgur.com/l60Hf.png'
-                          : userCache!.partner!.profileImage ?? 'https://i.stack.imgur.com/l60Hf.png',
+                          : userCache!.partner?.profileImage ??
+                              'https://i.stack.imgur.com/l60Hf.png',
                     ),
                   ),
                   SizedBox(width: 10.w),

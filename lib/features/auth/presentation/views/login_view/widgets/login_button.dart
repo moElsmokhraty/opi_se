@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../core/functions/cache_user_data.dart';
+import '../../../../../../core/cache/hive_helper.dart';
+import '../../../../../../core/cache/secure_storage_helper.dart';
 import '../../../../../../core/functions/show_snack_bar.dart';
 import '../../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/utils/socket_service.dart';
@@ -26,12 +27,15 @@ class LoginButton extends StatelessWidget {
             showCustomSnackBar(context, state.errMessage);
           }
         } else if (state is LoginSuccess) {
-          if (state.response.data!.getUserPrefers!) {
+          await SecureStorage.saveData(
+            key: 'token',
+            value: state.response.token!,
+          );
+          if (state.response.data!.getUserPrefers! && context.mounted) {
             GoRouter.of(context).pushReplacement(RoutesConfig.userPrefers);
           } else {
-            await cacheUserData(state.response).then((value) async {
-              SocketService.connect();
-              await Future.delayed(const Duration(seconds: 1)).then((value) {
+            await HiveHelper.cacheUserData(state.response).then((value) async {
+              await SocketService.connect().then((value) async {
                 showCustomSnackBar(context, 'Logged in successfully!');
                 GoRouter.of(context).pushReplacement(RoutesConfig.homeLayout);
               });

@@ -4,7 +4,6 @@ import 'package:http_parser/http_parser.dart';
 import 'package:opi_se/features/home/data/models/get_notifications_response/get_notifications_response.dart';
 import '../../domain/repos/profile_repo.dart';
 import '../../../../core/errors/failure.dart';
-import '../../../../core/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/errors/server_failure.dart';
 import '../../../../core/utils/api_config/api_config.dart';
@@ -22,7 +21,6 @@ class ProfileRepoImpl implements ProfileRepo {
       var response = await _apiService.sendFormData(
         endpoint: APIConfig.changeProfileImage,
         formData: formData,
-        token: userCache!.token!,
       );
       return Right(response['message']);
     } on Exception catch (e) {
@@ -47,7 +45,6 @@ class ProfileRepoImpl implements ProfileRepo {
       var response = await _apiService.sendFormData(
         endpoint: APIConfig.changeProfileImage,
         formData: formData,
-        token: userCache!.token!,
       );
       return Right(response['imageUrl']);
     } on Exception catch (e) {
@@ -67,7 +64,6 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       var response = await _apiService.get(
         endpoint: APIConfig.getUserNotifications,
-        token: userCache!.token!,
       );
       return Right(GetNotificationsResponse.fromJson(response));
     } on Exception catch (e) {

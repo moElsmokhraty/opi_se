@@ -23,7 +23,7 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
 
   int skillLevel = 1;
 
-  final List<UserSkill> skills = [];
+  final List<Skill> skills = [];
 
   bool sliderVisible = false;
 
@@ -38,13 +38,13 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
   }
 
   void addSkill() {
-    UserSkill newSkill = UserSkill(
+    Skill newSkill = Skill(
       skillName: skillController.text.trim(),
       skillRate: skillLevel,
     );
 
     bool containsSkill() {
-      for (UserSkill s in skills) {
+      for (Skill s in skills) {
         if (s.skillName == newSkill.skillName) {
           return true;
         }
@@ -66,7 +66,7 @@ class UserPrefersCubit extends Cubit<UserPrefersState> {
     emit(SkillsChanged());
   }
 
-  void removeSkill(UserSkill skill) {
+  void removeSkill(Skill skill) {
     skills.remove(skill);
     sliderVisible = false;
     emit(SkillsChanged());

@@ -21,7 +21,7 @@ class _OpiSeState extends State<OpiSe> {
     super.initState();
     notificationsServices.requestPermission();
     notificationsServices.initFirebaseListeners();
-    notificationsServices.initLocalNotifications();
+    notificationsServices.foregroundMessage();
   }
 
   @override

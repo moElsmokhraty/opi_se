@@ -6,22 +6,33 @@ part of 'user_skill.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserSkillAdapter extends TypeAdapter<UserSkill> {
+class UserSkillAdapter extends TypeAdapter<Skill> {
   @override
   final int typeId = 2;
 
   @override
-  UserSkill read(BinaryReader reader) {
+  Skill read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserSkill();
+    return Skill(
+      skillName: fields[0] as String?,
+      skillRate: fields[1] as int?,
+      id: fields[2] as String?,
+    );
   }
 
   @override
-  void write(BinaryWriter writer, UserSkill obj) {
-    writer.writeByte(0);
+  void write(BinaryWriter writer, Skill obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.skillName)
+      ..writeByte(1)
+      ..write(obj.skillRate)
+      ..writeByte(2)
+      ..write(obj.id);
   }
 
   @override

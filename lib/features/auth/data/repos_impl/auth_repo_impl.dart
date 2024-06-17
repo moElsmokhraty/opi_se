@@ -6,7 +6,6 @@ import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefer
 import 'package:opi_se/features/auth/data/models/user_prefers_models/user_prefers_response.dart';
 import '../../domain/repos/auth_repo.dart';
 import 'package:opi_se/core/errors/failure.dart';
-import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
 import 'package:opi_se/core/utils/api_config/api_config.dart';
 import 'package:opi_se/core/utils/api_config/api_service.dart';
@@ -66,7 +65,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.changePassword,
-        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(ChangePasswordResponse.fromJson(data));
@@ -80,11 +78,11 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either<Failure, ForgotPasswordResponse>> forgotPassword(
-      ForgotPasswordRequest request) async {
+    ForgotPasswordRequest request,
+  ) async {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.forgotPassword,
-        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(ForgotPasswordResponse.fromJson(data));
@@ -154,7 +152,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.post(
         endpoint: APIConfig.submitUserPrefers,
-        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(UserPrefersResponse.fromJson(data));
@@ -173,7 +170,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _apiService.patch(
         endpoint: APIConfig.editUserPrefers,
-        token: userCache!.token!,
         body: request.toJson(),
       );
       return Right(UserPrefersResponse.fromJson(data));

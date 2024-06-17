@@ -24,7 +24,6 @@ class TrashRepoImpl implements TrashRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getTrash,
-        token: userCache!.token!,
         params: {
           'matchId': userCache!.matchId!,
           'page': page,
@@ -45,7 +44,6 @@ class TrashRepoImpl implements TrashRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.flushTrash,
-        token: userCache!.token!,
         params: {'matchId': userCache!.matchId!},
       );
       return Right(FlushTrashResponse.fromJson(data));
@@ -63,7 +61,6 @@ class TrashRepoImpl implements TrashRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.deleteNoteFromTrash,
-        token: userCache!.token!,
         params: request.toJson(),
       );
       return Right(DeleteNoteFromTrashResponse.fromJson(data));

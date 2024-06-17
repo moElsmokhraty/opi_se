@@ -129,9 +129,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
           },
           tooltip: 'Chat',
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: SvgPicture.asset(
-            'assets/svgs/chat.svg'
-          ),
+          icon: SvgPicture.asset('assets/svgs/chat.svg'),
         ),
       ],
     );

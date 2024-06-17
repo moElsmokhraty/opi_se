@@ -44,6 +44,7 @@ import '../../../features/auth/presentation/cubits/forgot_password_cubit/forgot_
 import '../../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../../features/auth/presentation/cubits/mentor_login_otp_cubit/mentor_login_otp_cubit.dart';
 import '../../../features/auth/presentation/cubits/mentor_login_cubit/mentor_login_cubit.dart';
+import '../../../features/auth/presentation/cubits/mentor_prefers_cubit/mentor_prefers_cubit.dart';
 import '../../../features/auth/presentation/cubits/mentor_register/mentor_register_cubit.dart';
 import '../../../features/auth/presentation/cubits/register_cubit/register_cubit.dart';
 import '../../../features/auth/presentation/cubits/verify_account_cubit/verify_account_cubit.dart';
@@ -51,6 +52,7 @@ import '../../../features/auth/presentation/views/change_password_views/successf
 import '../../../features/auth/presentation/views/manage_profile_view/manage_profile_view.dart';
 import '../../../features/auth/presentation/views/mentor_login_otp_view/mentor_login_otp_view.dart';
 import '../../../features/auth/presentation/views/mentor_login_view/mentor_login_view.dart';
+import '../../../features/auth/presentation/views/mentor_prefers_view/mentor_prefers_view.dart';
 import '../../../features/auth/presentation/views/mentor_register_views/mentor_first_register_view.dart';
 import '../../../features/auth/presentation/views/mentor_register_views/mentor_second_register_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
@@ -104,7 +106,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.mentorFirstRegister,
+    initialLocation: RoutesConfig.mentorPrefers,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -384,6 +386,15 @@ abstract class AppRouter {
           return BlocProvider.value(
             value: state.extra as MentorRegisterCubit,
             child: const MentorSecondRegisterView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutesConfig.mentorPrefers,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => MentorPrefersCubit(),
+            child: const MentorPrefersView(),
           );
         },
       ),

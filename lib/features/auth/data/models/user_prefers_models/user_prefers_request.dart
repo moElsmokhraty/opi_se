@@ -6,7 +6,7 @@ class UserPrefersRequest extends Equatable {
   final String? fieldOfStudy;
   final String? specialization;
   final List<UserQuestion>? userQuestions;
-  final List<UserSkill>? userSkills;
+  final List<Skill>? userSkills;
 
   const UserPrefersRequest({
     this.fieldOfStudy,
@@ -23,7 +23,7 @@ class UserPrefersRequest extends Equatable {
           ?.map((e) => UserQuestion.fromJson(e as Map<String, dynamic>))
           .toList(),
       userSkills: (json['userSkills'] as List<dynamic>?)
-          ?.map((e) => UserSkill.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Skill.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../auth/presentation/views/user_prefers_view/widgets/custom_chip.dart';
-import '../../../../../auth/presentation/views/user_prefers_view/widgets/tag_editor.dart';
+import '../../../../../../core/widgets/custom_chip.dart';
+import '../../../../../../core/widgets/tag_editor.dart';
 import '../../../cubits/profile_cubit/profile_cubit.dart';
 import 'edit_skills_level_slider.dart';
 

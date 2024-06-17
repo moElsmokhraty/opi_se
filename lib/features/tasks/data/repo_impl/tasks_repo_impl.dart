@@ -27,7 +27,6 @@ class TasksRepoImpl implements TasksRepo {
       var data = await _apiService.post(
         endpoint: APIConfig.addTask,
         body: request.toJson(),
-        token: userCache!.token!,
         params: {'matchId': userCache!.matchId},
       );
       return Right(AddTaskResponse.fromJson(data));
@@ -47,8 +46,11 @@ class TasksRepoImpl implements TasksRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getAllTasks,
-        token: userCache!.token!,
-        params: {'matchId': userCache!.matchId, 'page': page, 'limit': limit},
+        params: {
+          'matchId': userCache!.matchId,
+          'page': page,
+          'limit': limit,
+        },
       );
       return Right(GetAllTasksResponse.fromJson(data));
     } on Exception catch (e) {
@@ -68,7 +70,6 @@ class TasksRepoImpl implements TasksRepo {
     try {
       var data = await _apiService.get(
         endpoint: APIConfig.getSpecificTasksType,
-        token: userCache!.token!,
         params: {
           'matchId': userCache!.matchId,
           'type': type,
@@ -92,7 +93,6 @@ class TasksRepoImpl implements TasksRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.deleteTask,
-        token: userCache!.token!,
         params: {'taskId': taskId, 'matchId': userCache!.matchId},
       );
       return Right(DeleteTaskResponse.fromJson(data));
@@ -111,7 +111,6 @@ class TasksRepoImpl implements TasksRepo {
     try {
       var data = await _apiService.delete(
         endpoint: APIConfig.deleteAllTasksType,
-        token: userCache!.token!,
         params: {'type': type, 'matchId': userCache!.matchId},
       );
       return Right(DeleteAllTasksTypeResponse.fromJson(data));
@@ -131,7 +130,6 @@ class TasksRepoImpl implements TasksRepo {
     try {
       var data = await _apiService.patch(
         endpoint: APIConfig.editTask,
-        token: userCache!.token!,
         body: request.toJson(),
         params: {'taskId': taskId, 'matchId': userCache!.matchId},
       );
