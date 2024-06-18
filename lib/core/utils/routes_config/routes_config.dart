@@ -37,4 +37,6 @@ abstract class RoutesConfig {
   static const String mentorFirstRegister = '/mentor-first-register';
   static const String mentorSecondRegister = '/mentor-second-register';
   static const String mentorPrefers = '/mentor-prefers';
+  static const String mentorHomeLayout = '/mentor-home-layout';
+  static const String quizSettings = '/quiz-settings';
 }

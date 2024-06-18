@@ -73,6 +73,7 @@ import '../../../features/home/domain/use_cases/send_partner_request_use_case.da
 import '../../../features/home/presentation/cubits/notifications_cubit/notifications_cubit.dart';
 import '../../../features/home/presentation/cubits/profile_cubit/profile_cubit.dart';
 import '../../../features/home/presentation/views/notifications_view/notifications_view.dart';
+import '../../../features/home/presentation/views/quiz_settings_view/quiz_settings_view.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -91,6 +92,7 @@ import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import '../../../features/tasks/domain/use_cases/edit_task_use_case.dart';
 import '../../../features/tasks/presentation/cubits/edit_task_cubit/edit_task_cubit.dart';
 import '../../../features/tasks/presentation/views/edit_task_view/edit_task_view.dart';
+import '../../widgets/mentor_home_layout.dart';
 import '../constants.dart';
 
 abstract class AppRouter {
@@ -107,7 +109,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: getInitialRoute(),
+    initialLocation: RoutesConfig.quizSettings,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -220,8 +222,9 @@ abstract class AppRouter {
         ),
       ),
       GoRoute(
-          path: RoutesConfig.homeLayout,
-          builder: (context, state) => const HomeLayout()),
+        path: RoutesConfig.homeLayout,
+        builder: (context, state) => const HomeLayout(),
+      ),
       GoRoute(
         path: RoutesConfig.home,
         builder: (context, state) => BlocProvider(
@@ -398,6 +401,14 @@ abstract class AppRouter {
             child: const MentorPrefersView(),
           );
         },
+      ),
+      GoRoute(
+        path: RoutesConfig.mentorHomeLayout,
+        builder: (context, state) => const MentorHomeLayout(),
+      ),
+      GoRoute(
+        path: RoutesConfig.quizSettings,
+        builder: (context, state) => const QuizSettingsView(),
       ),
     ],
   );
