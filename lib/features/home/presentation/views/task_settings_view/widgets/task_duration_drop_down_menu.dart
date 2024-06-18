@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class QuizDurationDropDownMenu extends StatelessWidget {
-  const QuizDurationDropDownMenu({super.key});
+class TaskDurationDropDownMenu extends StatelessWidget {
+  const TaskDurationDropDownMenu({super.key});
 
   @override
   Widget build(BuildContext context) {

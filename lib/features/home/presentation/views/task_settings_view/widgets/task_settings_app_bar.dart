@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class QuizSettingsAppBar extends StatelessWidget
+class TaskSettingsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const QuizSettingsAppBar({super.key});
+  const TaskSettingsAppBar({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(70.h);
@@ -30,7 +30,7 @@ class QuizSettingsAppBar extends StatelessWidget
         ),
       ),
       centerTitle: true,
-      title: const Text('Quiz Settings'),
+      title: const Text('Task Settings'),
       titleTextStyle: TextStyle(
         color: Colors.black,
         fontSize: 28.sp,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/constants.dart';
 
-class QuizDurationDropDownMenu extends StatelessWidget {
-  const QuizDurationDropDownMenu({super.key});
+class TaskVisibilityDropDownMenu extends StatelessWidget {
+  const TaskVisibilityDropDownMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class QuizDurationDropDownMenu extends StatelessWidget {
           fontSize: 14.sp,
         ),
         hintText: 'Select',
-        width: 0.4.sw,
+        width: width * 0.9,
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16.r),
@@ -44,9 +45,8 @@ class QuizDurationDropDownMenu extends StatelessWidget {
         ),
         menuHeight: 200.h,
         dropdownMenuEntries: const [
-          DropdownMenuEntry(value: 10, label: '10 Min'),
-          DropdownMenuEntry(value: 20, label: '20 Min'),
-          DropdownMenuEntry(value: 30, label: '30 Min'),
+          DropdownMenuEntry(value: 'Public', label: 'Public'),
+          DropdownMenuEntry(value: 'Private', label: 'Private'),
         ],
         onSelected: (value) {
           //cubit.editExperienceEmploymentTypeController.text = value.toString();

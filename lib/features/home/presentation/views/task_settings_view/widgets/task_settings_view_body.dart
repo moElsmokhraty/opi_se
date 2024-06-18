@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'duration_drop_down_menu.dart';
-import 'quiz_visibility_drop_down_menu.dart';
+
 import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
+import 'task_duration_drop_down_menu.dart';
+import 'task_visibility_drop_down_menu.dart';
 
-class QuizSettingsViewBody extends StatelessWidget {
-  const QuizSettingsViewBody({super.key});
+class TaskSettingsViewBody extends StatelessWidget {
+  const TaskSettingsViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class QuizSettingsViewBody extends StatelessWidget {
             ),
           ),
           SizedBox(height: height * 0.01),
-          const QuizVisibilityDropDownMenu(),
+          const TaskVisibilityDropDownMenu(),
           SizedBox(height: height * 0.04),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +124,7 @@ class QuizSettingsViewBody extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: height * 0.01),
-                  const QuizDurationDropDownMenu(),
+                  const TaskDurationDropDownMenu(),
                 ],
               ),
               Column(
