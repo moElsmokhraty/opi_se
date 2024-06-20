@@ -40,4 +40,5 @@ abstract class RoutesConfig {
   static const String mentorHomeLayout = '/mentor-home-layout';
   static const String quizSettings = '/quiz-settings';
   static const String taskSettings = '/task-settings';
+  static const String createQuiz = '/create-quiz';
 }

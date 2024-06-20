@@ -61,6 +61,7 @@ dependencies:
   animated_visibility: ^0.0.4 # removed
   file_picker: ^8.0.5
   flutter_secure_storage: ^9.2.2
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
