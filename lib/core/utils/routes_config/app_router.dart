@@ -73,6 +73,7 @@ import '../../../features/home/domain/use_cases/send_partner_request_use_case.da
 import '../../../features/home/presentation/cubits/notifications_cubit/notifications_cubit.dart';
 import '../../../features/home/presentation/cubits/profile_cubit/profile_cubit.dart';
 import '../../../features/home/presentation/views/create_quiz_view/create_quiz_view.dart';
+import '../../../features/home/presentation/views/mentor_create_task_view/mentor_create_task_view.dart';
 import '../../../features/home/presentation/views/notifications_view/notifications_view.dart';
 import '../../../features/home/presentation/views/quiz_settings_view/quiz_settings_view.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
@@ -111,7 +112,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.createQuiz,
+    initialLocation: RoutesConfig.mentorCreateTask,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -419,6 +420,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.createQuiz,
         builder: (context, state) => const CreateQuizView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.mentorCreateTask,
+        builder: (context, state) => const MentorCreateTaskView(),
       ),
     ],
   );

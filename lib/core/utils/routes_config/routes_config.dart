@@ -41,4 +41,5 @@ abstract class RoutesConfig {
   static const String quizSettings = '/quiz-settings';
   static const String taskSettings = '/task-settings';
   static const String createQuiz = '/create-quiz';
+  static const String mentorCreateTask = '/mentor-create-task';
 }
