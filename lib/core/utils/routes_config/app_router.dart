@@ -39,6 +39,7 @@ import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/get_user_profile_use_case.dart';
 import '../../../features/auth/domain/use_cases/mentor_login_use_case.dart';
+import '../../../features/auth/domain/use_cases/mentor_verify_otp_use_case.dart';
 import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
@@ -370,15 +371,17 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.mentorLogin,
         builder: (context, state) => BlocProvider(
-          create: (context) => MentorLoginCubit(getIt.get<MentorLoginUseCase>()),
-          child: const MentorLoginView(),
+          create: (context) =>
+              MentorLoginCubit(getIt.get<MentorLoginUseCase>()),
+          child: MentorLoginView(hasBackButton: state.extra as bool? ?? true),
         ),
       ),
       GoRoute(
         path: RoutesConfig.mentorLoginOtp,
         builder: (context, state) => BlocProvider(
-          create: (context) => MentorLoginOtpCubit(),
-          child: const MentorLoginOtpView(),
+          create: (context) =>
+              MentorLoginOtpCubit(getIt.get<MentorVerifyOtpUseCase>()),
+          child: MentorLoginOtpView(email: state.extra as String),
         ),
       ),
       GoRoute(

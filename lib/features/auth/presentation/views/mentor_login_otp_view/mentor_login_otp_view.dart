@@ -5,7 +5,9 @@ import '../../../../../core/widgets/app_bars/auth_app_bar.dart';
 import 'widgets/mentor_login_otp_view_body.dart';
 
 class MentorLoginOtpView extends StatelessWidget {
-  const MentorLoginOtpView({super.key});
+  const MentorLoginOtpView({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +15,11 @@ class MentorLoginOtpView extends StatelessWidget {
       onPopInvoked: (canPop) {
         GoRouter.of(context).pop();
       },
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AuthAppBar(),
+        appBar: const AuthAppBar(hasBackButton: false),
         body: SafeArea(
-          child: MentorLoginOtpViewBody(),
+          child: MentorLoginOtpViewBody(email: email),
         ),
       ),
     );

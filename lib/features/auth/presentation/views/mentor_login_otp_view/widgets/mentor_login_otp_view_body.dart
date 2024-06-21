@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'otp_text_field.dart';
-import '../../../../../../core/widgets/buttons/auth_button.dart';
+import 'mentor_login_otp_button.dart';
 import '../../../cubits/mentor_login_otp_cubit/mentor_login_otp_cubit.dart';
 
 class MentorLoginOtpViewBody extends StatelessWidget {
-  const MentorLoginOtpViewBody({super.key});
+  const MentorLoginOtpViewBody({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,6 @@ class MentorLoginOtpViewBody extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.04),
             OTPTextField(
-              controller: cubit.controller,
               fieldWidth: 70.w,
               width: 1.sw,
               onChanged: (value) {
@@ -83,12 +84,7 @@ class MentorLoginOtpViewBody extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.04),
-            AuthButton(
-              text: 'Verify',
-              onPressed: () {},
-              backColor: const Color(0XFF036666),
-              textColor: Colors.white,
-            ),
+            MentorLoginOtpButton(email: email),
           ],
         ),
       ),

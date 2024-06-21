@@ -15,10 +15,13 @@ class MentorLoginButton extends StatelessWidget {
     return BlocConsumer<MentorLoginCubit, MentorLoginState>(
       listener: (context, state) async {
         if (state is LoginFailure) {
-          if (state.errMessage == 'please verify your account first !') {
+          if (state.errMessage.contains('@')) {
+            while (context.canPop()) {
+              context.pop();
+            }
             GoRouter.of(context).pushReplacement(
               RoutesConfig.mentorLoginOtp,
-              extra: cubit.emailController.text,
+              extra: state.errMessage,
             );
           } else {
             showCustomSnackBar(context, state.errMessage);

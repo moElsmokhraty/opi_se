@@ -63,7 +63,7 @@ class MentorLoginViewBody extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.01),
             AuthTextField(
-              controller: cubit.emailController,
+              controller: cubit.userNameController,
               hintText: 'Enter Your Username',
               prefixIcon: Icon(
                 Icons.person_outline,

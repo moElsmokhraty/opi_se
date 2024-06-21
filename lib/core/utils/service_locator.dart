@@ -13,6 +13,7 @@ import '../../features/auth/data/repos_impl/mentor_auth_repo_impl.dart';
 import '../../features/auth/domain/use_cases/edit_user_prefers_use_case.dart';
 import '../../features/auth/domain/use_cases/get_user_profile_use_case.dart';
 import '../../features/auth/domain/use_cases/mentor_login_use_case.dart';
+import '../../features/auth/domain/use_cases/mentor_verify_otp_use_case.dart';
 import '../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
 import '../../features/home/data/repos_impl/profile_repo_impl.dart';
 import '../../features/home/domain/use_cases/change_profile_image_use_case.dart';
@@ -250,5 +251,8 @@ void setupServiceLocator() {
   );
   getIt.registerSingleton<MentorLoginUseCase>(
     MentorLoginUseCase(getIt.get<MentorAuthRepoImpl>()),
+  );
+  getIt.registerSingleton<MentorVerifyOtpUseCase>(
+    MentorVerifyOtpUseCase(getIt.get<MentorAuthRepoImpl>()),
   );
 }

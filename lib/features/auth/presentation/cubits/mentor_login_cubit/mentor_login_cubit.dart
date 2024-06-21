@@ -15,7 +15,7 @@ class MentorLoginCubit extends Cubit<MentorLoginState> {
 
   @override
   Future<void> close() async {
-    emailController.dispose();
+    userNameController.dispose();
     passwordController.dispose();
     formKey.currentState?.reset();
     super.close();
@@ -31,7 +31,7 @@ class MentorLoginCubit extends Cubit<MentorLoginState> {
     color: const Color(0xff036666),
   );
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
@@ -41,7 +41,7 @@ class MentorLoginCubit extends Cubit<MentorLoginState> {
     await FirebaseMessaging.instance.getToken().then((value) async {
       var result = await _mentorLoginUseCase.call(
         MentorLoginRequest(
-          userName: emailController.text.trim(),
+          userName: userNameController.text.trim(),
           password: passwordController.text.trim(),
           deviceToken: value,
         ),

@@ -91,7 +91,7 @@ class OTPTextFieldState extends State<OTPTextField> {
       ),
       child: TextFormField(
         controller: _textControllers[index],
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         textAlign: TextAlign.center,
         validator: (String? value) {
           if (value == null || value.isEmpty) {

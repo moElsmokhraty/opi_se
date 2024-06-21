@@ -40,4 +40,5 @@ class APIConfig {
   static const String getUserNotifications = 'user/getNotifications';
   static const String mentorRegister = 'mentor/signUp';
   static const String mentorLogin = 'mentor/login';
+  static const String mentorVerifyOtp = 'mentor/verifyAccount';
 }
