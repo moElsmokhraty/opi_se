@@ -15,6 +15,23 @@ class MentorLoginOtpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<MentorLoginOtpCubit>(context);
     return BlocConsumer<MentorLoginOtpCubit, MentorLoginOtpState>(
+      listenWhen: (previous, current) {
+        if (current is MentorLoginOtpError ||
+            current is MentorLoginOtpSuccess) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      buildWhen: (previous, current) {
+        if (current is MentorLoginOtpError ||
+            current is MentorLoginOtpSuccess ||
+            current is MentorLoginOtpLoading) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       listener: (context, state) {
         if (state is MentorLoginOtpSuccess) {
           showCustomSnackBar(context, 'Account verified successfully');
@@ -38,7 +55,6 @@ class MentorLoginOtpButton extends StatelessWidget {
           return AuthButton(
             text: 'Verify',
             onPressed: () async {
-              print(email);
               await cubit.verifyOtp(email);
             },
             backColor: const Color(0XFF036666),

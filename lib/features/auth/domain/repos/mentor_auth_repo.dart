@@ -13,4 +13,6 @@ abstract class MentorAuthRepo {
   );
 
   Future<Either<Failure, String>> verifyOtp(VerifyOtpRequest request);
+
+  Future<Either<Failure, String>> resendOtp(String email);
 }

@@ -14,3 +14,13 @@ final class MentorLoginOtpError extends MentorLoginOtpState {
 
   MentorLoginOtpError(this.message);
 }
+
+final class MentorResendOtpLoading extends MentorLoginOtpState {}
+
+final class MentorResendOtpSuccess extends MentorLoginOtpState {}
+
+final class MentorResendOtpError extends MentorLoginOtpState {
+  final String message;
+
+  MentorResendOtpError(this.message);
+}

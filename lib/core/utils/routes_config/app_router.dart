@@ -39,6 +39,7 @@ import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/get_user_profile_use_case.dart';
 import '../../../features/auth/domain/use_cases/mentor_login_use_case.dart';
+import '../../../features/auth/domain/use_cases/mentor_resend_otp_use_case.dart';
 import '../../../features/auth/domain/use_cases/mentor_verify_otp_use_case.dart';
 import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
@@ -379,8 +380,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.mentorLoginOtp,
         builder: (context, state) => BlocProvider(
-          create: (context) =>
-              MentorLoginOtpCubit(getIt.get<MentorVerifyOtpUseCase>()),
+          create: (context) => MentorLoginOtpCubit(
+            getIt.get<MentorVerifyOtpUseCase>(),
+            getIt.get<MentorResendOtpUseCase>(),
+          ),
           child: MentorLoginOtpView(email: state.extra as String),
         ),
       ),

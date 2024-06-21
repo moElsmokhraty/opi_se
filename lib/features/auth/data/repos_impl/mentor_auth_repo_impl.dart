@@ -77,4 +77,20 @@ class MentorAuthRepoImpl extends MentorAuthRepo {
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> resendOtp(String email) async {
+    try {
+      await _apiService.get(
+        endpoint: APIConfig.mentorResendOtp,
+        params: {'email': email},
+      );
+      return const Right('OTP sent successfully!');
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
 }
