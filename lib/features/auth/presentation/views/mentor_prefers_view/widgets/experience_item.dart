@@ -1,11 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import '../../../../data/models/mentor_prefers_models/experience.dart';
-import '../../../cubits/mentor_prefers_cubit/mentor_prefers_cubit.dart';
 import 'add_experience_button.dart';
 import 'edit_experience_dialog.dart';
+import '../../../cubits/mentor_prefers_cubit/mentor_prefers_cubit.dart';
+import '../../../../data/models/mentor_login_models/mentor_login_response/experience.dart';
 
 class ExperienceItem extends StatelessWidget {
   const ExperienceItem({
@@ -50,7 +50,7 @@ class ExperienceItem extends StatelessWidget {
                       SizedBox(
                         width: 200.w,
                         child: Text(
-                          experience.title,
+                          experience.title ?? '',
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.7),
                             fontSize: 20.sp,

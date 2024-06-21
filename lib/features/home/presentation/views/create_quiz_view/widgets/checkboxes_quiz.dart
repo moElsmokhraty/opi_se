@@ -163,12 +163,12 @@ class CheckboxesQuiz extends StatelessWidget {
                             Checkbox(
                               value: true,
                               fillColor: WidgetStateProperty.resolveWith<Color>(
-                                      (Set<WidgetState> states) {
-                                    if (states.contains(WidgetState.selected)) {
-                                      return const Color(0xFF036666);
-                                    }
-                                    return Colors.white;
-                                  }),
+                                  (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return const Color(0xFF036666);
+                                }
+                                return Colors.white;
+                              }),
                               checkColor: Colors.white,
                               onChanged: (value) {},
                             ),

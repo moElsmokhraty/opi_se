@@ -38,6 +38,7 @@ import 'package:opi_se/features/tasks/presentation/cubits/add_task_cubit/add_tas
 import 'package:opi_se/features/tasks/presentation/views/add_task_view/add_task_view.dart';
 import '../../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../../features/auth/domain/use_cases/get_user_profile_use_case.dart';
+import '../../../features/auth/domain/use_cases/mentor_login_use_case.dart';
 import '../../../features/auth/domain/use_cases/register_use_case.dart';
 import '../../../features/auth/domain/use_cases/submit_user_prefers_use_case.dart';
 import '../../../features/auth/domain/use_cases/verify_account_use_case.dart';
@@ -112,7 +113,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.mentorCreateTask,
+    initialLocation: RoutesConfig.mentorLogin,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -369,7 +370,7 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.mentorLogin,
         builder: (context, state) => BlocProvider(
-          create: (context) => MentorLoginCubit(),
+          create: (context) => MentorLoginCubit(getIt.get<MentorLoginUseCase>()),
           child: const MentorLoginView(),
         ),
       ),

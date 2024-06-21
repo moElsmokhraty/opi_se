@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/login_models/login_response/user_skill.dart';
-import '../../../data/models/mentor_prefers_models/experience.dart';
+import '../../../data/models/mentor_login_models/mentor_login_response/experience.dart';
 
 part 'mentor_prefers_state.dart';
 
@@ -252,13 +252,13 @@ class MentorPrefersCubit extends Cubit<MentorPrefersState> {
   }
 
   void setEditExperienceInitialValues(Experience experience) {
-    editExperienceTitleController.text = experience.title;
-    editExperienceCompanyNameController.text = experience.companyName;
+    editExperienceTitleController.text = experience.title!;
+    editExperienceCompanyNameController.text = experience.companyName!;
     editExperienceStartDateController.text =
         experience.startDate.toString().substring(0, 10);
     editExperienceEndDateController.text =
         experience.endDate.toString().substring(0, 10);
-    editExperienceEmploymentTypeController.text = experience.employmentType;
+    editExperienceEmploymentTypeController.text = experience.employmentType!;
     editExperienceIsCurrentlyWorking =
         experience.endDate?.difference(DateTime.now()).inDays == 0;
   }

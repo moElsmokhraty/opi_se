@@ -13,7 +13,7 @@ class HiveHelper {
     Hive.registerAdapter(UserCacheAdapter());
     Hive.registerAdapter(LanguageAdapter());
     Hive.registerAdapter(PartnerAdapter());
-    Hive.registerAdapter(UserSkillAdapter());
+    Hive.registerAdapter(SkillAdapter());
     await Hive.openBox<UserCache>(boxName);
     userCache = getUserCache();
   }

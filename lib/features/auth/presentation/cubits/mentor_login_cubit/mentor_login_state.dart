@@ -7,7 +7,11 @@ final class MentorLoginInitial extends MentorLoginState {}
 
 class LoginLoading extends MentorLoginState {}
 
-class LoginSuccess extends MentorLoginState {}
+class LoginSuccess extends MentorLoginState {
+  final MentorLoginResponse response;
+
+  LoginSuccess(this.response);
+}
 
 class LoginFailure extends MentorLoginState {
   final String errMessage;

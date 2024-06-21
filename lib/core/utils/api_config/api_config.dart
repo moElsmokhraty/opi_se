@@ -38,4 +38,6 @@ class APIConfig {
   static const String editTask = 'task/editTask';
   static const String uploadChatMedia = 'chat/uploadChatMedia';
   static const String getUserNotifications = 'user/getNotifications';
+  static const String mentorRegister = 'mentor/signUp';
+  static const String mentorLogin = 'mentor/login';
 }
