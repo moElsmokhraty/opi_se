@@ -95,6 +95,7 @@ import '../../../features/notes/presentation/views/trash_view/trash_view.dart';
 import '../../../features/onboarding/presentation/cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../../features/onboarding/presentation/views/get_started_view/get_started_view.dart';
 import '../../../features/onboarding/presentation/views/on_boarding_view/on_boarding_view.dart';
+import '../../../features/reports/presentation/views/reports_view/reports_view.dart';
 import '../../../features/settings/domain/use_cases/edit_profile_use_case.dart';
 import '../../../features/tasks/domain/use_cases/edit_task_use_case.dart';
 import '../../../features/tasks/presentation/cubits/edit_task_cubit/edit_task_cubit.dart';
@@ -116,7 +117,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.library,
+    initialLocation: RoutesConfig.reports,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -436,6 +437,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.library,
         builder: (context, state) => const LibraryView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.reports,
+        builder: (context, state) => const ReportsView(),
       ),
     ],
   );

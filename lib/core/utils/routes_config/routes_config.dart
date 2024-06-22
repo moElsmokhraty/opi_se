@@ -43,4 +43,5 @@ abstract class RoutesConfig {
   static const String createQuiz = '/create-quiz';
   static const String mentorCreateTask = '/mentor-create-task';
   static const String library = '/library';
+  static const String reports = '/reports';
 }
