@@ -44,4 +44,5 @@ abstract class RoutesConfig {
   static const String mentorCreateTask = '/mentor-create-task';
   static const String library = '/library';
   static const String reports = '/reports';
+  static const String searchMentor = '/search-mentor';
 }

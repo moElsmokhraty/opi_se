@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
-
-import 'experience.dart';
-import 'language.dart';
 import 'skill.dart';
+import 'language.dart';
+import 'experience.dart';
 
 class MentorRegisterRequest extends Equatable {
   final String? userName;
@@ -13,7 +12,6 @@ class MentorRegisterRequest extends Equatable {
   final String? nationalId;
   final String? password;
   final String? confirmPassword;
-  final String? bio;
   final String? fieldOfStudy;
   final String? specialization;
   final List<Language>? languages;
@@ -29,38 +27,12 @@ class MentorRegisterRequest extends Equatable {
     this.nationalId,
     this.password,
     this.confirmPassword,
-    this.bio,
     this.fieldOfStudy,
     this.specialization,
     this.languages,
     this.skills,
     this.experience,
   });
-
-  factory MentorRegisterRequest.fromJson(Map<String, dynamic> json) {
-    return MentorRegisterRequest(
-      userName: json['userName'] as String?,
-      email: json['email'] as String?,
-      age: json['age'] as int?,
-      gender: json['gender'] as String?,
-      location: json['location'] as String?,
-      nationalId: json['nationalId'] as String?,
-      password: json['password'] as String?,
-      confirmPassword: json['confirmPassword'] as String?,
-      bio: json['bio'] as String?,
-      fieldOfStudy: json['fieldOfStudy'] as String?,
-      specialization: json['specialization'] as String?,
-      languages: (json['languages'] as List<dynamic>?)
-          ?.map((e) => Language.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      skills: (json['skills'] as List<dynamic>?)
-          ?.map((e) => Skill.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      experience: (json['experience'] as List<dynamic>?)
-          ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
 
   Map<String, dynamic> toJson() => {
         'userName': userName,
@@ -71,7 +43,7 @@ class MentorRegisterRequest extends Equatable {
         'nationalId': nationalId,
         'password': password,
         'confirmPassword': confirmPassword,
-        'bio': bio,
+        'bio': 'blank',
         'fieldOfStudy': fieldOfStudy,
         'specialization': specialization,
         'languages': languages?.map((e) => e.toJson()).toList(),
@@ -90,7 +62,6 @@ class MentorRegisterRequest extends Equatable {
       nationalId,
       password,
       confirmPassword,
-      bio,
       fieldOfStudy,
       specialization,
       languages,
