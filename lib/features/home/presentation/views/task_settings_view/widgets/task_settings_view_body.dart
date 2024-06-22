@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'task_visibility_drop_down_menu.dart';
 import '../../../../../../core/widgets/buttons/auth_button.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
-import 'task_duration_drop_down_menu.dart';
-import 'task_visibility_drop_down_menu.dart';
 
 class TaskSettingsViewBody extends StatelessWidget {
   const TaskSettingsViewBody({super.key});
@@ -108,60 +106,41 @@ class TaskSettingsViewBody extends StatelessWidget {
           SizedBox(height: height * 0.01),
           const TaskVisibilityDropDownMenu(),
           SizedBox(height: height * 0.04),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Duration',
-                    style: TextStyle(
-                      fontSize: 21.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  const TaskDurationDropDownMenu(),
-                ],
+              Text(
+                'Deadline',
+                style: TextStyle(
+                  fontSize: 21.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Inter',
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Deadline',
-                    style: TextStyle(
-                      fontSize: 21.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Inter',
+              SizedBox(height: height * 0.01),
+              AuthTextField(
+                readOnly: true,
+                hintText: 'Select start date',
+                controller: TextEditingController(),
+                validator: (value) {
+                  return null;
+                },
+                suffixIcon: Icon(
+                  Icons.calendar_month_outlined,
+                  color: Colors.black.withOpacity(0.5),
+                  size: 20.sp,
+                ),
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 30),
                     ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  SizedBox(
-                    width: 0.4.sw,
-                    child: AuthTextField(
-                      readOnly: true,
-                      hintText: 'Select start date',
-                      controller: TextEditingController(),
-                      validator: (value) {
-                        return null;
-                      },
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(
-                            const Duration(days: 30),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ],
           ),

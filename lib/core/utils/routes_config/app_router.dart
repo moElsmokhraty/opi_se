@@ -81,6 +81,7 @@ import '../../../features/home/presentation/views/notifications_view/notificatio
 import '../../../features/home/presentation/views/quiz_settings_view/quiz_settings_view.dart';
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/home/presentation/views/task_settings_view/task_settings_view.dart';
+import '../../../features/library/presentation/views/library_view/library_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
@@ -115,7 +116,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.mentorLogin,
+    initialLocation: RoutesConfig.library,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -431,6 +432,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.mentorCreateTask,
         builder: (context, state) => const MentorCreateTaskView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.library,
+        builder: (context, state) => const LibraryView(),
       ),
     ],
   );

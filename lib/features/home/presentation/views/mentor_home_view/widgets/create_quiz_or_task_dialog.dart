@@ -12,6 +12,7 @@ class CreateQuizOrTaskDialog extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'What would you like to create?',
@@ -26,6 +27,7 @@ class CreateQuizOrTaskDialog extends StatelessWidget {
             GestureDetector(
               onTap: () {},
               child: Container(
+                width: 230.w,
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                   vertical: 16.h,
@@ -57,6 +59,7 @@ class CreateQuizOrTaskDialog extends StatelessWidget {
             GestureDetector(
               onTap: () {},
               child: Container(
+                width: 230.w,
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                   vertical: 16.h,
