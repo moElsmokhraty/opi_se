@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/dashboard/presentation/views/progress_view/progress_view.dart';
-import '../../features/home/presentation/views/mentor_home_view/mentor_home_view.dart';
 import '../utils/service_locator.dart';
 import '../../features/home/presentation/views/home_view/home_view.dart';
 import '../../features/tasks/presentation/views/tasks_view/tasks_view.dart';
@@ -19,7 +18,7 @@ class AppCubit extends Cubit<AppState> {
   int bottomNavBarIndex = 0;
 
   List<Widget> screens = [
-    const MentorHomeView(),
+    const HomeView(),
     //const DashboardView(),
     const ProgressView(),
     BlocProvider(

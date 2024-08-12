@@ -16,22 +16,26 @@ class MentalHealthView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context) =>
-            MentalHealthCubit(getIt.get<GetMentalSupportUseCase>()),
+        create: (context) {
+          return MentalHealthCubit(getIt.get<GetMentalSupportUseCase>());
+        },
         child: BlocBuilder<MentalHealthCubit, MentalHealthState>(
           builder: (context, state) {
             final MentalHealthCubit cubit =
                 BlocProvider.of<MentalHealthCubit>(context);
-            return PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: cubit.pageController,
-              children: const [
-                IntroPage(),
-                FirstPage(),
-                SecondPage(),
-                ThirdPage(),
-                ResultPage(),
-              ],
+            return PopScope(
+              canPop: false,
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: cubit.pageController,
+                children: const [
+                  IntroPage(),
+                  FirstPage(),
+                  SecondPage(),
+                  ThirdPage(),
+                  ResultPage(),
+                ],
+              ),
             );
           },
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'done_tasks_list.dart';
-import 'tasks_calendar.dart';
 import 'todo_tasks_list.dart';
 import 'task_type_tabs_widget.dart';
 import 'in_progress_tasks_list.dart';
@@ -27,8 +26,8 @@ class TasksViewBody extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: screenHeight * 0.03),
-          const TasksCalendar(),
-          SizedBox(height: screenHeight * 0.05),
+          // const TasksCalendar(),
+          // SizedBox(height: screenHeight * 0.05),
           const TaskTypeTabsWidget(),
           SizedBox(height: screenHeight * 0.03),
           BlocBuilder<TasksCubit, TasksState>(

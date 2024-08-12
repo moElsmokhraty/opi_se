@@ -14,6 +14,7 @@ class AddNoteView extends StatelessWidget {
       },
       child: const SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AddNoteAppBar(),
           body: AddNoteViewBody(),
         ),

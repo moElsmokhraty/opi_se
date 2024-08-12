@@ -12,6 +12,7 @@ class RequestsAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       scrolledUnderElevation: 0,
+      backgroundColor: Colors.white,
       title: Text(
         'Requests',
         textAlign: TextAlign.center,

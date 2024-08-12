@@ -12,6 +12,7 @@ class TasksViewAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       toolbarHeight: 70.h,
       scrolledUnderElevation: 0,
       elevation: 0,
@@ -58,6 +59,8 @@ class TasksViewAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         SizedBox(width: 16.w),
       ],
+      leadingWidth: 12.w,
+      leading: const SizedBox.shrink(),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:opi_se/core/utils/constants.dart';
+import '../../../../data/models/restore_note_models/restore_note_request.dart';
 import '../../../cubits/trash_cubit/trash_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../data/models/get_all_notes_response/note.dart';
@@ -65,7 +67,12 @@ class TrashItem extends StatelessWidget {
                   color: Colors.white,
                   onSelected: (value) async {
                     if (value == 'restore') {
-                      //cubit.restoreNote(note!);
+                      cubit.restoreNote(
+                        RestoreNoteRequest(
+                          matchId: userCache!.matchId!,
+                          noteId: note!.id!,
+                        ),
+                      );
                     } else if (value == 'delete') {
                       await cubit.deleteNoteFromTrash(
                         DeleteNoteFromTrashRequest(

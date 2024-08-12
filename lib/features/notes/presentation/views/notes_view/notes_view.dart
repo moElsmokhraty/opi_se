@@ -26,10 +26,14 @@ class NotesView extends StatelessWidget {
           ..listenOnNotePinned()
           ..listenOnNoteDeleted();
       },
-      child: const SafeArea(
-        child: Scaffold(
-          appBar: NotesAppBar(),
-          body: NotesViewBody(),
+      child: const PopScope(
+        canPop: false,
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: NotesAppBar(),
+            body: NotesViewBody(),
+          ),
         ),
       ),
     );

@@ -14,6 +14,7 @@ class NotificationsAppBar extends StatelessWidget
       elevation: 0,
       scrolledUnderElevation: 0,
       leadingWidth: 60.w,
+      backgroundColor: Colors.white,
       leading: IconButton(
         padding: EdgeInsets.only(left: 12.w),
         icon: Icon(

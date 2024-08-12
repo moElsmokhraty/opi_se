@@ -14,6 +14,7 @@ class OnBoardingView extends StatelessWidget {
         await BlocProvider.of<OnboardingCubit>(context).handleBackButton();
       },
       child: const Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: OnBoardingViewBody(),
         ),

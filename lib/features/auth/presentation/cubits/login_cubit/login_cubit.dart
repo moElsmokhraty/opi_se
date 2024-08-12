@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,12 +39,13 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login() async {
     if (!formKey.currentState!.validate()) return;
     emit(LoginLoading());
-    await FirebaseMessaging.instance.getToken().then((value) async {
+    try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
       var result = await _loginUseCase.call(
         LoginRequest(
           userName: emailController.text.trim(),
           password: passwordController.text.trim(),
-          deviceToken: value,
+          deviceToken: fcmToken,
         ),
       );
       result.fold((failure) {
@@ -51,7 +53,11 @@ class LoginCubit extends Cubit<LoginState> {
       }, (response) {
         emit(LoginSuccess(response));
       });
-    });
+    } on FirebaseException catch (e) {
+      emit(LoginFailure(e.code));
+    } catch (e) {
+      emit(LoginFailure(e.toString()));
+    }
   }
 
   void changePasswordVisibility() {

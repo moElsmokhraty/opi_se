@@ -118,7 +118,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutesConfig.searchMentor,
+    initialLocation: AppRouter.getInitialRoute(),
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -253,6 +253,7 @@ abstract class AppRouter {
           )
             ..getChat(page: 1, limit: 20)
             ..listenOnNewMessage()
+            ..listenOnMediaFromSocket()
             ..listenOnMessageDeleted()
             ..listenOnChatSessionRequest(context)
             ..listenOnReplyToSessionRequest(context)

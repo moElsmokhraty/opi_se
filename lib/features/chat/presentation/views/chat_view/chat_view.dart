@@ -14,6 +14,7 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: const ChatAppBar(),
         body: RefreshIndicator(
           onRefresh: () async {

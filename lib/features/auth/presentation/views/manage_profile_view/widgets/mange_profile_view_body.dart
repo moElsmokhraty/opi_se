@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -106,12 +107,6 @@ class ManageProfileViewBody extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black.withOpacity(0.6),
-                  size: 24.sp,
-                ),
               ],
             ),
           ),
@@ -137,11 +132,59 @@ class ManageProfileViewBody extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black.withOpacity(0.6),
-                  size: 24.sp,
+              ],
+            ),
+          ),
+          SizedBox(height: 32.h),
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/svgs/about.svg',
+                  height: 24.h,
+                  width: 24.w,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.black,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Text(
+                  'About',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 32.h),
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/svgs/contact_us.svg',
+                  height: 24.h,
+                  width: 24.w,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.black,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Text(
+                  'Contact Us',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -165,11 +208,20 @@ class ManageProfileViewBody extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Switch(
-                value: false,
+              Switch.adaptive(
+                value: true,
                 onChanged: (value) {},
                 inactiveThumbColor: Colors.white,
+                activeTrackColor: const Color(0XFF036666),
                 inactiveTrackColor: const Color(0XFFC4C4C4),
+                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+                thumbIcon: WidgetStateProperty.all(
+                  Icon(
+                    Icons.nightlight_round_outlined,
+                    color: Colors.white,
+                    size: 24.sp,
+                  ),
+                ),
               ),
             ],
           ),
@@ -177,32 +229,25 @@ class ManageProfileViewBody extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Hive.box<UserCache>(boxName).clear();
-              GoRouter.of(context).pop();
-              GoRouter.of(context).pushReplacement(RoutesConfig.login);
+              GoRouter.of(context).pushReplacement(RoutesConfig.getStarted);
               showCustomSnackBar(context, 'Logged out successfully');
             },
             child: Row(
               children: [
                 Icon(
                   Icons.logout_outlined,
-                  color: Colors.black.withOpacity(0.6),
+                  color: const Color(0XFF036666),
                   size: 24.sp,
                 ),
                 SizedBox(width: 16.w),
                 Text(
                   'Logout',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: const Color(0XFF036666),
                     fontSize: 16.sp,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
                   ),
-                ),
-                const Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black.withOpacity(0.6),
-                  size: 24.sp,
                 ),
               ],
             ),

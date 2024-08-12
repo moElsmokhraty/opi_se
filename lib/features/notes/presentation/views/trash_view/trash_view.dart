@@ -15,6 +15,7 @@ class TrashView extends StatelessWidget {
       },
       child: const SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: TrashAppBar(),
           body: TrashViewBody(),
         ),

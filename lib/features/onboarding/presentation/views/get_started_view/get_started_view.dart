@@ -12,6 +12,7 @@ class GetStartedView extends StatelessWidget {
         GoRouter.of(context).pop();
       },
       child: const Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: GetStartedViewBody(),
         ),

@@ -7,10 +7,14 @@ class TasksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: TasksViewAppBar(),
-      body: SafeArea(
-        child: TasksViewBody(),
+    return const PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: TasksViewAppBar(),
+        body: SafeArea(
+          child: TasksViewBody(),
+        ),
       ),
     );
   }

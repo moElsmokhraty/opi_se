@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../core/utils/routes_config/routes_config.dart';
 
 class MentorRegisterText extends StatelessWidget {
   const MentorRegisterText({super.key});
@@ -10,7 +9,7 @@ class MentorRegisterText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(RoutesConfig.mentorFirstRegister);
+        GoRouter.of(context).pop();
       },
       child: Align(
         alignment: Alignment.center,

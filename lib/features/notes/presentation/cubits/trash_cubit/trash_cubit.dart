@@ -67,7 +67,15 @@ class TrashCubit extends Cubit<TrashState> {
     var result = await _deleteNoteFromTrashUseCase.call(request);
     result.fold(
       (failure) => emit(DeleteNoteFromTrashFailure(failure: failure)),
-      (response) => emit(DeleteNoteFromTrashSuccess(response: response)),
+      (response) {
+        for (var note in trash) {
+          if (note.id == request.noteId) {
+            trash.remove(note);
+            break;
+          }
+        }
+        emit(DeleteNoteFromTrashSuccess(response: response));
+      },
     );
   }
 
@@ -92,7 +100,15 @@ class TrashCubit extends Cubit<TrashState> {
     var result = await _restoreNoteUseCase.call(request);
     result.fold(
       (failure) => emit(RestoreNoteFailure(failure: failure)),
-      (response) => emit(RestoreNoteSuccess()),
+      (response) {
+        for (var note in trash) {
+          if (note.id == request.noteId) {
+            trash.remove(note);
+            break;
+          }
+        }
+        emit(RestoreNoteSuccess());
+      },
     );
   }
 }

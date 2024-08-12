@@ -16,6 +16,8 @@ class IntroPage extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 70.h,
         backgroundColor: Colors.white,
+        leadingWidth: 12.w,
+        leading: const SizedBox.shrink(),
         title: Text(
           'Mental Health',
           style: TextStyle(

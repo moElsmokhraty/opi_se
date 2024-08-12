@@ -126,6 +126,7 @@ class ChatCubit extends Cubit<ChatState> {
     SocketService.on(
         eventName: 'receiveMessage',
         handler: (data) {
+          print(data.toString());
           messages.insert(
               0,
               Message(
@@ -269,6 +270,11 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
+  // h
+  // h789456123
+
+  // w
+  // h789456123
   Future<void> takeImage() async {
     final XFile? file = await picker.pickImage(source: ImageSource.camera);
     if (file != null) {
@@ -360,5 +366,25 @@ class ChatCubit extends Cubit<ChatState> {
         }
       },
     );
+  }
+
+  void listenOnMediaFromSocket() {
+    SocketService.on(
+        eventName: 'showMediaInChat',
+        handler: (data) {
+          print(data);
+          for (var media in data['media']) {
+            messages.insert(
+              0,
+              Message(
+                mediaUrl: media,
+                messageType: 'media',
+                messageSender: userCache?.id,
+                sentAt: DateTime.now().toLocal(),
+              ),
+            );
+          }
+          emit(GetChatSuccess(messages));
+        });
   }
 }

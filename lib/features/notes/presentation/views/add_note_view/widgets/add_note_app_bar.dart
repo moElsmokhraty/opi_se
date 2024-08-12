@@ -18,6 +18,7 @@ class AddNoteAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       scrolledUnderElevation: 0,
+      backgroundColor: Colors.white,
       leading: GestureDetector(
         child: Icon(
           Icons.arrow_back_ios,

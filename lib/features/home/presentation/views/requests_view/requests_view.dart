@@ -9,6 +9,7 @@ class RequestsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: RequestsAppBar(),
         body: RequestsViewBody(),
       ),

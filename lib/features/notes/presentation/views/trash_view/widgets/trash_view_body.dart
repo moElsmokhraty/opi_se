@@ -29,20 +29,18 @@ class TrashViewBody extends StatelessWidget {
             showCustomSnackBar(context, 'Loading...');
           } else if (state is DeleteNoteFromTrashSuccess) {
             showCustomSnackBar(context, 'Note deleted successfully');
-            await cubit.getTrash(page: 1, limit: 0);
           } else if (state is DeleteNoteFromTrashFailure) {
             showCustomSnackBar(context, state.failure.errMessage);
           } else if (state is RestoreNoteLoading) {
             showCustomSnackBar(context, 'Loading...');
           } else if (state is RestoreNoteSuccess) {
             showCustomSnackBar(context, 'Note restored successfully');
-            await cubit.getTrash(page: 1, limit: 0);
           } else if (state is RestoreNoteFailure) {
             showCustomSnackBar(context, state.failure.errMessage);
           }
         },
         builder: (context, state) {
-          if (state is GetTrashFailure) {
+          if (state is GetTrashFailure && cubit.trash.isEmpty) {
             return CustomErrorWidget(
               errorMessage: state.failure.errMessage,
               onPressed: () {},
@@ -57,7 +55,7 @@ class TrashViewBody extends StatelessWidget {
             } else {
               return GridView.builder(
                 itemCount: cubit.trash.length,
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 12.w,

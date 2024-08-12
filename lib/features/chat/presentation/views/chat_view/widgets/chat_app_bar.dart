@@ -24,6 +24,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
         } else {
           return AppBar(
             elevation: 0,
+            backgroundColor: Colors.white,
             scrolledUnderElevation: 0,
             toolbarHeight: 65.h,
             flexibleSpace: Padding(

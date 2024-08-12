@@ -13,6 +13,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       title: Text(
         'Notes',
         style: TextStyle(
@@ -24,7 +25,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       scrolledUnderElevation: 0,
-      leadingWidth: 60.w,
+      leadingWidth: 12.w,
       actions: [
         GestureDetector(
           child: IconButton(
@@ -68,6 +69,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         SizedBox(width: 8.w),
       ],
+      leading: const SizedBox.shrink(),
     );
   }
 }

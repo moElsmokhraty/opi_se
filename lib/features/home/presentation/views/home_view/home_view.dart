@@ -17,11 +17,14 @@ class HomeView extends StatelessWidget {
         getIt.get<GetPartnerRecommendationsUseCase>(),
         getIt.get<SendPartnerRequestsUseCase>(),
       )..getPartnerRecommendations(),
-      child: const SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: HomeAppBar(),
-          body: HomeViewBody(),
+      child: const PopScope(
+        canPop: false,
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: HomeAppBar(),
+            body: HomeViewBody(),
+          ),
         ),
       ),
     );

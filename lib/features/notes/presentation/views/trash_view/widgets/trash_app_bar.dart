@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -38,8 +39,9 @@ class TrashAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Container(
-          height: 30.h,
-          width: 30.w,
+          height: 35.h,
+          width: 35.w,
+          margin: EdgeInsets.only(right: 8.w),
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
@@ -54,9 +56,9 @@ class TrashAppBar extends StatelessWidget implements PreferredSizeWidget {
                 BlocProvider.of<TrashCubit>(context).flushTrash();
               },
               child: Icon(
-                Icons.more_vert,
+                CupertinoIcons.delete,
                 color: const Color(0XFF036666),
-                size: 24.sp,
+                size: 22.sp,
               ),
             ),
           ),
