@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/utils/routes_config/routes_config.dart';
 import '../../../../../../core/utils/styling/app_assets.dart';
 import '../../../cubits/contact_us_cubit/contact_us_cubit.dart';
 import '../../../../../../core/widgets/text_fields/auth_text_field.dart';
@@ -200,12 +201,17 @@ class ContactUsViewBody extends StatelessWidget {
                         AppAssets.logo,
                         height: 55.h,
                       ),
-                      Text(
-                        'About Us',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0XFF036666),
+                      GestureDetector(
+                        onTap: () {
+                          GoRouter.of(context).push(RoutesConfig.aboutUs);
+                        },
+                        child: Text(
+                          'About Us',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0XFF036666),
+                          ),
                         ),
                       ),
                     ],

@@ -36,7 +36,7 @@ class AuthTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       readOnly: readOnly,
-      maxLines: maxLines,
+      maxLines: obscureText ? 1 : maxLines,
       minLines: minLines,
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(

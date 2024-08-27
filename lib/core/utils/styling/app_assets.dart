@@ -8,4 +8,6 @@ abstract class AppAssets {
   static const String contactUs = 'assets/images/contact_us.png';
   static const String contactUsFooter = 'assets/images/contact_us_footer.png';
   static const String logo = 'assets/images/opi_se_logo.png';
+  static const String aboutUs = 'assets/images/about_us.png';
+  static const String aboutUsSign = 'assets/images/about_us_sign.png';
 }

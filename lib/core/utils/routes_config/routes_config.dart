@@ -46,4 +46,5 @@ abstract class RoutesConfig {
   static const String reports = '/reports';
   static const String searchMentor = '/search-mentor';
   static const String contactUs = '/contact-us';
+  static const String aboutUs = '/about-us';
 }

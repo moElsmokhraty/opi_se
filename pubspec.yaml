@@ -62,6 +62,7 @@ dependencies:
   file_picker: ^8.0.7
   flutter_secure_storage: ^9.2.2
   dropdown_button2: ^2.3.9
+  carousel_slider_plus: ^7.0.0
 
 dev_dependencies:
   flutter_test:

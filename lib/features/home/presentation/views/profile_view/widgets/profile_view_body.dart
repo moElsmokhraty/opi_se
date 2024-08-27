@@ -61,7 +61,7 @@ class ProfileViewBody extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 Text(
-                  userCache!.specialization!,
+                  userCache!.specialization ?? 'No specialization',
                   style: AppStyles.textStyle16.copyWith(
                     color: Colors.black.withOpacity(0.8),
                     fontWeight: FontWeight.w500,
@@ -89,7 +89,7 @@ class ProfileViewBody extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.025),
                 const AboutMeWidget(),
                 SizedBox(height: screenHeight * 0.025),
-                ProfileSkillsWidget(skills: userCache!.skills!),
+                ProfileSkillsWidget(skills: userCache!.skills ?? []),
               ],
             ),
           ),

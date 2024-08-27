@@ -83,6 +83,7 @@ import '../../../features/home/presentation/views/requests_view/requests_view.da
 import '../../../features/home/presentation/views/search_mentor_view/search_mentor_view.dart';
 import '../../../features/home/presentation/views/task_settings_view/task_settings_view.dart';
 import '../../../features/info/presentation/cubits/contact_us_cubit/contact_us_cubit.dart';
+import '../../../features/info/presentation/views/about_us_view/about_us_view.dart';
 import '../../../features/info/presentation/views/contact_us_view/contact_us_view.dart';
 import '../../../features/library/presentation/views/library_view/library_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
@@ -456,6 +457,10 @@ abstract class AppRouter {
           create: (context) => ContactUsCubit(),
           child: const ContactUsView(),
         ),
+      ),
+      GoRoute(
+        path: RoutesConfig.aboutUs,
+        builder: (context, state) => const AboutUsView(),
       ),
     ],
   );
