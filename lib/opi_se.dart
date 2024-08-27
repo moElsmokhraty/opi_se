@@ -45,7 +45,10 @@ class _OpiSeState extends State<OpiSe> {
               debugShowCheckedModeBanner: false,
               routerConfig: AppRouter.router,
               title: 'OpiSe',
-              theme: ThemeData(fontFamily: 'Inter'),
+              theme: ThemeData(
+                fontFamily: 'Inter',
+                scaffoldBackgroundColor: Colors.white,
+              ),
             ),
           );
         },

@@ -82,6 +82,7 @@ import '../../../features/home/presentation/views/quiz_settings_view/quiz_settin
 import '../../../features/home/presentation/views/requests_view/requests_view.dart';
 import '../../../features/home/presentation/views/search_mentor_view/search_mentor_view.dart';
 import '../../../features/home/presentation/views/task_settings_view/task_settings_view.dart';
+import '../../../features/info/presentation/views/contact_us_view/contact_us_view.dart';
 import '../../../features/library/presentation/views/library_view/library_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
@@ -118,7 +119,7 @@ abstract class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: AppRouter.getInitialRoute(),
+    initialLocation: RoutesConfig.contactUs,
     routes: [
       GoRoute(
         path: RoutesConfig.getStarted,
@@ -447,6 +448,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.searchMentor,
         builder: (context, state) => const SearchMentorView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.contactUs,
+        builder: (context, state) => const ContactUsView(),
       ),
     ],
   );

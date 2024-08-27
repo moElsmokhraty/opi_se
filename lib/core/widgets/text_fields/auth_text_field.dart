@@ -12,6 +12,8 @@ class AuthTextField extends StatelessWidget {
     this.onTap,
     this.suffixIcon,
     this.prefixIcon,
+    this.maxLines,
+    this.minLines,
     this.readOnly = false,
   });
 
@@ -23,6 +25,8 @@ class AuthTextField extends StatelessWidget {
   final void Function()? onTap;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final int? maxLines;
+  final int? minLines;
   final bool readOnly;
 
   @override
@@ -32,6 +36,8 @@ class AuthTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       readOnly: readOnly,
+      maxLines: maxLines,
+      minLines: minLines,
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
         isDense: true,
