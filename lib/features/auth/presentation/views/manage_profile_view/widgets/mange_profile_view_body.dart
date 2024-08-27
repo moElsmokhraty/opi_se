@@ -164,7 +164,9 @@ class ManageProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: 32.h),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              GoRouter.of(context).push(RoutesConfig.contactUs);
+            },
             child: Row(
               children: [
                 SvgPicture.asset(
