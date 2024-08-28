@@ -10,7 +10,6 @@ class TasksView extends StatelessWidget {
     return const PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: TasksViewAppBar(),
         body: SafeArea(
           child: TasksViewBody(),

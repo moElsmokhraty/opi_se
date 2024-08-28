@@ -6,43 +6,59 @@ import 'task_type_tabs_widget.dart';
 import 'in_progress_tasks_list.dart';
 import '../../../cubits/tasks_cubit/tasks_cubit.dart';
 
-class TasksViewBody extends StatelessWidget {
+class TasksViewBody extends StatefulWidget {
   const TasksViewBody({super.key});
+
+  @override
+  State<TasksViewBody> createState() => _TasksViewBodyState();
+}
+
+class _TasksViewBodyState extends State<TasksViewBody>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        BlocProvider.of<TasksCubit>(
+          context,
+          listen: false,
+        ).selectedIndex = _tabController.index;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(() {});
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.sizeOf(context).height;
-    final TasksCubit cubit = BlocProvider.of<TasksCubit>(context);
-    return RefreshIndicator(
-      onRefresh: () async {
-        if (cubit.selectedIndex == 0) {
-          await cubit.getTodoTasks();
-        } else if (cubit.selectedIndex == 1) {
-          await cubit.getInProgressTasks();
-        } else {
-          await cubit.getDoneTasks();
-        }
-      },
-      child: Column(
-        children: [
-          SizedBox(height: screenHeight * 0.03),
-          // const TasksCalendar(),
-          // SizedBox(height: screenHeight * 0.05),
-          const TaskTypeTabsWidget(),
-          SizedBox(height: screenHeight * 0.03),
-          BlocBuilder<TasksCubit, TasksState>(
-            builder: (context, state) {
-              if (cubit.selectedIndex == 0) {
-                return const TodoTasksList();
-              } else if (cubit.selectedIndex == 1) {
-                return const InProgressTasksList();
-              } else {
-                return const DoneTasksList();
-              }
-            },
+    return Column(
+      children: [
+        SizedBox(height: screenHeight * 0.03),
+        // const TasksCalendar(),
+        // SizedBox(height: screenHeight * 0.05),
+        TaskTypeTabsWidget(tabController: _tabController),
+        SizedBox(height: screenHeight * 0.03),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: const [
+              TodoTasksList(),
+              InProgressTasksList(),
+              DoneTasksList(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

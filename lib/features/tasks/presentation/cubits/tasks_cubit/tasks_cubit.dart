@@ -24,17 +24,11 @@ class TasksCubit extends Cubit<TasksState> {
   List<Task> inProgressTasks = [];
   List<Task> doneTasks = [];
 
-  void changeSelectedIndex(int index) {
-    if (index == selectedIndex) return;
-    selectedIndex = index;
-    emit(TasksChangeSelectedIndex());
-  }
-
   Future<void> getTodoTasks() async {
     emit(GetTasksLoading());
     final result = await getSpecificTasksTypeUseCase.call({'type': 'toDo'});
     result.fold(
-      (failure) => emit(GetTasksFailure(failure.errMessage)),
+      (failure) => emit(GetTasksFailure(failure.errMessage, 0)),
       (response) {
         todoTasks.clear();
         todoTasks.addAll(response.tasks ?? []);
@@ -49,7 +43,7 @@ class TasksCubit extends Cubit<TasksState> {
       {'type': 'inProgress'},
     );
     result.fold(
-      (failure) => emit(GetTasksFailure(failure.errMessage)),
+      (failure) => emit(GetTasksFailure(failure.errMessage, 1)),
       (response) {
         inProgressTasks.clear();
         inProgressTasks.addAll(response.tasks ?? []);
@@ -62,7 +56,7 @@ class TasksCubit extends Cubit<TasksState> {
     emit(GetTasksLoading());
     final result = await getSpecificTasksTypeUseCase.call({'type': 'done'});
     result.fold(
-      (failure) => emit(GetTasksFailure(failure.errMessage)),
+      (failure) => emit(GetTasksFailure(failure.errMessage, 2)),
       (response) {
         doneTasks.clear();
         doneTasks.addAll(response.tasks ?? []);
@@ -71,29 +65,29 @@ class TasksCubit extends Cubit<TasksState> {
     );
   }
 
-  Future<void> deleteTask(String id) async {
-    emit(DeleteTaskLoading());
-    final result = await deleteTaskUseCase.call(id);
+  Future<void> deleteTask(String taskId) async {
+    emit(DeleteTaskLoading(taskId));
+    final result = await deleteTaskUseCase.call(taskId);
     result.fold(
       (failure) => emit(DeleteTaskFailure(failure.errMessage)),
       (response) {
         if (selectedIndex == 0) {
-          todoTasks.removeWhere((element) => element.id == id);
+          todoTasks.removeWhere((element) => element.id == taskId);
         } else if (selectedIndex == 1) {
-          inProgressTasks.removeWhere((element) => element.id == id);
+          inProgressTasks.removeWhere((element) => element.id == taskId);
         } else {
-          doneTasks.removeWhere((element) => element.id == id);
+          doneTasks.removeWhere((element) => element.id == taskId);
         }
-        deleteTaskSocket(id);
+        deleteTaskSocket(taskId);
         emit(DeleteTaskSuccess());
       },
     );
   }
 
-  void deleteTaskSocket(String id) {
+  void deleteTaskSocket(String taskId) {
     SocketService.emit(
       eventName: 'deleteTask',
-      data: {'taskId': id},
+      data: {'taskId': taskId},
     );
   }
 

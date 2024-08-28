@@ -73,9 +73,11 @@ class TaskItem extends StatelessWidget {
                 ),
                 child: BlocBuilder<TasksCubit, TasksState>(
                     builder: (context, state) {
-                  if (state is DeleteTaskLoading) {
-                    return const CircularProgressIndicator(
-                      color: Color(0xFF036666),
+                  if (state is DeleteTaskLoading && state.taskId == task.id) {
+                    return const CircularProgressIndicator.adaptive(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color(0XFF036666),
+                      ),
                       strokeWidth: 2,
                     );
                   } else {

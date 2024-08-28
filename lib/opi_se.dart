@@ -48,6 +48,11 @@ class _OpiSeState extends State<OpiSe> {
               theme: ThemeData(
                 fontFamily: 'Inter',
                 scaffoldBackgroundColor: Colors.white,
+                appBarTheme: const AppBarTheme(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                ),
               ),
             ),
           );

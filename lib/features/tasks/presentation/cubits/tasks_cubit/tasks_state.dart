@@ -5,14 +5,13 @@ sealed class TasksState {}
 
 final class TasksInitial extends TasksState {}
 
-final class TasksChangeSelectedIndex extends TasksState {}
-
 final class GetTasksLoading extends TasksState {}
 
 final class GetTasksFailure extends TasksState {
   final String errMessage;
+  final int index;
 
-  GetTasksFailure(this.errMessage);
+  GetTasksFailure(this.errMessage, this.index);
 }
 
 final class GetTasksSuccess extends TasksState {
@@ -21,7 +20,11 @@ final class GetTasksSuccess extends TasksState {
   GetTasksSuccess(this.tasks);
 }
 
-final class DeleteTaskLoading extends TasksState {}
+final class DeleteTaskLoading extends TasksState {
+  final String taskId;
+
+  DeleteTaskLoading(this.taskId);
+}
 
 final class DeleteTaskFailure extends TasksState {
   final String errMessage;

@@ -19,26 +19,65 @@ class NotificationsViewBody extends StatelessWidget {
           );
         }
         if (state is GetNotificationsFailure && cubit.notifications.isEmpty) {
-          return Center(
-            child: Text(
-              state.failure.errMessage,
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.red,
-                fontFamily: 'Inter',
-              ),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/no_requests.png',
+                  width: double.infinity,
+                  height: 350.h,
+                ),
+                SizedBox(height: 25.h),
+                Text(
+                  state.failure.errMessage,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           );
         } else if (state is GetNotificationsSuccess &&
             cubit.notifications.isEmpty) {
-          return Center(
-            child: Text(
-              'No Notifications Available',
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.red,
-                fontFamily: 'Inter',
-              ),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/no_notifications.png',
+                  width: double.infinity,
+                  height: 350.h,
+                ),
+                SizedBox(height: 25.h),
+                Text(
+                  'No Notifications Found',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  'You don\'t have any notifications at the moment',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.5),
+                    fontSize: 20.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
             ),
           );
         }

@@ -11,13 +11,20 @@ class InProgressTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TasksCubit cubit = BlocProvider.of<TasksCubit>(context);
-    return Expanded(
+    return RefreshIndicator(
+      onRefresh: () async {
+        await cubit.getInProgressTasks();
+      },
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
-          if (state is GetTasksFailure &&
-              cubit.todoTasks.isNotEmpty &&
-              cubit.selectedIndex == 0 &&
-              state.errMessage != 'No tasks yet !') {
+          if (state is DeleteTaskFailure && cubit.selectedIndex == 1) {
+            showCustomSnackBar(context, state.errMessage);
+          } else if (state is DeleteTaskSuccess && cubit.selectedIndex == 1) {
+            showCustomSnackBar(context, 'Task deleted successfully');
+          } else if (state is GetTasksFailure &&
+              state.index == 1 &&
+              cubit.inProgressTasks.isNotEmpty &&
+              cubit.selectedIndex == 1) {
             showCustomSnackBar(context, state.errMessage);
           }
         },
@@ -28,8 +35,8 @@ class InProgressTasksList extends StatelessWidget {
               child: Container(
                 height: 0.5.sh,
                 alignment: Alignment.center,
-                child: const CircularProgressIndicator(
-                  color: Color(0XFF036666),
+                child: const CircularProgressIndicator.adaptive(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0XFF036666)),
                 ),
               ),
             );
@@ -37,31 +44,65 @@ class InProgressTasksList extends StatelessWidget {
               cubit.inProgressTasks.isEmpty) {
             return SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                height: 0.5.sh,
-                alignment: Alignment.center,
-                child: Text(
-                  state.errMessage,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 16.sp,
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/no_notes.png',
+                    width: double.infinity,
+                    height: 350.h,
                   ),
-                ),
+                  SizedBox(height: 25.h),
+                  Text(
+                    state.errMessage,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             );
-          } else if (cubit.inProgressTasks.isEmpty) {
+          } else if ((state is GetTasksSuccess || state is DeleteTaskSuccess) &&
+              cubit.inProgressTasks.isEmpty) {
             return SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                height: 0.5.sh,
-                alignment: Alignment.center,
-                child: Text(
-                  'No tasks found',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16.sp,
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/no_notes.png',
+                    width: double.infinity,
+                    height: 350.h,
                   ),
-                ),
+                  SizedBox(height: 25.h),
+                  Text(
+                    'No In Progress Tasks Found',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  Text(
+                    'You don\'t have any in progress tasks at the moment',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 20.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
               ),
             );
           } else {
@@ -69,10 +110,7 @@ class InProgressTasksList extends StatelessWidget {
               itemCount: cubit.inProgressTasks.length,
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return TaskItem(
-                  key: UniqueKey(),
-                  task: cubit.inProgressTasks[index],
-                );
+                return TaskItem(task: cubit.inProgressTasks[index]);
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 12.h);

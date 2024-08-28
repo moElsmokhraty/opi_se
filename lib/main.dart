@@ -1,6 +1,8 @@
 import 'opi_se.dart';
 import 'firebase_options.dart';
+import 'package:bloc/bloc.dart';
 import 'core/cache/hive_helper.dart';
+import 'core/utils/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/utils/socket_service.dart';
@@ -20,6 +22,7 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await SocketService.connect();
   setupServiceLocator();
+  Bloc.observer = MyBlocObserver();
   runApp(const OpiSe());
 }
 
