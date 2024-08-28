@@ -54,7 +54,9 @@ class NotesViewBody extends StatelessWidget {
             );
           } else if (state is GetNotesLoading && cubit.notes.isEmpty) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0XFF036666)),
+              ),
             );
           } else {
             if (cubit.notes.isEmpty) {

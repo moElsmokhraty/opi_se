@@ -44,7 +44,6 @@ class ResendOtpButton extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () async {
-                  print(email);
                   await cubit.resendOtp(email);
                 },
                 child: RichText(

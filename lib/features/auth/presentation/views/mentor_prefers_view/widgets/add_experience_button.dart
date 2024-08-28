@@ -15,7 +15,7 @@ class AddExperienceButton extends StatelessWidget {
         await showDialog(
           context: context,
           builder: (context) {
-            return new BlocProvider.value(
+            return BlocProvider.value(
               value: cubit,
               child: const AddExperienceDialog(),
             );

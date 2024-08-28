@@ -64,7 +64,7 @@ class ExperienceItem extends StatelessWidget {
                           await showDialog(
                             context: context,
                             builder: (context) {
-                              return new BlocProvider(
+                              return BlocProvider(
                                 create: (context) {
                                   return cubit
                                     ..setEditExperienceInitialValues(

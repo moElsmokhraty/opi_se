@@ -126,7 +126,6 @@ class ChatCubit extends Cubit<ChatState> {
     SocketService.on(
         eventName: 'receiveMessage',
         handler: (data) {
-          print(data.toString());
           messages.insert(
               0,
               Message(
@@ -372,7 +371,6 @@ class ChatCubit extends Cubit<ChatState> {
     SocketService.on(
         eventName: 'showMediaInChat',
         handler: (data) {
-          print(data);
           for (var media in data['media']) {
             messages.insert(
               0,
