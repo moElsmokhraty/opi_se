@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
 import '../../../data/models/task.dart';
 import '../../../domain/use_cases/delete_task_use_case.dart';
@@ -25,6 +26,7 @@ class TasksCubit extends Cubit<TasksState> {
   List<Task> doneTasks = [];
 
   Future<void> getTodoTasks() async {
+    if (userCache?.partner?.id == null) return;
     emit(GetTasksLoading());
     final result = await getSpecificTasksTypeUseCase.call({'type': 'toDo'});
     result.fold(
@@ -38,6 +40,7 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   Future<void> getInProgressTasks() async {
+    if (userCache?.partner?.id == null) return;
     emit(GetTasksLoading());
     final result = await getSpecificTasksTypeUseCase.call(
       {'type': 'inProgress'},
@@ -53,6 +56,7 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   Future<void> getDoneTasks() async {
+    if (userCache?.partner?.id == null) return;
     emit(GetTasksLoading());
     final result = await getSpecificTasksTypeUseCase.call({'type': 'done'});
     result.fold(

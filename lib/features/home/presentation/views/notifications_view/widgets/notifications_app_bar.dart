@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class NotificationsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -14,6 +15,7 @@ class NotificationsAppBar extends StatelessWidget
       elevation: 0,
       scrolledUnderElevation: 0,
       leadingWidth: 60.w,
+      toolbarHeight: 60.h,
       backgroundColor: Colors.white,
       leading: IconButton(
         padding: EdgeInsets.only(left: 12.w),
@@ -23,7 +25,7 @@ class NotificationsAppBar extends StatelessWidget
           size: 20.sp,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          GoRouter.of(context).pop();
         },
       ),
       title: Text(

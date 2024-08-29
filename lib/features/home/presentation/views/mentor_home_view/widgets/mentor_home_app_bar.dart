@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/utils/constants.dart';
 import 'package:opi_se/core/utils/routes_config/routes_config.dart';
@@ -122,14 +121,6 @@ class _MentorHomeAppBarState extends State<MentorHomeAppBar> {
               return notificationIcon;
             },
           ),
-        ),
-        IconButton(
-          onPressed: () {
-            GoRouter.of(context).push(RoutesConfig.chat);
-          },
-          tooltip: 'Chat',
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          icon: SvgPicture.asset('assets/svgs/chat.svg'),
         ),
       ],
     );

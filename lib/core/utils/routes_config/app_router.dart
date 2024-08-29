@@ -17,7 +17,6 @@ import 'package:opi_se/features/auth/presentation/views/user_prefers_view/user_p
 import 'package:opi_se/features/auth/presentation/views/verify_account_view/verify_account_view.dart';
 import 'package:opi_se/features/chat/presentation/views/call_view/call_view.dart';
 import 'package:opi_se/features/chat/presentation/views/chat_media_view/chat_media_view.dart';
-import 'package:opi_se/features/chat/presentation/views/chat_view/chat_view.dart';
 import 'package:opi_se/features/dashboard/presentation/views/dashboard_view/dashboard_view.dart';
 import 'package:opi_se/features/home/data/models/requests_models/get_match_requests_response/partner_request.dart';
 import 'package:opi_se/features/home/domain/use_cases/get_notifications_use_case.dart';
@@ -61,9 +60,6 @@ import '../../../features/auth/presentation/views/mentor_register_views/mentor_f
 import '../../../features/auth/presentation/views/mentor_register_views/mentor_second_register_view.dart';
 import '../../../features/auth/presentation/views/register_views/second_register_view.dart';
 import '../../../features/chat/domain/use_cases/get_chat_media_use_case.dart';
-import '../../../features/chat/domain/use_cases/get_chat_use_case.dart';
-import '../../../features/chat/domain/use_cases/upload_chat_images_use_case.dart';
-import '../../../features/chat/presentation/cubits/chat_cubit/chat_cubit.dart';
 import '../../../features/chat/presentation/cubits/chat_media_cubit/chat_media_cubit.dart';
 import '../../../features/home/domain/use_cases/accept_match_request_use_case.dart';
 import '../../../features/home/domain/use_cases/change_profile_image_use_case.dart';
@@ -86,6 +82,7 @@ import '../../../features/info/presentation/cubits/contact_us_cubit/contact_us_c
 import '../../../features/info/presentation/views/about_us_view/about_us_view.dart';
 import '../../../features/info/presentation/views/contact_us_view/contact_us_view.dart';
 import '../../../features/library/presentation/views/library_view/library_view.dart';
+import '../../../features/mental_health/presentation/views/mental_health_view/mental_health_view.dart';
 import '../../../features/notes/data/models/get_all_notes_response/note.dart';
 import '../../../features/notes/domain/use_cases/add_note_use_case.dart';
 import '../../../features/notes/domain/use_cases/delete_note_from_trash_use_case.dart';
@@ -245,23 +242,6 @@ abstract class AppRouter {
             getIt.get<SendPartnerRequestsUseCase>(),
           )..getPartnerRecommendations(),
           child: const HomeView(),
-        ),
-      ),
-      GoRoute(
-        path: RoutesConfig.chat,
-        builder: (context, state) => BlocProvider(
-          create: (context) => ChatCubit(
-            getIt.get<GetChatUseCase>(),
-            getIt.get<UploadChatImagesUseCase>(),
-          )
-            ..getChat(page: 1, limit: 20)
-            ..listenOnNewMessage()
-            ..listenOnMediaFromSocket()
-            ..listenOnMessageDeleted()
-            ..listenOnChatSessionRequest(context)
-            ..listenOnReplyToSessionRequest(context)
-            ..listenOnMatchRequestApproved(),
-          child: const ChatView(),
         ),
       ),
       GoRoute(
@@ -461,6 +441,10 @@ abstract class AppRouter {
       GoRoute(
         path: RoutesConfig.aboutUs,
         builder: (context, state) => const AboutUsView(),
+      ),
+      GoRoute(
+        path: RoutesConfig.mentalHealth,
+        builder: (context, state) => const MentalHealthView(),
       ),
     ],
   );

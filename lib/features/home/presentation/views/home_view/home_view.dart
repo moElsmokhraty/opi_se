@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'widgets/home_app_bar.dart';
 import 'widgets/home_view_body.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../domain/use_cases/send_partner_request_use_case.dart';
@@ -17,16 +16,7 @@ class HomeView extends StatelessWidget {
         getIt.get<GetPartnerRecommendationsUseCase>(),
         getIt.get<SendPartnerRequestsUseCase>(),
       )..getPartnerRecommendations(),
-      child: const PopScope(
-        canPop: false,
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: HomeAppBar(),
-            body: HomeViewBody(),
-          ),
-        ),
-      ),
+      child: const HomeViewBody(),
     );
   }
 }

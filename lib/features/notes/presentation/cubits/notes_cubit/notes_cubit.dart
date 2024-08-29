@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../../../core/errors/failure.dart';
+import '../../../../../core/utils/constants.dart';
 import '../../../data/models/pin_note_response.dart';
 import 'package:opi_se/core/utils/socket_service.dart';
 import 'package:opi_se/core/errors/server_failure.dart';
@@ -26,16 +27,7 @@ class NotesCubit extends Cubit<NotesState> {
   List<Note> notes = [];
 
   Future<void> getNotes(String? matchId, int page, int limit) async {
-    if (matchId == null) {
-      emit(
-        GetNotesFailure(
-          failure: ServerFailure(
-            errMessage: 'You do not have a student partner yet!',
-          ),
-        ),
-      );
-      return;
-    }
+    if (userCache?.partner?.id == null) return;
     emit(GetNotesLoading());
     var result = await _getNotesUseCase.call([matchId, page, limit]);
     result.fold(
@@ -114,6 +106,7 @@ class NotesCubit extends Cubit<NotesState> {
   }
 
   void listenOnNewNote() {
+    if (userCache?.partner?.id == null) return;
     SocketService.on(
       eventName: 'getNote',
       handler: (newNote) {
@@ -130,6 +123,7 @@ class NotesCubit extends Cubit<NotesState> {
   }
 
   void listenOnNoteDeleted() {
+    if (userCache?.partner?.id == null) return;
     SocketService.on(
       eventName: 'noteDeleted',
       handler: (deletedNote) {
@@ -145,6 +139,7 @@ class NotesCubit extends Cubit<NotesState> {
   }
 
   void listenOnNotePinned() {
+    if (userCache?.partner?.id == null) return;
     SocketService.on(
       eventName: 'notePinned',
       handler: (pinnedNote) {
@@ -160,6 +155,7 @@ class NotesCubit extends Cubit<NotesState> {
   }
 
   void listenOnNoteRestored() {
+    if (userCache?.partner?.id == null) return;
     SocketService.on(
       eventName: 'noteRestored',
       handler: (restoredNote) {

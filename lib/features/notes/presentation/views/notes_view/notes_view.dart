@@ -6,7 +6,6 @@ import '../../../domain/use_cases/delete_note_use_case.dart';
 import '../../../domain/use_cases/get_notes_use_case.dart';
 import '../../../domain/use_cases/pin_note_use_case.dart';
 import '../../cubits/notes_cubit/notes_cubit.dart';
-import 'widgets/notes_app_bar.dart';
 import 'widgets/notes_view_body.dart';
 
 class NotesView extends StatelessWidget {
@@ -26,16 +25,7 @@ class NotesView extends StatelessWidget {
           ..listenOnNotePinned()
           ..listenOnNoteDeleted();
       },
-      child: const PopScope(
-        canPop: false,
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: NotesAppBar(),
-            body: NotesViewBody(),
-          ),
-        ),
-      ),
+      child: const NotesViewBody(),
     );
   }
 }

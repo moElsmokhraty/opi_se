@@ -7,14 +7,13 @@ class ManageProfileAppBar extends StatelessWidget
   const ManageProfileAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(75.h);
+  Size get preferredSize => Size.fromHeight(60.h);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      toolbarHeight: 75.h,
-      titleSpacing: 0,
+      toolbarHeight: 60.h,
       scrolledUnderElevation: 0,
       centerTitle: false,
       backgroundColor: Colors.white,

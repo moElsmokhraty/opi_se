@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:opi_se/core/widgets/buttons/auth_button.dart';
 
 import '../../../cubits/mental_health_cubit.dart';
@@ -14,10 +15,24 @@ class IntroPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 70.h,
         backgroundColor: Colors.white,
-        leadingWidth: 12.w,
-        leading: const SizedBox.shrink(),
+        elevation: 0,
+        titleSpacing: 0,
+        toolbarHeight: 75.h,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 20.w),
+          child: GestureDetector(
+            onTap: () {
+              GoRouter.of(context).pop();
+            },
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+          ),
+        ),
         title: Text(
           'Mental Health',
           style: TextStyle(

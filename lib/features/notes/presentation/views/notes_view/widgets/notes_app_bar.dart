@@ -8,7 +8,7 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
   const NotesAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60.h);
+  Size get preferredSize => Size.fromHeight(75.h);
 
   @override
   Widget build(BuildContext context) {
@@ -24,51 +24,54 @@ class NotesAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       elevation: 0,
+      toolbarHeight: 75.h,
       scrolledUnderElevation: 0,
       leadingWidth: 12.w,
-      actions: [
-        GestureDetector(
-          child: IconButton(
-            onPressed: () {
-              if (userCache!.matchId != null) {
-                GoRouter.of(context).push(RoutesConfig.addNote);
-              }
-            },
-            tooltip: 'Add Note',
-            icon: Container(
-              width: 28.w,
-              height: 28.h,
-              alignment: Alignment.center,
-              decoration: ShapeDecoration(
-                color: const Color(0x26036666),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7.r),
+      actions: (userCache?.partner?.id == null)
+          ? null
+          : [
+              GestureDetector(
+                child: IconButton(
+                  onPressed: () {
+                    if (userCache!.matchId != null) {
+                      GoRouter.of(context).push(RoutesConfig.addNote);
+                    }
+                  },
+                  tooltip: 'Add Note',
+                  icon: Container(
+                    width: 28.w,
+                    height: 28.h,
+                    alignment: Alignment.center,
+                    decoration: ShapeDecoration(
+                      color: const Color(0x26036666),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.r),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.add_outlined,
+                      color: Colors.black,
+                      size: 26.sp,
+                    ),
+                  ),
                 ),
               ),
-              child: Icon(
-                Icons.add_outlined,
-                color: Colors.black,
-                size: 26.sp,
+              SizedBox(width: 8.w),
+              IconButton(
+                onPressed: () {
+                  if (userCache!.matchId != null) {
+                    GoRouter.of(context).push(RoutesConfig.trash);
+                  }
+                },
+                tooltip: 'Trash',
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: const Color(0XFF036666),
+                  size: 24.sp,
+                ),
               ),
-            ),
-          ),
-        ),
-        SizedBox(width: 8.w),
-        IconButton(
-          onPressed: () {
-            if (userCache!.matchId != null) {
-              GoRouter.of(context).push(RoutesConfig.trash);
-            }
-          },
-          tooltip: 'Trash',
-          icon: Icon(
-            Icons.delete_rounded,
-            color: const Color(0XFF036666),
-            size: 24.sp,
-          ),
-        ),
-        SizedBox(width: 8.w),
-      ],
+              SizedBox(width: 8.w),
+            ],
       leading: const SizedBox.shrink(),
     );
   }

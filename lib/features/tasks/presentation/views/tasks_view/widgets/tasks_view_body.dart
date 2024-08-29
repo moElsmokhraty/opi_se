@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../core/utils/constants.dart';
+import '../../../../../../core/widgets/no_partner_widget.dart';
 import 'done_tasks_list.dart';
 import 'todo_tasks_list.dart';
 import 'task_type_tabs_widget.dart';
@@ -41,24 +43,32 @@ class _TasksViewBodyState extends State<TasksViewBody>
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.sizeOf(context).height;
-    return Column(
-      children: [
-        SizedBox(height: screenHeight * 0.03),
-        // const TasksCalendar(),
-        // SizedBox(height: screenHeight * 0.05),
-        TaskTypeTabsWidget(tabController: _tabController),
-        SizedBox(height: screenHeight * 0.03),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: const [
-              TodoTasksList(),
-              InProgressTasksList(),
-              DoneTasksList(),
+    return Builder(
+      builder: (context) {
+        if (userCache?.partner?.id == null) {
+          return const NoPartnerWidget();
+        } else {
+          return Column(
+            children: [
+              SizedBox(height: screenHeight * 0.03),
+              // const TasksCalendar(),
+              // SizedBox(height: screenHeight * 0.05),
+              TaskTypeTabsWidget(tabController: _tabController),
+              SizedBox(height: screenHeight * 0.03),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    TodoTasksList(),
+                    InProgressTasksList(),
+                    DoneTasksList(),
+                  ],
+                ),
+              ),
             ],
-          ),
-        ),
-      ],
+          );
+        }
+      },
     );
   }
 }

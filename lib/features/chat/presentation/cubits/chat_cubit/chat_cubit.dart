@@ -73,11 +73,7 @@ class ChatCubit extends Cubit<ChatState> {
     int page = 1,
     int limit = 20,
   }) async {
-    messages.clear();
-    if (userCache?.matchId == null) {
-      emit(GetChatFailure('You do not have a student partner yet!'));
-      return;
-    }
+    if (userCache?.matchId == null) return;
     emit(GetChatLoading());
     var result = await _getChatUseCase.call({
       'matchId': userCache?.matchId,
@@ -87,6 +83,7 @@ class ChatCubit extends Cubit<ChatState> {
     result.fold(
       (failure) => emit(GetChatFailure(failure.errMessage)),
       (response) {
+        messages.clear();
         messages.addAll(response.messages ?? []);
         emit(GetChatSuccess(response.messages ?? []));
       },

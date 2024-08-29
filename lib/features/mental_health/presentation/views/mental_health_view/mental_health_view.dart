@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:opi_se/features/mental_health/domain/use_cases/get_mental_support_use_case.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../cubits/mental_health_cubit.dart';
@@ -25,6 +26,16 @@ class MentalHealthView extends StatelessWidget {
                 BlocProvider.of<MentalHealthCubit>(context);
             return PopScope(
               canPop: false,
+              onPopInvoked: (canPop) async {
+                if (cubit.pageController.page != 0) {
+                  cubit.pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                  );
+                } else {
+                  GoRouter.of(context).pop();
+                }
+              },
               child: PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: cubit.pageController,

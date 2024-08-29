@@ -20,7 +20,6 @@ abstract class RoutesConfig {
   static const String partnerRequestProfile = '/partner-request-profile';
   static const String requests = '/requests';
   static const String progress = '/dashboard';
-  static const String chat = '/chat';
   static const String chatMedia = '/chat-media';
   static const String call = '/call';
   static const String notes = '/notes';
@@ -47,4 +46,5 @@ abstract class RoutesConfig {
   static const String searchMentor = '/search-mentor';
   static const String contactUs = '/contact-us';
   static const String aboutUs = '/about-us';
+  static const String mentalHealth = '/mental-health';
 }
